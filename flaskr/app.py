@@ -8,10 +8,11 @@ def login():
 # returns the main Schedule html page
 @app.route("/Schedule/<username>")
 def Schedule(username):
-	return render_template('Schedule.html',name=username)
+	return render_template('schedule.html',name=username)
+
 
 #returns list of classes in JSON format from sql
-@app.route("/Classes")
+@app.route("/classes")
 def classes():
 	my_people = {'Alice': 25,
 		     'Bob': 21,
