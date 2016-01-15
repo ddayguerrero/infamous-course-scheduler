@@ -1,0 +1,4 @@
+ Flaskr is the project directory, this is a flask standard layout.
+ Files such as js and ccs must be in the static folder. 
+ Html files must be in the templates folder.
+ The Schema file should be in the current directory, so should the .py files.
