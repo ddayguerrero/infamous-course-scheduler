@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Home Page</title>
+    {% if page == "home" %}
+	    <title>Home Page</title>
+    {% elif page == "login" %}
+        <title>Login</title>
+    {% endif %}
 </head>
 <body>
-
+<a href="/home">Home</a><br>
+<a href="/login">Login</a>
 </body>
 </html>
