@@ -11,3 +11,8 @@ def home():
 @app.route('/login')
 def login():
     return render_template('login.html',page="login")
+
+
+@app.route('/schedule')
+def schedule():
+    return render_template('schedule.html',page="schedule")
