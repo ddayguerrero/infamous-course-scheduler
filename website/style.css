@@ -1,0 +1,60 @@
+body{
+    background-color: rgb(255,255,235);  
+}
+header{
+    text-align: center;
+    margin: 0px 40px;
+    max-width: 1000px;
+}
+nav{
+    background-color: rgb(229,229,229);
+    margin: 0px 40px;
+    max-width: 1000px;
+    text-align: right;
+}
+.login{
+    width:60px;
+}
+form{
+    display:inline;
+}
+h1{
+    font-family: Verdana;
+    font-weight:400; 
+    text-align: center;
+}
+div{
+    background-color: white;
+    border: rgb(229,229,229) solid 1px;
+    max-width: 1000px;
+}
+#info{
+    height: 130px;
+    margin: 40px;
+    background-clip: content-box;
+    text-align: center;
+}
+#schedule{
+    min-height: 800px;
+    margin: 40px;
+    background-clip: content-box;
+    text-align: center;
+}
+input[type='button']{
+  border-radius: 6px;
+  border-width: 0px;
+  font-family: Verdana;
+  color: white;
+  font-size: 20px;
+  background: #3498db;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+input[type='button']:hover{
+  background: #1283c4;
+  text-decoration: none;
+}
+input[type='button']:active{
+  background: #0f75ab;
+  text-decoration: none;
+}
