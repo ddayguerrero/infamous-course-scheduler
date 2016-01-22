@@ -1,15 +1,20 @@
 body{
-    background-color: rgb(255,255,235);  
+    background-color: rgb(230,230,230);  
+}
+header,nav,#info,#schedule{
+    max-width: 1000px;    
+}
+#info,#schedule{
+    background-color: white;
+    border: rgb(229,229,229) solid 1px;
 }
 header{
     text-align: center;
-    margin: 0px 40px;
-    max-width: 1000px;
+    margin: 0px auto;
 }
 nav{
-    background-color: rgb(229,229,229);
-    margin: 0px 40px;
-    max-width: 1000px;
+    background-color: rgb(205,205,205);
+    margin: 0px auto;
     text-align: right;
 }
 .login{
@@ -23,24 +28,19 @@ h1{
     font-weight:400; 
     text-align: center;
 }
-div{
-    background-color: white;
-    border: rgb(229,229,229) solid 1px;
-    max-width: 1000px;
-}
 #info{
     height: 130px;
-    margin: 40px;
+    margin: 40px auto;
     background-clip: content-box;
     text-align: center;
 }
 #schedule{
     min-height: 800px;
-    margin: 40px;
+    margin: 40px auto;
     background-clip: content-box;
     text-align: center;
 }
-input[type='button']{
+input[type='button'].semesterButton{
   border-radius: 6px;
   border-width: 0px;
   font-family: Verdana;
@@ -50,11 +50,11 @@ input[type='button']{
   padding: 10px 20px 10px 20px;
   text-decoration: none;
 }
-input[type='button']:hover{
+input[type='button'].semesterButton:hover{
   background: #1283c4;
   text-decoration: none;
 }
-input[type='button']:active{
+input[type='button'].semesterButton:active{
   background: #0f75ab;
   text-decoration: none;
 }
