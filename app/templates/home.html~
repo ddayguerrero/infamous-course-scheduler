@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% if page == "home" %}
+	    <title>Home Page</title>
+    {% elif page == "login" %}
+        <title>Login</title>
+    {% elif page == "schedule" %}
+        <title>Schedule</title>
+    {% endif %}
+</head>
+<body>
+<a href="/home">Home</a><br>
+<a href="/login">Login</a><br>
+<a href="/schedule">Schedule</a>
+{% block login %}{% endblock %}
+{% block schedule %}{% endblock %}
+</body>
+</html>
