@@ -15,9 +15,27 @@
     {% endif %}
 </head>
 <body>
-<a href="/home">Home</a><br>
-<a href="/login">Login</a><br>
-<a href="/schedule">Schedule</a>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+       </button>
+       <a style="color:#0099FF" class="navbar-brand" href="\home">Home</a>
+      </div>
+
+  		<div class="navbar-header">
+			 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			 </button>
+			 <a style="color:#0099FF" class="navbar-brand" href="\login">Login</a>
+			</div>
+
+			<div class="navbar-header">
+			 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			 </button>
+			 <a style="color:#0099FF" class="navbar-brand" href="\schedule">Schedule</a>
+			</div>
+		</div>
+	</nav>
 {% block login %}{% endblock %}
 {% block schedule %}{% endblock %}
 </body>
