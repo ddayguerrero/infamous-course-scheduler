@@ -12,7 +12,7 @@ body {
 }
 /*=== Links ===*/
 a {
-  color: #aaaaaa;
+  color: #7FB9FF;
   transition: all ease-in-out 200ms;
 }
 a:hover {
@@ -22,7 +22,7 @@ a:hover {
 
 /*=== Login Links ===*/
 .etc-login-form {
-  color: #919191;
+  color: #7FB9FF;
   padding: 10px 20px;
 }
 .etc-login-form p {
@@ -43,7 +43,7 @@ a:hover {
   box-shadow: 0 0 0;
   border-radius: 0;
   background: transparent;
-  color: #555555;
+  color: #7FB9FF;
   padding: 7px 0;
   font-weight: bold;
   height:auto;
@@ -100,7 +100,8 @@ a:hover {
 
 /*=== 9. Misc ===*/
 .logo {
+  padding: 15px 0;
   font-size: 25px;
-  color: #aaaaaa;
+  color: #7FB9FF;
   font-weight: bold;
 }
