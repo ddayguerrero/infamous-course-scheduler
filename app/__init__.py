@@ -7,10 +7,17 @@ app = Flask(__name__)
 # Configurations
 app.config.from_object('config')
 
+
 @app.route('/')
 @app.route('/login')
 def home():
     return render_template('auth/login.html', page="home")
+
+
+@app.route('/registration')
+def register():
+    return render_template('auth/registration.html', page="register")
+
 
 # Sample HTTP error handling
 @app.errorhandler(404)
