@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="../static/loginStyle.css">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../static/javascript.js"></script>
 
 <html>
 <!-- Registration -->
@@ -16,27 +17,27 @@
 						<input type="text" class="form-control" placeholder="username">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control"  placeholder="password">
+						<input type="password" class="form-control"  placeholder="password" id="password" onchange="checkPass()">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control"  placeholder="confirm password">
+						<input type="password" class="form-control"  placeholder="confirm password" id="confirmPass" onchange="confirmSame()">
 					</div>
-					
+
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="email">
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="full name">
 					</div>
-					
+
 					<div class="form-group login-group-checkbox">
 						<input type="radio" class="" placeholder="username">
 						<label for="male">male</label>
-						
+
 						<input type="radio" class="" placeholder="username">
 						<label for="female">female</label>
 					</div>
-					
+
 					<div class="form-group login-group-checkbox">
 						<input type="checkbox" class="" >
 						<label for="reg_agree">I agree with <a href="#">terms of service</a></label>
