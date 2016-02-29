@@ -48,8 +48,11 @@ def registerForm():
             error =True
         if error :
             return redirect('/registration')
+        else:
+            flash("Password was accepted")
+            return redirect('/login')    
     else:
-        return redirect('/login')
+        return redirect('/registration')
 
 # Sample HTTP error handling
 @app.errorhandler(404)
