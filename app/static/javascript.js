@@ -30,6 +30,6 @@ function checkPass(){
 
 function confirmSame(){
   if(document.getElementById('password').value != document.getElementById('confirmPass').value){
-    alert("The passwords are not the same");
+    alert("The passwords are not the same");  
   }
 }
