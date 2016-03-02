@@ -16,10 +16,13 @@ from app import db
 #Define the blueprint: 'auth'
 mod_auth = Blueprint('auth',__name__)
 
+
 @mod_auth.route('/')
 def home():
     return render_template('auth/login.html', page="home")
 
+
 @mod_auth.route('/registration/')
 def register():
     return render_template('auth/registration.html', page="register")
+    
