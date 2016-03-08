@@ -25,7 +25,8 @@ def home():
 @mod_auth.route('/registration/')
 def register():
     return render_template('auth/registration.html', page="register")
-    
-@mod_auth.route('/studentHome')
-def studentHomePage():
-    return render_template('auth/studentHome.html', page="studentHomePage")
+
+
+@mod_auth.route('/home')
+def studentHome():
+    return render_template('auth/home.html', page="portal")
