@@ -22,7 +22,7 @@ def home():
     return render_template('auth/login.html', page="home")
 
 
-@mod_auth.route('/registration/')
+@mod_auth.route('/registration')
 def register():
     return render_template('auth/registration.html', page="register")
 
