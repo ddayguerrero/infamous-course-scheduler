@@ -2,19 +2,22 @@ from app import db
 
 
 class Student(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String(50), index=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    sequence_id = db.Column(db.Integer, db.ForeignKey('sequence.id'))
-    course_completed_id = db.Column(db.Integer, db.ForeignKey('courseCompleted.id'))
-    course_register = db.Column(db.Integer, db.ForeignKey('courseRegistered.id'))
+	__tablename__ = 'student'
+    id = db.Column(db.Integer, primary_key = True)
+    full_name = db.Column(db.String(50), index = True)
+
+    courses_registered = relationship("CourseRegistered")
+   	courses_completed = relationship("CourseCompleted")
+   	sequence = relationship("Sequence")
 
     def __repr__(self):
         return '<User %r>' % (self.full_name)
 
 
 class CourseCompleted(db.Model):
+	__tablename__ = 'courseCompleted'
 	id = db.Column(db.Integer, primary_key = True)
+	student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 	course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
 
 	def __repr__(self):
@@ -22,6 +25,7 @@ class CourseCompleted(db.Model):
 
 
 class Semester(db.Model):
+	__tablename__ = 'semester'
 	id = db.Column(db.Integer, primary_key = True)
 	course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
 
@@ -30,7 +34,9 @@ class Semester(db.Model):
 
 
 class Sequence(db.Model):
+	__tablename__ = 'sequence'
 	id = db.Column(db.Integer, primary_key = True)
+	student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 	course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
 
 	def __repr__(self):
@@ -38,6 +44,7 @@ class Sequence(db.Model):
 
 
 class Prerequisites(db.Model):
+	__tablename__ = 'prerequisites'
 	id = db.Column(db.Integer, primary_key = True)
 
 	def __repr__(self):
@@ -45,7 +52,9 @@ class Prerequisites(db.Model):
 
 
 class CourseRegistered(db.Model):
+	__tablename__ = 'courseRegistered'
 	id = db.Column(db.Integer, primary_key = True)
+	student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 	course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
 
 	def __repr__(self):
