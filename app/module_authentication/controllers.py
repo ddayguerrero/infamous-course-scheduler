@@ -30,6 +30,7 @@ def register():
 		return redirect(url_for('auth.home'))
 	return render_template('auth/registration.html', form=form)
 
+
 @mod_auth.route('/home/')
 def studentHome():
     return render_template('auth/home.html', page="portal")
