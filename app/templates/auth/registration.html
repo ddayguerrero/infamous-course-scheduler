@@ -4,6 +4,7 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 <html>
+{% from "auth/_formhelpers.html" import render_field %}
 <!-- Registration -->
 <div class="text-center" style="padding:50px 0">
 	<div class="logo">Register</div>
@@ -39,6 +40,19 @@
 			<div class="etc-login-form">
 				<p>Already registered? <a href="{{ url_for('auth.home') }}">Login here</a></p>
 			</div>
+		</form>
+	</div>
+	<div class="test">
+		<form method="POST" role="form">
+			{{ form.csrf_token }}
+  			<dl>
+    			{{ render_field(form.username) }}
+    			{{ render_field(form.email) }}
+   				{{ render_field(form.password) }}
+    			{{ render_field(form.confirm) }}
+    			{{ render_field(form.accept_tos) }}
+  			</dl>
+  				<p><input type="submit" name = "submit">
 		</form>
 	</div>
 </div>

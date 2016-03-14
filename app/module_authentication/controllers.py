@@ -8,10 +8,10 @@ from werkzeug import check_password_hash, generate_password_hash
 from app import db
 
 #Import module forms
-#from app.module_authentication.forms import LoginForm
+from app.module_authentication.forms import RegistrationForm
 
 #Import module models
-#from app.module_authentication.models import User
+from app.module_authentication.models import User
 
 #Define the blueprint: 'auth'
 mod_auth = Blueprint('auth',__name__)
@@ -22,11 +22,17 @@ def home():
     return render_template('auth/login.html', page="home")
 
 
-@mod_auth.route('/registration')
+@mod_auth.route('/registration/', methods=['GET', 'POST'])
 def register():
-    return render_template('auth/registration.html', page="register")
+	form = RegistrationForm()
+	if form.validate_on_submit():
+		flash('Thanks for registering')
+		return redirect(url_for('auth.home'))
+	return render_template('auth/registration.html', form=form)
 
 
-@mod_auth.route('/home')
+@mod_auth.route('/home/')
 def studentHome():
     return render_template('auth/home.html', page="portal")
+
+
