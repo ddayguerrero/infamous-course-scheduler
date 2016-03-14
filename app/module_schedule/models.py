@@ -59,29 +59,17 @@ class Course(db.Model):
     number = db.Column(db.String(3))
     name = db.Column(db.String(50))
     semester = db.Column(db.Integer, db.ForeignKey('semester.id'))
-
-
-class Lab(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
-    start_time = db.Colum(db.DateTime, default=db.func.now())
-    end_time = db.Colum(db.DateTime, default=db.func.now())
-    days = db.Column(db.String(25))
     
 
 class Section(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     code = db.Column(db.String(3))
-    start_time = db.Colum(db.DateTime, default=db.func.now())
-    end_time = db.Colum(db.DateTime, default=db.func.now())
-    professor = db.Column(db.Integer(50))
-    days = db.Column(db.String(25))
 
 
 class Tutorial(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
     start_time = db.Colum(db.DateTime, default=db.func.now())
     end_time = db.Colum(db.DateTime, default=db.func.now())
     days = db.Column(db.String(25))
@@ -89,7 +77,16 @@ class Tutorial(db.Model):
 
 class Lecture(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
+    start_time = db.Colum(db.DateTime, default=db.func.now())
+    end_time = db.Colum(db.DateTime, default=db.func.now())
+    professor = db.Column(db.Integer(50))
+    days = db.Column(db.String(25))
+
+
+class Lab(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
     start_time = db.Colum(db.DateTime, default=db.func.now())
     end_time = db.Colum(db.DateTime, default=db.func.now())
     days = db.Column(db.String(25))
