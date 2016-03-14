@@ -85,3 +85,11 @@ class Tutorial(db.Model):
     start_time = db.Colum(db.DateTime, default=db.func.now())
     end_time = db.Colum(db.DateTime, default=db.func.now())
     days = db.Column(db.String(25))
+
+
+class Lecture(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+    start_time = db.Colum(db.DateTime, default=db.func.now())
+    end_time = db.Colum(db.DateTime, default=db.func.now())
+    days = db.Column(db.String(25))
