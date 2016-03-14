@@ -58,6 +58,7 @@ class Course(db.Model):
     credits = db.Column(db.Double(4))
     number = db.Column(db.String(3))
     name = db.Column(db.String(50))
+    semester = db.Column(db.Integer, db.ForeignKey('semester.id'))
 
 
 class Lab(db.Model):
@@ -76,8 +77,7 @@ class Section(db.Model):
     end_time = db.Colum(db.DateTime, default=db.func.now())
     professor = db.Column(db.Integer(50))
     days = db.Column(db.String(25))
-    semester = db.Column(db.Integer, db.ForeignKey('semester.id'))
-    
+
 
 class Tutorial(db.Model):
     id = db.Column(db.Integer, primary_key=True)
