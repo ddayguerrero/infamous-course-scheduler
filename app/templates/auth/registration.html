@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="../static/css/loginStyle.css">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../static/javascript.js"></script>
 
 <html>
 {% from "auth/_formhelpers.html" import render_field %}
@@ -9,28 +10,39 @@
 <div class="text-center" style="padding:50px 0">
 	<div class="logo">Register</div>
 	<div class="login-form-1">
-		<form id="register-form" class="text-left">
+		<form id="register-form" class="text-left" method="post" action="registerForm">
 			<div class="login-form-main-message"></div>
 			<div class="main-login-form">
 				<div class="login-group">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="username">
+						<input type="text" class="form-control" name ="username" placeholder="username">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control"  placeholder="password">
+						<input type="password" class="form-control"  placeholder="password" name="password" id="password" onchange="checkPass()">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control"  placeholder="confirm password">
+						<input type="password" class="form-control"  placeholder="confirm password" name="confirmPass" id="confirmPass" onchange="confirmSame()">
 					</div>
-					
+
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="email">
+						<input type="text" class="form-control" placeholder="email" name="email">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="full name">
+						<input type="text" class="form-control" placeholder="full name" name="full name">
 					</div>
-					
+
+					{% with messages = get_flashed_messages() %}
+  					{% if messages %}
+    					<ul class="form-control">
+    						{% for message in messages %}
+      						<li>{{ message }}</li>
+    						{% endfor %}
+    					</ul>
+  					{% endif %}
+					{% endwith %}
+
 					<div class="form-group login-group-checkbox">
+
 						<input type="checkbox" class="" >
 						<label for="reg_agree">I agree with <a href="#">terms of service</a></label>
 					</div>
