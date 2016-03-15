@@ -54,8 +54,6 @@ def not_found(error):
 <<<<<<< HEAD
 #Import a module / component using its blueprint handler variable
 from app.module_authentication.controllers import mod_auth
-
-#Import a module / component using its blueprint handler variable
 from app.module_schedule.controllers import mod_schedule
 
 #Register blueprints
