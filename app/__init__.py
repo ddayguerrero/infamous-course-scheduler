@@ -2,6 +2,7 @@
 from flask import Flask, render_template , request, redirect, flash
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
 import re
+from flask_sqlalchemy import SQLAlchemy
 
 # Define the WSGI application object
 app = Flask(__name__)
@@ -51,7 +52,6 @@ def registerForm():
 def not_found(error):
     return render_template('404.html'), 404
 
-<<<<<<< HEAD
 #Import a module / component using its blueprint handler variable
 from app.module_authentication.controllers import mod_auth
 from app.module_schedule.controllers import mod_schedule
@@ -63,9 +63,6 @@ app.register_blueprint(mod_schedule)
 #Create the database file using SQLAlchemy
 db.create_all()
 
-=======
-
-
 class RegistrationForm(Form):
     username = TextField('Username', [validators.Length(min=6, max=25)])
     password = PasswordField('password', [
@@ -74,4 +71,3 @@ class RegistrationForm(Form):
     ])
     confirm = PasswordField('confirmPass')
     accept_tos = BooleanField('I accept the TOS', [validators.Required()])
->>>>>>> origin
