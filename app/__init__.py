@@ -10,7 +10,7 @@ app = Flask(__name__)
 # Configurations
 app.config.from_object('config')
 
-#Define the database object which is imported by modules and controllers
+# Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
 
 # Sample HTTP error handling
@@ -18,14 +18,14 @@ db = SQLAlchemy(app)
 def not_found(error):
     return render_template('404.html'), 404
 
-#Import a module / component using its blueprint handler variable
+# Import a module / component using its blueprint handler variable
 from app.module_authentication.controllers import mod_auth
 from app.module_schedule.controllers import mod_schedule
 
-#Register blueprints
+# Register blueprints
 app.register_blueprint(mod_auth)
 app.register_blueprint(mod_schedule)
 
-#Create the database file using SQLAlchemy
+# Create the database file using SQLAlchemy
 db.create_all()
 
