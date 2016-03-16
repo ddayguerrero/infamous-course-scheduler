@@ -21,7 +21,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = 'False'
 THREADS_PER_PAGE = 2
 
 # Enable protection agains *Cross-site Request Forgery (CSRF)*
-CSRF_ENABLED     = True
+CSRF_ENABLED = True
 
 # Use a secure, unique and absolutely secret key for
 # signing the data. 
