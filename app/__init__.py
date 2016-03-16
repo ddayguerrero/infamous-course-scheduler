@@ -1,8 +1,14 @@
 # Import flask and template operators
-from flask import Flask, render_template
+from flask import Flask, render_template, session
+
+#Import session
+from sqlalchemy.orm import sessionmaker
 
 # Import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
+
+# Import engine
+from sqlalchemy import create_engine
 
 # Define the WSGI application object
 app = Flask(__name__)
@@ -12,6 +18,10 @@ app.config.from_object('config')
 
 #Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
+
+Session = sessionmaker(autoflush=False)
+engine = create_engine('sqlite:///app.db')
+Session.configure(bind=engine)
 
 # Sample HTTP error handling
 @app.errorhandler(404)
