@@ -41,9 +41,8 @@ class Sequence(db.Model):
 	student = relationship("Student", back_populates="sequence")
 	courses = relationship("Course")
 
-<<<<<<< HEAD
-    def __repr__(self):
-        return '<Sequence %r>' % (self.id)
+        def __repr__(self):
+            return '<Sequence %r>' % (self.id)
 
 class Prerequisites(db.Model):
 	__tablename__ = 'prerequisites'

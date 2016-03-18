@@ -1,3 +1,4 @@
+id,section_id,section_code,start_time,end_time,instructor,days,semester
 1,1,AA,18:30:00,21:00:00,"BASSEL ATALLAH",M-WW-----,Summer
 2,1,G,16:15:00,17:30:00,"REMI ALAURENT",-T-----,Fall
 3,1,H,16:15:00,17:30:00,"REMI ALAURENT",---J---,Fall
