@@ -19,10 +19,6 @@ app.config.from_object('config')
 # Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
 
-Session = sessionmaker(autoflush=False)
-engine = create_engine('sqlite:///app.db')
-Session.configure(bind=engine)
-
 # Sample HTTP error handling
 @app.errorhandler(404)
 def not_found(error):

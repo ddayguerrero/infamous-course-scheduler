@@ -13,9 +13,6 @@ from app.module_authentication.forms import RegistrationForm
 #Import module models
 from app.module_authentication.models import User
 
-#Import the engine
-from app import Session
-
 #Define the blueprint: 'auth'
 mod_auth = Blueprint('auth',__name__)
 
@@ -28,12 +25,8 @@ def home():
 def register():
 	form = RegistrationForm()
 	if form.validate_on_submit(): 
-
-		session = Session()
-
-		session.add(User(user_Name=form.username.data, email=form.email.data, password=form.password.data))
-		session.commit()
-		flash('Thanks for registering')
+		db.session.add(User(username=form.username.data, email=form.email.data, password=form.password.data))
+		db.session.commit()
 		return redirect(url_for('auth.home'))
 	return render_template('auth/registration.html', form=form)
 
