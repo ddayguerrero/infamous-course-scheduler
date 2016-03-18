@@ -4,14 +4,14 @@ from flask import Blueprint, request, render_template, flash, g, session, redire
 # Import password / encryption helper tools
 from werkzeug import check_password_hash, generate_password_hash
 
-#Import the database object from the main app module
-from app import db_session
-
 #Import module forms
 from app.module_authentication.forms import RegistrationForm, LoginForm
 
 # Import the database object from the main app module
 from app import db
+
+#import sessions
+import database
 
 # Import module models
 from app.module_authentication.models import User
@@ -23,16 +23,19 @@ mod_auth = Blueprint('auth',__name__)
 def home():
 	form = LoginForm()
 	if(form.validate_on_submit):
-		user = db_session.query(User).filter_by(username=form.username.data).first()
+		session = database.start_session()
+		user = session.query(User).filter_by(username=form.username.data).first()
+		session.remove()
 		if(user == None):
 			flash('Log in below')
 			#return redirect(url_for('auth.home'))
 		elif(user.password == form.password.data):
 			flash('You successfully logged in')
-			#return redirect(url_for('auth.home'))
+			return render_template('auth/home.html', page="home", form=form)
 		else:
 			flash('The password was incorrect. Try again')
 			#return redirect(url_for('auth.home'))
+
 	return render_template('auth/login.html', page="home", form=form)
 
 
@@ -40,12 +43,14 @@ def home():
 def register():
 	form = RegistrationForm()
 	if form.validate_on_submit():
+		session = database.start_session()
 		user = User(form.username.data, form.password.data, form.email.data)
-		user_exists = db_session.query(User).filter_by(username=form.username.data).first()
+		user_exists = session.query(User).filter_by(username=form.username.data).first()
 
-		if(user == None):	
-			db_session.add(user)
-			db_session.commit()
+		session.remove()
+		if(user_exists == None):	
+			session.add(user)
+			session.commit()
 			flash('Thanks for registering')
 			return redirect(url_for('auth.home'))
 		else:
