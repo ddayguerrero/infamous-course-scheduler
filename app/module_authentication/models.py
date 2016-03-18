@@ -1,7 +1,8 @@
-from database import Base
+from app import db
 from sqlalchemy import Column, Integer, String
 
-class User(Base):
+
+class User(db.Model):
     __tablename__ = 'user'
     id = Column(Integer, primary_key = True)
     username = Column(String(30), unique = True)

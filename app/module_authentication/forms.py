@@ -1,5 +1,4 @@
 from flask.ext.wtf import Form
-# Login and Register forms should be here
 from wtforms import BooleanField, TextField, PasswordField, validators
 
 
