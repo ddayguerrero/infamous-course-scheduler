@@ -1,7 +1,7 @@
-
 from flask.ext.wtf import Form
 # Login and Register forms should be here
 from wtforms import BooleanField, TextField, PasswordField, validators
+
 
 class RegistrationForm(Form):
     username = TextField('Username', [validators.Length(min=4, max=25)])
