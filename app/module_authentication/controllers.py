@@ -28,11 +28,8 @@ def home():
 def register():
 	form = RegistrationForm()
 	if form.validate_on_submit(): 
-
-		session = Session()
-
-		session.add(User(user_Name=form.username.data, email=form.email.data, password=form.password.data))
-		session.commit()
+		db.session.add(User(username=form.username.data, email=form.email.data, password=form.password.data))
+		db.session.commit()
 		flash('Thanks for registering')
 		return redirect(url_for('auth.home'))
 	return render_template('auth/registration.html', form=form)

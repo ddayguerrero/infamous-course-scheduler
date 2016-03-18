@@ -19,9 +19,8 @@ app.config.from_object('config')
 # Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
 
-Session = sessionmaker(autoflush=False)
-engine = create_engine('sqlite:///app.db')
-Session.configure(bind=engine)
+# Session factory
+Session = sessionmaker()
 
 # Sample HTTP error handling
 @app.errorhandler(404)
