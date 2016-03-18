@@ -1,9 +1,6 @@
 # Import flask and template operators
 from flask import Flask, render_template, session
 
-#Import session
-from sqlalchemy.orm import sessionmaker
-
 # Import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -19,6 +16,8 @@ app.config.from_object('config')
 # Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
 
+engine = create_engine('sqlite:///app.db')
+
 # Sample HTTP error handling
 @app.errorhandler(404)
 def not_found(error):
@@ -33,5 +32,6 @@ app.register_blueprint(mod_auth)
 app.register_blueprint(mod_schedule)
 
 # Create the database file using SQLAlchemy
-db.create_all()
-
+from app.module_authentication import models
+from app.module_schedule import models
+Base.metadata.create_all(bind=engine)
