@@ -4,35 +4,22 @@ from flask import Blueprint, request, render_template, flash, g, session, redire
 # Import password / encryption helper tools
 from werkzeug import check_password_hash, generate_password_hash
 
-<<<<<<< HEAD
 #Import the database object from the main app module
 from app import db_session
 
 #Import module forms
 from app.module_authentication.forms import RegistrationForm, LoginForm
-=======
+
 # Import the database object from the main app module
 from app import db
-
-# Import module forms
-from app.module_authentication.forms import RegistrationForm
->>>>>>> 49091f54b860b323025f338fcfd5f143876dac4c
 
 # Import module models
 from app.module_authentication.models import User
 
-<<<<<<< HEAD
 #Define the blueprint: 'auth'
 mod_auth = Blueprint('auth',__name__)
 
 @mod_auth.route('/', methods=['GET', 'POST'])
-=======
-# Define the blueprint: 'auth'
-mod_auth = Blueprint('auth',__name__)
-
-
-@mod_auth.route('/')
->>>>>>> 49091f54b860b323025f338fcfd5f143876dac4c
 def home():
 	form = LoginForm()
 	if(form.validate_on_submit):
