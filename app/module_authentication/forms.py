@@ -12,3 +12,7 @@ class RegistrationForm(Form):
     ])
     confirm = PasswordField('Repeat Password')
     accept_tos = BooleanField('I accept the TOS', [validators.Required()])
+
+class LoginForm(Form):
+	username = TextField('Username')
+	password = PasswordField('Password')

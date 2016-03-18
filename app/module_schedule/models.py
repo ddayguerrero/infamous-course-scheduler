@@ -2,13 +2,12 @@ from app import db
 
 
 class Student(db.Model):
-	__tablename__ = 'student'
-    id = db.Column(db.Integer, primary_key = True)
+    __tablename__ = 'student'
+    id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(50), index = True)
-
     courses_registered = relationship("CourseRegistered")
-   	courses_completed = relationship("CourseCompleted")
-   	sequence = relationship("Sequence", back_populates="student")
+    courses_completed = relationship("CourseCompleted")
+    sequence = relationship("Sequence", back_populates="student")
 
     def __repr__(self):
         return '<User %r>' % (self.full_name)
@@ -22,7 +21,7 @@ class CourseCompleted(db.Model):
 
 	course = relationship("Course", back_populates="courseCompleted")
 
-	def __repr__(self):
+def __repr__(self):
         return '<CourseCompleted %r>' % (self.id)
 
 
@@ -44,7 +43,7 @@ class Sequence(db.Model):
 	student = relationship("Student", back_populates="sequence")
 	courses = relationship("Course")
 
-	def __repr__(self):
+    def __repr__(self):
         return '<Sequence %r>' % (self.id)
 
 
@@ -135,4 +134,3 @@ class Lecture(db.Model):
 
     def __repr__(self):
 		return '<Lecture %r>' % (self.section_id)
-

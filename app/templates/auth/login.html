@@ -1,31 +1,38 @@
 {% extends "base.html" %}
-{% block title %}
-Login
-{% endblock %}
+{% block title %}Login{% endblock %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="../static/css/loginStyle.css">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="login.js"></script>
 <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
 {% endblock %}
+{{ super() }}
+{% from "auth/_formhelpers.html" import render_field %}
 
 {% block content %}
-    {{ super() }}
-
-<!-- Login -->
 <div class="text-center" style="padding:50px 0">
     <div class="logo">Null Pointer</div>
 	<div class="login-form-1">
-		<form id="login-form" class="text-left">
+		<form id="login-form" class="text-left" method="POST" role="form">
+			{{ form.csrf_token }}
 			<div class="login-form-main-message"></div>
 			<div class="main-login-form">
 				<div class="login-group">
-                    <!-- User -->
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="username">
+					{% with messages = get_flashed_messages() %}
+  					{% if messages %}
+    					<ul class="form-control">
+    						{% for message in messages %}
+      						<li>{{ message }}</li>
+    						{% endfor %}
+    					</ul>
+  					{% endif %}
+					{% endwith %}
+                    <div class="form-group">
+						<div class="form-control">{{ render_field(form.username) }}</div>
 					</div>
-                    <!-- Password -->
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="password">
+						<div class="form-control">{{ render_field(form.password) }}</div>
 					</div>
                     <!-- Remember Me -->
 					<div class="form-group">
@@ -42,3 +49,5 @@ Login
 	</div>
 </div>
 {% endblock %}
+
+
