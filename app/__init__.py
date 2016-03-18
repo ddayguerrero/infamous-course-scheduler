@@ -19,9 +19,6 @@ app.config.from_object('config')
 # Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
 
-# Session factory
-Session = sessionmaker()
-
 # Sample HTTP error handling
 @app.errorhandler(404)
 def not_found(error):
