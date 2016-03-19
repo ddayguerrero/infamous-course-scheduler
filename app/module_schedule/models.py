@@ -26,7 +26,7 @@ class Course(Abstract_Course):
 
 class Lab(Abstract_ClassType):
 	__tablename__ = 'labs'
-	lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
+	lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
 
 	def __repr__(self):
 		return '<Lab %r>' % (self.code)
@@ -34,7 +34,7 @@ class Lab(Abstract_ClassType):
 
 class Tutorial(Abstract_ClassType):
 	__tablename__ = 'tutorials'
-	lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
+	lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
 
 	def __repr__(self):
 		return '<Tutorial %r>' % (self.section_id)
@@ -43,7 +43,7 @@ class Tutorial(Abstract_ClassType):
 class Lecture(Abstract_ClassType):
 	__tablename__ = 'lectures'
 	instructor = db.Column(db.String(50))
-	course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+	course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
 	semester_id = db.Column(db.Integer, db.ForeignKey('semesters.id'))
 	
 	tutorial = relationship("Tutorial")

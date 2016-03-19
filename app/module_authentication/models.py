@@ -7,7 +7,7 @@ class User(Abstract_Base):
     username = db.Column(db.String(30), unique = True)
     password = db.Column(db.String(20), index = True)
     email = db.Column(db.String(50), index = True)
-
+    	# foreign key to Student
     def __init__(self, username=None, password=None, email=None):
     	self.username = username
     	self.password = password
