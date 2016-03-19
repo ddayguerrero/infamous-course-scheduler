@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy.orm import relationship
 
 
 class Student(db.Model):
@@ -9,7 +10,7 @@ class Student(db.Model):
     courses_completed = relationship("CourseCompleted")
     sequence = relationship("Sequence", back_populates="student")
 
-	def __repr__(self):
+    def __repr__(self):
 		return '<User %r>' % (self.full_name)
 
 
@@ -67,7 +68,7 @@ class Course(db.Model):
 	__tablename__ = 'course'
 	id = db.Column(db.Integer, primary_key=True)
 	code = db.Column(db.String(4))
-	credits = db.Column(db.Double(4))
+	credits = db.Column(db.Float(4))
 	number = db.Column(db.String(3))
 	name = db.Column(db.String(50))
 	semester = db.Column(db.Integer, db.ForeignKey('semester.id'))
@@ -107,8 +108,8 @@ class Tutorial(db.Model):
 	__tablename__ = 'tutorial'
 	id = db.Column(db.Integer, primary_key=True)
 	section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
-	start_time = db.Colum(db.DateTime, default=db.func.now())
-	end_time = db.Colum(db.DateTime, default=db.func.now())
+	start_time = db.Column(db.DateTime, default=db.func.now())
+	end_time = db.Column(db.DateTime, default=db.func.now())
 	days = db.Column(db.String(25))
 	section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
 
@@ -119,8 +120,8 @@ class Lecture(db.Model):
 	__tablename__ = 'lecture'
 	id = db.Column(db.Integer, primary_key=True)
 	section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
-	start_time = db.Colum(db.DateTime, default=db.func.now())
-	end_time = db.Colum(db.DateTime, default=db.func.now())
+	start_time = db.Column(db.DateTime, default=db.func.now())
+	end_time = db.Column(db.DateTime, default=db.func.now())
 	days = db.Column(db.String(25))
 
 	section = relationship("Section", back_populates="lecture")

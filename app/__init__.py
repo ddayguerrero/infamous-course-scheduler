@@ -6,6 +6,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 # Import engine
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 # Define the WSGI application object
 app = Flask(__name__)
@@ -17,6 +18,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 engine = create_engine('sqlite:///app.db')
+Base = declarative_base()
 
 # Sample HTTP error handling
 @app.errorhandler(404)
