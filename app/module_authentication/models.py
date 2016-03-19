@@ -1,5 +1,5 @@
 from app import db
-from abstract_models import Abstract_Base
+from app.abstract_models import Abstract_Base
 
 
 class User(Abstract_Base):
