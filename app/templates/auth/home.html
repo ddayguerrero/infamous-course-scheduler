@@ -4,41 +4,76 @@ Welcome
 {% endblock %}  
 {% block head %}
   <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../../static/css/base.css">
+  <link rel="stylesheet" type="text/css" href="../../static/font-awesome-4.5.0/css/font-awesome.min.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+
+
 {% endblock %}  
 {{ super() }}
 {% block content %}
-  <nav class="navbar navbar-inverse">
-    <div class="container">
+<body>
+  <div id="logo" class="contianer-fluid">
+        <img src="../../static/images/tempLogo341_transparent.png" alt="Logo" class="img-responsive" width="300" height="120">
+  </div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
       <div class="navbar-header">
         <a class="pull-left" href="home.html"><img id="nav-logo" src="NullPointer.png"></a>
       </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="home.html">Home</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-      <li><a href="registration.html"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-      <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="#registration-modal" data-toggle="modal" data-target="#registration-modal"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+        <li><a href="#login-modal" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
     </ul>
     </div>
   </nav>
 
-  <div class="container">
 
+  <div class="modal fade" id="registration-modal" role="dialog">
+       <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <iframe src= "registration.html"></iframe>
+        </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="login-modal" role="dialog">
+     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe src= "login.html"></iframe>
+      </div>
+    </div>
+</div>
+
+  <div class = "container semesterButtons">
+    <div class="row text-center">
+      <h2>Choose your semester:</h2>
+    </div>
     <div class="row"> 
       <div class="col-md-4 text-center">
-        <button class="btn btn-default btn-block">Fall</button>
+        <button type="button" class="btn btn-default btn-block">Fall</button>
       </div> 
       <div class="col-md-4 text-center">
-        <button class="btn btn-default btn-block">Winter</button>
+        <button type="button" class="btn btn-default btn-block">Winter</button>
       </div> 
        <div class="col-md-4 text-center">
-        <button class="btn btn-default btn-block">Summer</button>
+        <button type="button" class="btn btn-default btn-block">Summer</button>
       </div> 
     </div>
-
+  </div>
+  <div class="container schedule">
     <div class="row">
       <div class="col-sm-10">
         <h2>Now displaying the ____ semester</h2>
@@ -54,13 +89,13 @@ Welcome
         <div class="row">
           <div class="headers">
             <div class="col-xs-6 text-center"> 
-              <button class="btn btn-default">Add Course</button>
+              <button type="button" class="btn btn-default">Add Course</button>
             </div>
 <!--             <div class="col-xs-4 text-center"> 
               <h6>Course List</h6>
             </div> -->
             <div class="col-xs-6 text-center"> 
-              <button class="btn btn-default">Delete Course(s)</button>
+              <button type="button" class="btn btn-default">Delete Course(s)</button>
             </div>
           </div>
           <div class="col-sm-12 courseList">
@@ -232,11 +267,11 @@ Welcome
               <td></td>
               <td></td>
             </tr>    
-
           </tbody> 
         </table>
       </div>
       </div>
     </div>
   </div>
+</body>
 {% endblock %}
