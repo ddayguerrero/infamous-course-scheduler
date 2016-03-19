@@ -6,6 +6,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 # Import engine
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 
 # Define the WSGI application object
 app = Flask(__name__)

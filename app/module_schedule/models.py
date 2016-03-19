@@ -52,7 +52,6 @@ class Lecture(Abstract_ClassType):
 	def __repr__(self):
 		return '<Lecture %r>' % (self.section_id)
 
-
 # Tables
 academic_records = db.Table('academic_records',
 	db.Column('id', db.Integer, primary_key = True),
