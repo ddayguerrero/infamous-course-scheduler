@@ -1,3 +1,4 @@
+course_id,program,number,credits,name
 21,COMP,345,3,"Advanced Program Design with C++"
 27,COMP,376,4,"Introduction to Game Development"
 32,COMP,472,4,"Artificial Intelligence"
