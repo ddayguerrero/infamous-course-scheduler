@@ -1,13 +1,12 @@
 from app import db
-from sqlalchemy import Column, Integer, String
+from abstract_models import Abstract_Base
 
 
-class User(db.Model):
-    __tablename__ = 'user'
-    id = Column(Integer, primary_key = True)
-    username = Column(String(30), unique = True)
-    password = Column(String(20), index = True)
-    email = Column(String(50), index = True)
+class User(Abstract_Base):
+    __tablename__ = 'users'
+    username = db.Column(db.String(30), unique = True)
+    password = db.Column(db.String(20), index = True)
+    email = db.Column(db.String(50), index = True)
 
     def __init__(self, username=None, password=None, email=None):
     	self.username = username
