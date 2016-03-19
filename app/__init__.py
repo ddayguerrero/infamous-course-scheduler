@@ -17,9 +17,6 @@ app.config.from_object('config')
 # Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
 
-engine = create_engine('sqlite:///app.db')
-Base = declarative_base()
-
 # Sample HTTP error handling
 @app.errorhandler(404)
 def not_found(error):
@@ -33,7 +30,5 @@ from app.module_schedule.controllers import mod_schedule
 app.register_blueprint(mod_auth)
 app.register_blueprint(mod_schedule)
 
-# Create the database file using SQLAlchemy
-from app.module_authentication import models
-from app.module_schedule import models
-Base.metadata.create_all(bind=engine)
+# Create the database 
+db.create_all()
