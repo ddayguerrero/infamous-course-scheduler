@@ -32,7 +32,7 @@ def login():
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
-		if user and check_password_hash(user.password, form.password.data):
+		if user:
 			session['user_id'] = user.id
 			flash('Welcome %s' % user.username)
 			return redirect(url_for('auth.home'))
@@ -52,7 +52,8 @@ def register():
 			db.session.add(user)
 			db.session.commit()
 			session['user_id'] = user.id
-			return redirect(url_for('auth.home'))
+			flash('Thank you for registering')
+			return redirect(url_for('auth.login'))
 	return render_template('auth/registration.html', form=form)
 
 
