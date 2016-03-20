@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-Welcome
+Course Schedule
 {% endblock %}  
 {% block head %}
   <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
@@ -16,8 +16,6 @@ Welcome
 {{ super() }}
 {% block content %}
 <body>
-  {% include 'auth/header.html' %}
-
   <div class = "container semesterButtons">
     <div class="row text-center">
       <h2>Choose your semester:</h2>
