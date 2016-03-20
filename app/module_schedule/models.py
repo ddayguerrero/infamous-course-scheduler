@@ -15,29 +15,29 @@ class Student(Abstract_Base):
 
 
 class Course(Abstract_Course):
-	__tablename__ = 'courses'
-	type = db.Column(db.String(30))
-	requisite_for = db.Column(db.Integer, db.ForeignKey('req_mappings.id'))
-	lectures = relationship("Lecture")
+    __tablename__ = 'courses'
+    type = db.Column(db.String(30))
+    requisite_for = db.Column(db.Integer, db.ForeignKey('req_mappings.id'))
+    lectures = relationship("Lecture")
 
-	def __repr__(self):
-		return '<Course %r>' % (self.name)
+    def __repr__(self):
+        return '<Course %r>' % (self.name)
 
 
 class Lab(Abstract_ClassType):
-	__tablename__ = 'labs'
-	lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
+    __tablename__ = 'labs'
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
 
-	def __repr__(self):
-		return '<Lab %r>' % (self.code)
+    def __repr__(self):
+        return '<Lab %r>' % (self.code)
 		
 
 class Tutorial(Abstract_ClassType):
-	__tablename__ = 'tutorials'
-	lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
+    __tablename__ = 'tutorials'
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
 
-	def __repr__(self):
-		return '<Tutorial %r>' % (self.section_id)
+    def __repr__(self):
+        return '<Tutorial %r>' % (self.section_id)
 
 
 class Lecture(Abstract_ClassType):
