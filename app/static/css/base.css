@@ -25,6 +25,19 @@ body{
 	background: linear-gradient(#7FB9FF, white);
 }
 
-#copyright{
-	text-align: center;
+#nav-logo{
+  max-width:80px;
+  margin-right:10px;
 }
+
+#homeLink{
+	width:85px;
+}
+
+#homeLink:hover{
+	background-image: url("../images/arrow.png");
+	background-size: 35%;
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+

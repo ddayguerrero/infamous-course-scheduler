@@ -1,4 +1,4 @@
-id,course_id,section_code,start_time,end_time,days
+id,lecture_id,section_code,start_time,end_time,days
 1,42,AI,10:30:00,13:15:00,-T-----
 2,42,AJ,10:30:00,13:15:00,---J---
 3,42,AK,13:30:00,16:15:00,--W----

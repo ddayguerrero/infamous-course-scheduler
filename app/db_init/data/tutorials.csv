@@ -1,4 +1,4 @@
-id,section_id,section_code,start_time,end_time,days
+id,lecture_id,section_code,start_time,end_time,days
 1,1,AB,09:20:00,10:10:00,---J---
 2,1,AC,11:00:00,11:50:00,---J---
 3,1,AD,13:00:00,13:50:00,---J---
