@@ -1,4 +1,4 @@
-id,section_id,section_code,start_time,end_time,instructor,days,semester
+id,course_id,section_code,start_time,end_time,instructor,days,semester
 1,1,AA,18:30:00,21:00:00,"BASSEL ATALLAH",M-W-----,Summer
 2,1,G,16:15:00,17:30:00,"REMI ALAURENT",-T-----,Fall
 3,1,H,16:15:00,17:30:00,"REMI ALAURENT",---J---,Fall
@@ -180,7 +180,7 @@ id,section_id,section_code,start_time,end_time,instructor,days,semester
 194,42,Q,08:45:00,10:00:00,"NANCY ACEMIAN",-T-J---,Fall
 195,42,S,08:45:00,10:00:00,"NAGI BASHA",-T-J---,Winter
 196,42,U,14:45:00,16:00:00,"CHUN WANG",-T-J---,Winter
-197,42,W,00:00:00,00:00:00,"TERRILL FANCOTT",-------,Winter
+197,42,W,08:45:00,10:00:00,"TERRILL FANCOTT",-T-J---,Winter
 198,43,GG,17:45:00,20:15:00,"AMR YOUSSEF",M-W-----,Fall
 199,44,U,16:15:00,17:30:00,"CONSTANTINOS CONSTANTINIDES",-T-J---,Winter
 200,45,H,10:15:00,11:30:00,"TERRILL FANCOTT",--W-F--,Fall
