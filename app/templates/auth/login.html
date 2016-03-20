@@ -27,11 +27,11 @@
     					</ul>
   					{% endif %}
 					{% endwith %}
-                    <div class="form-group">
-						<div class="form-control">{{ render_field(form.username) }}</div>
+					<div class="form-group">
+						{{ render_field(form.username, class_="form-control") }}
 					</div>
 					<div class="form-group">
-						<div class="form-control">{{ render_field(form.password) }}</div>
+						{{ render_field(form.password, class_="form-control") }}
 					</div>
                     <!-- Remember Me -->
 					<div class="form-group">
@@ -48,5 +48,3 @@
 	</div>
 </div>
 {% endblock %}
-
-
