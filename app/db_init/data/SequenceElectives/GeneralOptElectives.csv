@@ -1,3 +1,4 @@
+course_id,program,number,credits,name
 25,COMP,353,4,Databases
 26,COMP,371,4,"Computer Graphics"
 28,COMP,426,4,"Multicore Programming"
