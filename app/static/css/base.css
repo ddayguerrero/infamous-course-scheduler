@@ -30,6 +30,14 @@ body{
   margin-right:10px;
 }
 
-#copyright{
-	text-align: center;
+#homeLink{
+	width:85px;
 }
+
+#homeLink:hover{
+	background-image: url("../images/arrow.png");
+	background-size: 35%;
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
