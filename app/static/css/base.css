@@ -25,11 +25,6 @@ body{
 	background: linear-gradient(#7FB9FF, white);
 }
 
-#nav-logo{
-  max-width:80px;
-  margin-right:10px;
-}
-
 #copyright{
 	text-align: center;
 }
