@@ -10,7 +10,7 @@ body {
     margin: 0 auto;
 }
 /*=== Links ===*/
-a {
+a.formLink {
   color: #7FB9FF;
   transition: all ease-in-out 200ms;
 }
