@@ -31,10 +31,18 @@ def login():
 		user = User.query.filter_by(username=form.username.data).first()
 		if user:
 			session['user_id'] = user.id
+			session['logged_in'] = True
 			flash('Welcome %s' % user.username)
 			return redirect(url_for('auth.home'))
 		flash('Wrong username or password', 'error-message')
 	return render_template('auth/login.html', form=form)
+
+
+@mod_auth.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return render_template('auth/login.html', form=form)
 
 
 @mod_auth.route('/registration/', methods=['GET', 'POST'])
