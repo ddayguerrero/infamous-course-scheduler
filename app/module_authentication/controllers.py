@@ -55,8 +55,24 @@ def register():
 
 
 @mod_auth.route('/home/')
-@requires_login
+#@requires_login
 def home():
-    return render_template('auth/home.html', page="home")
+    return render_template('auth/profile.html', page="home")
 
+
+@mod_auth.route('/fall/')
+#@requires_login
+def fall():
+    return render_template('auth/semesters/fall.html', page="fall")
+
+	
+@mod_auth.route('/winter/')
+#@requires_login
+def winter():
+    return render_template('auth/semesters/winter.html', page="winter")
+	
+@mod_auth.route('/summer/')
+#@requires_login
+def summer():
+    return render_template('auth/semesters/summer.html', page="summer")
 

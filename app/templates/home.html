@@ -1,21 +1,12 @@
 {% extends "base.html" %}
-{% block title %}
-Course Schedule
-{% endblock %}  
+ 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../../static/css/base.css">
 <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
-<link rel="stylesheet" type="text/css" href="../../static/font-awesome-4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans">
-
-<script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 {% endblock %}  
 {{ super() }}
 {% block content %}
 <body>
-  <div class = "container semesterButtons">
+<!--  <div class = "container semesterButtons">
     <div class="row text-center">
       <h2>Choose your semester:</h2>
     </div>
@@ -30,11 +21,11 @@ Course Schedule
         <button type="button" class="btn btn-default btn-block">Summer</button>
       </div> 
     </div>
-  </div>
+  </div>-->
   <div class="container schedule">
     <div class="row">
       <div class="col-sm-10">
-        <h2>Now displaying the ____ semester</h2>
+        <h2>Now displaying the {% block semester %}{% endblock %} semester</h2>
       </div>
 <!--       <div class="col-sm-offset-11">
         <button class="btn btn-default" type="button">Log Out</button>
