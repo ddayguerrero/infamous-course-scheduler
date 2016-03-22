@@ -38,7 +38,7 @@ def login():
 	return render_template('auth/login.html', form=form)
 
 
-@mod_auth.route('/logout')
+@mod_auth.route('/')
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')

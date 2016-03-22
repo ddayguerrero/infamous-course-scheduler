@@ -37,7 +37,7 @@
 		      {% if not session.logged_in %}
 				<li><a href="{{ url_for('auth.login') }}" ><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 			  {% else %}
-			    <li><a href="{{ url_for('auth.home') }}" ><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			    <li><a href="{{ url_for('auth.logout') }}" ><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
               {% endif %}
 		  </ul>
 		  </div>
