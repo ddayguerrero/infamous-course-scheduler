@@ -4,10 +4,6 @@ from flask import Flask, render_template, session
 # Import SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
 
-# Import engine
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-
 # Define the WSGI application object
 app = Flask(__name__)
 
@@ -16,6 +12,9 @@ app.config.from_object('config')
 
 # Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
+
+from sqlalchemy import create_engine
+engine = create_engine('sqlite:///app.db')
 
 # Sample HTTP error handling
 @app.errorhandler(404)
@@ -26,9 +25,15 @@ def not_found(error):
 from app.module_authentication.controllers import mod_auth
 from app.module_schedule.controllers import mod_schedule
 
+#import models
+from app.module_authentication import models
+from app.module_schedule import models
+
 # Register blueprints
 app.register_blueprint(mod_auth)
 app.register_blueprint(mod_schedule)
 
 # Create the database 
 db.create_all()
+
+connection = engine.connect()
