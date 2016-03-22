@@ -4,6 +4,7 @@ import re
 from app import db, connection
 from app.module_schedule.models import Course, Lecture, Lab, Tutorial, sequences, req_mappings, electives
 
+
 def getDays(days):
     return re.split(r'[-]+', days)
 

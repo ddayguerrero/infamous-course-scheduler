@@ -45,7 +45,7 @@ schedules = [
 @mod_schedule.route('/courses', methods=['GET'])
 def get_courses():
     # logic goes here
-    return jsonify({'tasks': courses})
+    return jsonify({'courses': courses})
 
 if __name__ == '__main__':
     app.run(debug=True)

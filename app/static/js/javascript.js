@@ -1,3 +1,4 @@
+/* global $ */
 /*function validatePass(str){
   if(!(/[0-9]/.test(str))){
     alert("Password must contain atleast one number")
@@ -55,3 +56,27 @@ function setUpLinks(){
 	}
 	alert("finished assigning");
 }*/
+
+//////////
+// HTTP Requests Actions
+//////////
+$( document ).ready(function() {
+
+$('#addCourse').click(function(){
+    $.ajax({
+        url: 'http://localhost:5000/courses',
+        data: {
+            format: 'text'
+        },
+        error: function() {
+            alert("fail");
+        },
+        dataType: 'jsonp',
+        success: function(data) {
+            console.log(typeof(data));
+        },
+        type: 'GET'
+    });
+});
+
+});
