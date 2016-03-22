@@ -33,3 +33,13 @@ function confirmSame(){
     alert("The passwords are not the same");  
   }
 }
+
+
+function hoverInLogo(){
+  document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
+}
+
+function hoverOutLogo(){
+  document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
+}
+

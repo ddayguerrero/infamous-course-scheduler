@@ -11,6 +11,7 @@
     <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans' >
 
 	<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../static/javascript.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
 	{% block head %}
@@ -27,18 +28,20 @@
 		<nav class="navbar navbar-default">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
-		      <a class="pull-left" href="{{ url_for('auth.home') }}"><img id="nav-logo" src="../../static/images/NullPointer.png"></a>
+		    	<a class="pull-left" href="{{ url_for('auth.home') }}"><img id="nav-logo" src="../../static/images/NullPointer.png"></a>
 		    </div>
 		    <ul class="nav navbar-nav">
-		      <li class="active"><a id="homeLink" href="{{ url_for('auth.home') }}">Home</a></li>
-		      </ul>
-		      <ul class="nav navbar-nav navbar-right">
-		      <li><a href="{{ url_for('auth.register') }}" ><span class="glyphicon glyphicon-user"></span> Register</a></li>
-		      {% if not session.logged_in %}
-				<li><a href="{{ url_for('auth.login') }}" ><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-			  {% else %}
-			    <li><a href="{{ url_for('auth.logout') }}" ><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-              {% endif %}
+		    	<li class="active">
+		      		<a id="homeLink" onmouseenter="hoverInLogo()" onmouseout="hoverOutLogo()" href="{{ url_for('auth.home') }}">Home</a>
+		    	</li>
+		    </ul>
+		    <ul class="nav navbar-nav navbar-right">
+			    <li>
+			    	<a href="{{ url_for('auth.register') }}" ><span class="glyphicon glyphicon-user"></span> Register</a>
+			    </li>
+			    <li>
+			    	<a href="{{ url_for('auth.login') }}" ><span class="glyphicon glyphicon-log-in"></span> Login</a>
+			    </li>
 		  </ul>
 		  </div>
 		</nav>
@@ -71,5 +74,6 @@
 			</div>
 		{% block footer %}
 		{% endblock %}
+
 	</body>
 </html>
