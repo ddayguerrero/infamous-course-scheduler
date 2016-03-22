@@ -112,10 +112,10 @@ sequences = db.Table('sequences',
 
 
 req_mappings = db.Table('req_mappings',
-	db.Column('id', db.Integer, primary_key = True),
-	db.Column('course_req_id', db.Integer),
-	db.Column('course_req_type', db.Integer),
-	db.Column('course_id', db.Integer, db.ForeignKey('courses.id'))
+        db.Column('id', db.Integer, primary_key = True),
+        db.Column('course_req_id', db.Integer),
+        db.Column('course_req_type', db.Integer),
+        db.Column('course_id', db.Integer, db.ForeignKey('courses.id'))
 )
 
 
