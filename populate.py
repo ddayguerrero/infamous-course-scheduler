@@ -1,8 +1,8 @@
 import csv
 import re
 
-from app import db, connection
-from app.module_schedule.models import Course, Lecture, Lab, Tutorial, sequences, req_mappings, electives
+from app import db
+from app.module_schedule.models import Course, Lecture, Lab, Tutorial, Sequence, Mapping, Elective, AcademicRecord, Semester
 
 def getDays(days):
     return re.split(r'[-]+', days)
@@ -35,6 +35,7 @@ def parseLectures():
             semester_id = getSemesterId(row['semester'])
             print semester_id
             db.session.add(Lecture(row['instructor'], row['course_id'], semester_id, row['start_time'], row['end_time'], days[0], days[1]))
+            db.session.add(Semester(semester_id, row['course_id']))
             db.session.commit()
 
 parseLectures()
@@ -56,7 +57,7 @@ def parseTutorials():
         for row in reader:
             days = getDays(row['days'])
             print row['lecture_id']
-            db.session.add(Lecture(row['lecture_id'], row['section_code'], row['start_time'], row['end_time'], days[0], days[1]))
+            db.session.add(Tutorial(row['lecture_id'], row['section_code'], row['start_time'], row['end_time'], days[0], days[1]))
             db.session.commit()
 
 
@@ -73,9 +74,8 @@ def parseSequences():
             reader = csv.DictReader(csvFile)
             for row in reader:
                 print opt + '  ' + row['course_id']
-                trans = connection.begin()
-                connection.execute(sequences.insert().values(option=opt, course_id=row['course_id']))
-                trans.commit()
+                db.session.add(Sequence(opt, row['course_id']))
+                db.session.commit()
 
 parseSequences()
 
@@ -84,9 +84,9 @@ def parsePrerequisites():
         reader = csv.DictReader(csvFile)
         for row in reader:
             print row['id'] + '  ' + row['course_id']
-            trans = connection.begin()
-            connection.execute(req_mappings.insert().values(id=row['id'], course_req_id=row['course_id'], course_req_type=row['prereq_type_id'], course_id=row['course_id_prereq']))
-            trans.commit()
+            db.session.add(Mapping(row['course_id'], row['prereq_type_id'], row['course_id_prereq']))
+            db.session.commit()
+
 
 parsePrerequisites()
 
@@ -101,10 +101,10 @@ def parseTechElectives():
             opt = options[index]
             print opt
             for row in reader:
-                trans = connection.begin()
-                connection.execute(electives.insert().values(elective_type=opt, course_id=row['course_id']))
-                trans.commit()
+                db.session.add(Elective(opt, row['course_id']))
+                db.session.commit()
                 
+
 parseTechElectives()
 
 def parseOtherElectives():
@@ -118,11 +118,8 @@ def parseOtherElectives():
             opt = options[index]
             print opt
             for row in reader:
-                trans = connection.begin()
-                connection.execute(electives.insert().values(elective_type=opt, course_id=row['course_id']))
-                trans.commit()
+                db.session.add(Elective(opt, row['course_id']))
  
 
 parseOtherElectives()
 
-connection.close()
