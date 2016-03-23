@@ -158,4 +158,3 @@ class Elective(Abstract_Base):
     def __repr__(self):
         return '<User %r>' % (self.id)
 
-

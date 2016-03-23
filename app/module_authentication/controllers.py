@@ -9,6 +9,7 @@ from app import db
 
 # Import module models
 from app.module_authentication.models import User
+from app.module_schedule.models import Student
 
 # Import decorators
 from app.module_authentication.decorators import requires_login
@@ -46,6 +47,8 @@ def register():
 			flash('The username already exists.')	
 		else:
 			user = User(form.username.data, form.password.data, form.email.data)
+			student = Student(form.username.data, None, None, user.id)
+			db.session.add(student)
 			db.session.add(user)
 			db.session.commit()
 			session['user_id'] = user.id
@@ -55,8 +58,24 @@ def register():
 
 
 @mod_auth.route('/home/')
-@requires_login
+#@requires_login
 def home():
-    return render_template('auth/home.html', page="home")
+    return render_template('auth/profile.html', page="home")
 
+
+@mod_auth.route('/fall/')
+#@requires_login
+def fall():
+    return render_template('auth/semesters/fall.html', page="fall")
+
+	
+@mod_auth.route('/winter/')
+#@requires_login
+def winter():
+    return render_template('auth/semesters/winter.html', page="winter")
+	
+@mod_auth.route('/summer/')
+#@requires_login
+def summer():
+    return render_template('auth/semesters/summer.html', page="summer")
 
