@@ -9,6 +9,7 @@ from app import db
 
 # Import module models
 from app.module_authentication.models import User
+from app.module_schedule.models import Student
 
 # Import decorators
 from app.module_authentication.decorators import requires_login
@@ -46,6 +47,8 @@ def register():
 			flash('The username already exists.')	
 		else:
 			user = User(form.username.data, form.password.data, form.email.data)
+			student = Student(form.username.data, None, None, user.id)
+			db.session.add(student)
 			db.session.add(user)
 			db.session.commit()
 			session['user_id'] = user.id
