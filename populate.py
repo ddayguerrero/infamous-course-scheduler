@@ -1,8 +1,8 @@
 import csv
 import re
 
-from app import db, connection
-from app.module_schedule.models import Course, Lecture, Lab, Tutorial, sequences, req_mappings, electives
+from app import db
+from app.module_schedule.models import Course, Lecture, Lab, Tutorial, Sequence, Mapping, Elective, AcademicRecord, Semester
 
 
 def getDays(days):
@@ -36,6 +36,7 @@ def parseLectures():
             days = getDays(row['days'])
             semester_id = getSemesterId(row['semester'])
             db.session.add(Lecture(row['instructor'], row['course_id'], semester_id, row['start_time'], row['end_time'], days[0], days[1]))
+            db.session.add(Semester(semester_id, row['course_id']))
             db.session.commit()
     print "Parsing successful"
 parseLectures()
@@ -59,7 +60,8 @@ def parseTutorials():
         reader = csv.DictReader(csvFile)
         for row in reader:
             days = getDays(row['days'])
-            db.session.add(Lecture(row['lecture_id'], row['section_code'], row['start_time'], row['end_time'], days[0], days[1]))
+            print row['lecture_id']
+            db.session.add(Tutorial(row['lecture_id'], row['section_code'], row['start_time'], row['end_time'], days[0], days[1]))
             db.session.commit()
     print "Parsing successful"
 parseTutorials()
@@ -76,10 +78,11 @@ def parseSequences():
         with open('app/db_init/data/SequenceRequired/'+file) as csvFile:
             reader = csv.DictReader(csvFile)
             for row in reader:
-                trans = connection.begin()
-                connection.execute(sequences.insert().values(option=opt, course_id=row['course_id']))
-                trans.commit()
-    print "Parsing successful"
+                print opt + '  ' + row['course_id']
+                db.session.add(Sequence(opt, row['course_id']))
+                db.session.commit()
+
+
 parseSequences()
 
 
@@ -88,10 +91,11 @@ def parsePrerequisites():
     with open('app/db_init/data/course_prereqs.csv') as csvFile:
         reader = csv.DictReader(csvFile)
         for row in reader:
-            trans = connection.begin()
-            connection.execute(req_mappings.insert().values(id=row['id'], course_req_id=row['course_id'], course_req_type=row['prereq_type_id'], course_id=row['course_id_prereq']))
-            trans.commit()
-    print "Parsing successful"
+            print row['id'] + '  ' + row['course_id']
+            db.session.add(Mapping(row['course_id'], row['prereq_type_id'], row['course_id_prereq']))
+            db.session.commit()
+
+
 parsePrerequisites()
 
 
@@ -106,10 +110,10 @@ def parseTechElectives():
             reader = csv.DictReader(csvFile)
             opt = options[index]
             for row in reader:
-                trans = connection.begin()
-                connection.execute(electives.insert().values(elective_type=opt, course_id=row['course_id']))
-                trans.commit()
-    print "Parsing successful"
+                db.session.add(Elective(opt, row['course_id']))
+                db.session.commit()
+                
+
 parseTechElectives()
 
 
@@ -124,10 +128,9 @@ def parseOtherElectives():
             reader = csv.DictReader(csvFile)
             opt = options[index]
             for row in reader:
-                trans = connection.begin()
-                connection.execute(electives.insert().values(elective_type=opt, course_id=row['course_id']))
-                trans.commit()
-    print "Parsing successful"
+                db.session.add(Elective(opt, row['course_id']))
+                db.session.commit()
+ 
+
 parseOtherElectives()
 
-connection.close()
