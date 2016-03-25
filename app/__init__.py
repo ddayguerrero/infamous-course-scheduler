@@ -13,9 +13,6 @@ app.config.from_object('config')
 # Define the database object which is imported by modules and controllers
 db = SQLAlchemy(app)
 
-from sqlalchemy import create_engine
-engine = create_engine('sqlite:///app.db')
-
 # Sample HTTP error handling
 @app.errorhandler(404)
 def not_found(error):
@@ -35,5 +32,3 @@ app.register_blueprint(mod_schedule)
 
 # Create the database 
 db.create_all()
-
-connection = engine.connect()

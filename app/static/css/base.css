@@ -1,25 +1,34 @@
 body{
 	margin: 0;
 	padding: 0;
+	font-family: 'Open Sans';
 }
+
 .navbar-default{
 	background: linear-gradient(white,#efefef);
 	border: 0px;
 	border-radius: 0px;
 }
+
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover,
 .navbar-default .navbar-nav>.active>a:focus {
     background-color: inherit;
 }
-/*.navbar-brand{
-	border-style: solid;
-	border-width: 1px;
-	border-color:transparent;
-	border-right-color: black;
 
-	
-}*/
+.navlink{
+}
+
+#active{
+	background-image: url("../images/arrow.png");
+	background-size: 25%;
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+#homeLink{
+	width:85px;
+}
 
 #logo{
 	background: linear-gradient(#7FB9FF, white);
@@ -30,14 +39,6 @@ body{
   margin-right:10px;
 }
 
-#homeLink{
-	width:85px;
-}
 
-#homeLink:hover{
-	background-image: url("../images/arrow.png");
-	background-size: 35%;
-	background-repeat: no-repeat;
-	background-position: right top;
-}
+
 
