@@ -1,6 +1,6 @@
 from app import db
 from app.abstract_models import Abstract_Base
-
+from sqlalchemy.orm import relationship, backref
 
 class User(Abstract_Base):
     __tablename__ = 'users'
