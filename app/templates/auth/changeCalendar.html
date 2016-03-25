@@ -1,5 +1,5 @@
 {% extends "base.html" %}
- 
+
 {% block head %}
 <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
 {% endblock %}  
@@ -36,41 +36,35 @@
 
       <div class="col-sm-6 courseListContainer">
         <div class="row">
-          <div class="headers">
-            <div class="col-xs-6 text-center">
-            <a href="{{ url_for('auth.changeCalendar') }}">
-              <button type="button" class="btn btn-default" id="addCourse">Add Course</button>
-            </a>
+          <form id="login-form" class="text-left" method="POST" role="form">
+            {{ form.csrf_token }}
+            <div class="login-form-main-message"></div>
+            <div class="main-login-form">
+              <div class="login-group">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class="form-control">
+                  {% for message in messages %}
+                  <li>{{ message }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+                <div class="form-group">
+                  {{ render_field(form.username, class_="form-control") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.password, class_="form-control") }}
+                </div>
+                <!-- Remember Me -->
+                <div class="form-group">
+                  <input type="checkbox" id="lg_remember" name="lg_remember">
+                  <label for="lg_remember"> Remember Me</label>
+                </div>
+              </div>
+              <button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
             </div>
-<!--             <div class="col-xs-4 text-center"> 
-              <h6>Course List</h6>
-            </div> -->
-            <div class="col-xs-6 text-center"> 
-              <button type="button" class="btn btn-default">Delete Course(s)</button>
-            </div>
-          </div>
-          <div class="col-sm-12 courseList">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Section</th>
-                  <th>Time</th>
-                  <th>Selection</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Random class</td>
-                  <td>Random section</td>
-                  <td>Random Time</td>
-                  <td><input type="checkbox" value="class1"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          </form>
         </div>
       </div>
       <div class="col-sm-6">
@@ -221,8 +215,8 @@
           </tbody> 
         </table>
       </div>
-      </div>
     </div>
   </div>
+</div>
 </body>
 {% endblock %}

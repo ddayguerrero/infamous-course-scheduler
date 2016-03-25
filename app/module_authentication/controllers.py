@@ -81,9 +81,16 @@ def fall():
 #@requires_login
 def winter():
     return render_template('auth/semesters/winter.html', page="winter")
+
 	
 @mod_auth.route('/summer/')
 #@requires_login
 def summer():
     return render_template('auth/semesters/summer.html', page="summer")
+
+
+@mod_auth.route('/changeCalendar/')
+#@requires_login
+def changeCalendar():
+    return render_template('auth/changeCalendar.html', page="changeCalendar")
 
