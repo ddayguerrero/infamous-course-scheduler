@@ -111,6 +111,7 @@ def parseTechElectives():
             opt = options[index]
             for row in reader:
                 db.session.add(Elective(opt, row['course_id']))
+                db.session.add(Sequence(opt, row['course_id']))
                 db.session.commit()
                 
 
@@ -129,6 +130,7 @@ def parseOtherElectives():
             opt = options[index]
             for row in reader:
                 db.session.add(Elective(opt, row['course_id']))
+                db.session.add(Sequence(opt, row['course_id']))
                 db.session.commit()
  
 
