@@ -30,7 +30,7 @@ class Course(Abstract_Course):
         super(type(self), self).__init__(program=None, number=None, credits=None, name=None)
         self.requisite = requisite
 
-    def__repr__(self):
+    def __repr__(self):
         return '<Course %r>' % (self.name)
 
 

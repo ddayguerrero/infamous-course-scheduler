@@ -25,7 +25,6 @@ def parseCourses():
             db.session.add(Course(row['program'], row['credits'], row['number'], row['name ']))
             db.session.commit()
     print "Parsing successful"
-parseCourses()
 
 
 def parseLectures():
@@ -39,7 +38,6 @@ def parseLectures():
             db.session.add(Semester(semester_id, row['course_id']))
             db.session.commit()
     print "Parsing successful"
-parseLectures()
 
 
 def parseLabs():
@@ -51,7 +49,6 @@ def parseLabs():
             db.session.add(Lab(row['lecture_id'], row['section_code'], row['start_time'], row['end_time'], days[0]))
             db.session.commit()
     print "Parsing successful"
-parseLabs()
 
 
 def parseTutorials():
@@ -64,7 +61,6 @@ def parseTutorials():
             db.session.add(Tutorial(row['lecture_id'], row['section_code'], row['start_time'], row['end_time'], days[0], days[1]))
             db.session.commit()
     print "Parsing successful"
-parseTutorials()
 
 
 def parseSequences():
@@ -83,9 +79,6 @@ def parseSequences():
                 db.session.commit()
 
 
-parseSequences()
-
-
 def parsePrerequisites():
     print "Parsing course prerequisites..."
     with open('app/db_init/data/course_prereqs.csv') as csvFile:
@@ -94,9 +87,6 @@ def parsePrerequisites():
             print row['id'] + '  ' + row['course_id']
             db.session.add(Mapping(row['course_id'], row['prereq_type_id'], row['course_id_prereq']))
             db.session.commit()
-
-
-parsePrerequisites()
 
 
 def parseTechElectives():
@@ -111,10 +101,8 @@ def parseTechElectives():
             opt = options[index]
             for row in reader:
                 db.session.add(Elective(opt, row['course_id']))
+                db.session.add(Sequence(opt, row['course_id']))
                 db.session.commit()
-                
-
-parseTechElectives()
 
 
 def parseOtherElectives():
@@ -129,8 +117,19 @@ def parseOtherElectives():
             opt = options[index]
             for row in reader:
                 db.session.add(Elective(opt, row['course_id']))
+                db.session.add(Sequence(opt, row['course_id']))
                 db.session.commit()
  
 
 parseOtherElectives()
+
+def populate():
+    parseCourses()
+    parseLectures()
+    parseLabs()
+    parseTutorials()
+    parseSequences()
+    parsePrerequisites()
+    parseTechElectives()
+
 
