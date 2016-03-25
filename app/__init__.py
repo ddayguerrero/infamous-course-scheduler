@@ -32,9 +32,3 @@ app.register_blueprint(mod_schedule)
 
 # Create the database 
 db.create_all()
-
-from populate import populate
-
-courses = db.session.query(Course).all()
-if(courses == None):
-	populate()
