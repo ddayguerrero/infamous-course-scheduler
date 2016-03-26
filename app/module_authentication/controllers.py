@@ -65,13 +65,6 @@ def register():
 	return render_template('auth/registration.html', form=form)
 
 
-@mod_auth.route('/', methods=['GET', 'POST'])
-def verifyCourse():
-    form = CourseSelection()
-    # addCourse(form.courseName.data) implement 
-    return None
-
-
 @mod_auth.route('/home/')
 #@requires_login
 def home():

@@ -1,5 +1,8 @@
 from flask import Flask, Blueprint, jsonify, abort, request
 
+from app.module_authentication.forms import CourseSelection
+
+
 app = Flask(__name__)
 mod_schedule = Blueprint('schedule', __name__)
 
@@ -36,6 +39,29 @@ schedules = [
         'name': "Divad"
     }
 ]
+
+lectures = [
+    {
+        'instructor': 'Don Davis',
+        'id': '1',
+        'semester_id': '1',
+        'tutorials': [
+            {'id': '2', 'startTime': '8:00','endTime': '9:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
+            {'id': '2','startTime': '11:00','endTime': '12:00','dayOne': 'Monday', 'dayTwo': 'Wednesday'},
+            {'id': '3', 'startTime': '8:00','endTime': '9:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
+            {'id': '3','startTime': '11:00','endTime': '12:00','dayOne': 'Monday', 'dayTwo': 'Wednesday'}
+        ],
+        'labs': [
+             {'id': '4', 'startTime': '10:00','endTime': '11:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
+             {'id': 'None', 'startTime': 'None','endTime': 'None','dayOne': 'None', 'dayTwo': 'None'}
+        ],
+        'startTime': '18:00',
+        'endTime': '21:00',
+        'dayOne': 'Monday',
+        'dayTwo': 'None'
+    }
+]
+
 
 
 # RESTful resources must be defined as 'nouns' not verbs
@@ -82,3 +108,10 @@ def generate_schedule():
     }
     schedules.append(schedule)
     return jsonify({'schedule': schedule}), 201
+
+
+@mod_schedule.route('/changeCalendar', methods=['GET', 'POST'])
+def verifyCourse():
+    form = CourseSelection()
+    # addCourse(form.courseName.data) implement 
+    return None
