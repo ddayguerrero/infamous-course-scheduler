@@ -1,71 +1,46 @@
 {% extends "base.html" %}
-
+{% block title %}Registration{% endblock %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
-{% endblock %}  
+{% endblock %}
 {{ super() }}
+{% from "auth/_formhelpers.html" import render_field %}
+
 {% block content %}
 <body>
-<!--  <div class = "container semesterButtons">
-    <div class="row text-center">
-      <h2>Choose your semester:</h2>
-    </div>
-    <div class="row"> 
-      <div class="col-md-4 text-center">
-        <button type="button" class="btn btn-default btn-block">Fall</button>
-      </div> 
-      <div class="col-md-4 text-center">
-        <button type="button" class="btn btn-default btn-block">Winter</button>
-      </div> 
-       <div class="col-md-4 text-center">
-        <button type="button" class="btn btn-default btn-block">Summer</button>
-      </div> 
-    </div>
-  </div>-->
   <div class="container schedule">
     <div class="row">
-      <div class="col-sm-10">
-        <h2>Now displaying the {% block semester %}{% endblock %} semester</h2>
-      </div>
-<!--       <div class="col-sm-offset-11">
-        <button class="btn btn-default" type="button">Log Out</button>
-      </div> -->
-    </div>
-
-    <div class="row">
-
       <div class="col-sm-6 courseListContainer">
         <div class="row">
-          <form id="login-form" class="text-left" method="POST" role="form">
-            {{ form.csrf_token }}
-            <div class="login-form-main-message"></div>
-            <div class="main-login-form">
-              <div class="login-group">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul class="form-control">
-                  {% for message in messages %}
-                  <li>{{ message }}</li>
-                  {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
-                <div class="form-group">
-                  {{ render_field(form.username, class_="form-control") }}
-                </div>
-                <div class="form-group">
-                  {{ render_field(form.password, class_="form-control") }}
-                </div>
-                <!-- Remember Me -->
-                <div class="form-group">
-                  <input type="checkbox" id="lg_remember" name="lg_remember">
-                  <label for="lg_remember"> Remember Me</label>
-                </div>
-              </div>
-              <button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
+          <form id="verifyCourse-form" class="text-left" method="POST" role="form">
+            <div class="form-group">
+              {{ render_field(form.courseName, class_="form-group") }}
             </div>
+            <button type="submit"> Add Course</button>
           </form>
         </div>
+          <div class="col-sm-12 courseList">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Section</th>
+                  <th>Time</th>
+                  <th>Selection</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Random class</td>
+                  <td>Random section</td>
+                  <td>Random Time</td>
+                  <td><input type="checkbox" value="class1"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
       </div>
       <div class="col-sm-6">
         <div class="row headers">
@@ -217,6 +192,5 @@
       </div>
     </div>
   </div>
-</div>
 </body>
 {% endblock %}

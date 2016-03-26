@@ -2,7 +2,7 @@
 from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for
 
 # Import module forms
-from app.module_authentication.forms import RegistrationForm, LoginForm
+from app.module_authentication.forms import RegistrationForm, LoginForm, CourseSelection
 
 # Import the database object from the main app module
 from app import db
@@ -65,6 +65,13 @@ def register():
 	return render_template('auth/registration.html', form=form)
 
 
+@mod_auth.route('/', methods=['GET', 'POST'])
+def verifyCourse():
+    form = CourseSelection()
+    # addCourse(form.courseName.data) implement 
+    return None
+
+
 @mod_auth.route('/home/')
 #@requires_login
 def home():
@@ -89,8 +96,7 @@ def summer():
     return render_template('auth/semesters/summer.html', page="summer")
 
 
-@mod_auth.route('/changeCalendar/')
-#@requires_login
+@mod_auth.route('/changeCalendar/', methods=['GET', 'POST'])
 def changeCalendar():
-    return render_template('auth/changeCalendar.html', page="changeCalendar")
-
+	form = CourseSelection()
+	return render_template('auth/changeCalendar.html', form = form)
