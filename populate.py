@@ -57,7 +57,6 @@ def parseTutorials():
         reader = csv.DictReader(csvFile)
         for row in reader:
             days = getDays(row['days'])
-            print row['lecture_id']
             db.session.add(Tutorial(row['lecture_id'], row['section_code'], row['start_time'], row['end_time'], days[0], days[1]))
             db.session.commit()
     print "Parsing successful"
@@ -74,7 +73,6 @@ def parseSequences():
         with open('app/db_init/data/SequenceRequired/'+file) as csvFile:
             reader = csv.DictReader(csvFile)
             for row in reader:
-                print opt + '  ' + row['course_id']
                 db.session.add(Sequence(opt, row['course_id']))
                 db.session.commit()
 
@@ -84,7 +82,6 @@ def parsePrerequisites():
     with open('app/db_init/data/course_prereqs.csv') as csvFile:
         reader = csv.DictReader(csvFile)
         for row in reader:
-            print row['id'] + '  ' + row['course_id']
             db.session.add(Mapping(row['course_id'], row['prereq_type_id'], row['course_id_prereq']))
             db.session.commit()
 
@@ -121,8 +118,6 @@ def parseOtherElectives():
                 db.session.commit()
  
 
-parseOtherElectives()
-
 def populate():
     parseCourses()
     parseLectures()
@@ -131,5 +126,4 @@ def populate():
     parseSequences()
     parsePrerequisites()
     parseTechElectives()
-
-
+    parseOtherElectives()

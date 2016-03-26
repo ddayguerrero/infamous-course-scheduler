@@ -1,3 +1,6 @@
+import os.path
+from config import BASE_DIR
+
 # Import flask and template operators
 from flask import Flask, render_template, session
 
@@ -30,5 +33,11 @@ from app.module_schedule import models
 app.register_blueprint(mod_auth)
 app.register_blueprint(mod_schedule)
 
-# Create the database 
-db.create_all()
+# Define and populate the database
+if(os.path.exists(BASE_DIR + '/app.db')):
+    print "Database already populated."
+else:
+    db.create_all()
+
+from populate import populate
+populate()

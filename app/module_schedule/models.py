@@ -50,7 +50,7 @@ class Tutorial(Abstract_ClassType):
     __tablename__ = 'tutorials'
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
 
-    def __init__(self, lecture_id=None, section_code=None, start_time=None, end_time=None, day_one=None):
+    def __init__(self, lecture_id=None, section_code=None, start_time=None, end_time=None, day_one=None, day_two=None):
         super(type(self), self).__init__(code=None, start_time=None,end_time=None, day_one=None, day_two=None)
         self.lecture_id = lecture_id
     def __repr__(self):
