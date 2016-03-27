@@ -1,3 +1,3 @@
 $( document ).ready(function() {
-    $('#homeCalendar').append(createCalendar());
+    $('#homeCalendar').append(HTMLModule.createCalendar());
 });
