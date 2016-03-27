@@ -2,6 +2,7 @@
 {% block title %}Registration{% endblock %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
+<script src={{ url_for('static' , filename="createCalendar.js")}}></script>
 <script type="text/javascript">
 function tableCreate(){
  var parent = document.getElementById("calendar-location"); 
@@ -43,6 +44,36 @@ function tableCreate(){
 }
 parent.appendChild(tbl);
 }
+
+//////////
+// HTTP Requests for searching for courses
+//////////
+$( document ).ready(function() {
+    console.log("ready!");
+$('#addCourse').click(function(){
+    var inputCourse = $('input[name="courseSearch"]').val()
+    $.ajax({
+        url: '/courses',
+        data: {
+            course: inputCourse
+        },
+        error: function(error) {
+          console.log(error)
+        },
+        success: function(data) {
+            console.log(data)
+            console.log("success")
+            $("#courseIdNum").html(data.id)
+            $("#courseName").html(data.name)
+            $("#startTime").html(data.startTime)
+            $("#endTime").html(data.endTime)
+            $("#instructor").html(data.instructor)
+        },
+        type: 'POST'
+    });
+});
+ 
+}); 
 </script>
 {% endblock %}
 {{ super() }}
@@ -53,13 +84,13 @@ parent.appendChild(tbl);
   <div class="row">
     <div class="col-sm-6 courseListContainer">
       <div class="row">
-        <form id="verifyCourse-form" class="text-left" method="POST" role="form">
+        <form id="verifyCourse-form" class="text-left" method="POST" role="form" onsubmit="return false">
           <div class="form-group">
-            {{ render_field(form.courseName, class_="form-group") }}
+            <input type="text" class="form-group" name="courseSearch"></input>
           </div>
-          <button type="submit"> Add Course</button>
+          <button type="submit" id="addCourse">Search Course</button>
         </form>
-        <button onclick="tableCreate()">Test</button>
+        <button>Add Selection</button>
       </div>
       <div class="col-sm-12 courseList">
         <table class="table table-striped">
@@ -67,17 +98,20 @@ parent.appendChild(tbl);
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Section</th>
-              <th>Time</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Instructor</th>
               <th>Selection</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>1</td>
-              <td>Random class</td>
-              <td>Random section</td>
-              <td>Random Time</td>
+              <td id="courseIdNum"></td>
+              <td id="courseName"></td>
+              <td id="startTime"></td>
+              <td id="endTime"></td>
+              <td id="instructor"></td>
+              <td id="selection"></td>
               <td><input type="checkbox" value="class1"></td>
             </tr>
           </tbody>
