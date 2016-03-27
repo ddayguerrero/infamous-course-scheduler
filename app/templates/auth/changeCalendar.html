@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Registration{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
+<script src="../../static/js/createCalendar.js"></script>
+{% endblock %}
+{{ super() }}
+{% from "auth/_formhelpers.html" import render_field %}
+
+{% block content %}
+<div class="container schedule">
+  <div class="row">
+    <div class="col-sm-6 courseListContainer">
+      <div class="row">
+        <form id="verifyCourse-form" class="text-left" method="POST" role="form" onsubmit="return false">
+          <div class="form-group">
+            <input type="text" class="form-group" name="courseSearch"></input>
+          </div>
+          <button type="submit" id="addCourse">Search Course</button>
+        </form>
+        <button>Add Selection</button>
+      </div>
+      <div class="col-sm-12 courseList">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Instructor</th>
+              <th>Selection</th>
+            </tr>
+
+          <tbody>
+            <tr>
+              <td id="courseIdNum"></td>
+              <td id="courseName"></td>
+              <td id="startTime"></td>
+              <td id="endTime"></td>
+              <td id="instructor"></td>
+              <td id="selection"></td>
+              <td><input type="checkbox" value="class1"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-6" id ="calendar-location">
+    </div>
+  </div>
+  <button>Generate</button>
+</div>
+{% endblock %}

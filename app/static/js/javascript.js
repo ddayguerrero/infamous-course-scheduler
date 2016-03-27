@@ -57,26 +57,3 @@ function setUpLinks(){
 	alert("finished assigning");
 }*/
 
-//////////
-// HTTP Requests Actions
-//////////
-$( document ).ready(function() {
-
-$('#addCourse').click(function(){
-    $.ajax({
-        url: 'http://localhost:5000/courses',
-        data: {
-            format: 'text'
-        },
-        error: function() {
-            alert("fail");
-        },
-        dataType: 'jsonp',
-        success: function(data) {
-            console.log(typeof(data));
-        },
-        type: 'GET'
-    });
-});
-
-});

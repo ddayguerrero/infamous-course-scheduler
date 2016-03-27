@@ -2,7 +2,7 @@
 from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for
 
 # Import module forms
-from app.module_authentication.forms import RegistrationForm, LoginForm
+from app.module_authentication.forms import RegistrationForm, LoginForm, CourseSelection
 
 # Import the database object from the main app module
 from app import db
@@ -32,10 +32,18 @@ def login():
 		user = User.query.filter_by(username=form.username.data).first()
 		if user:
 			session['user_id'] = user.id
+			session['logged_in'] = True
 			flash('Welcome %s' % user.username)
 			return redirect(url_for('auth.home'))
 		flash('Wrong username or password', 'error-message')
 	return render_template('auth/login.html', form=form)
+
+
+@mod_auth.route('/')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return render_template('auth/login.html', form=form)
 
 
 @mod_auth.route('/registration/', methods=['GET', 'POST'])
@@ -73,9 +81,15 @@ def fall():
 #@requires_login
 def winter():
     return render_template('auth/semesters/winter.html', page="winter")
+
 	
 @mod_auth.route('/summer/')
 #@requires_login
 def summer():
     return render_template('auth/semesters/summer.html', page="summer")
 
+
+@mod_auth.route('/changeCalendar/', methods=['GET', 'POST'])
+def changeCalendar():
+	form = CourseSelection()
+	return render_template('auth/changeCalendar.html', form = form)

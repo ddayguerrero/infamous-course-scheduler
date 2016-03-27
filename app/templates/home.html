@@ -5,7 +5,6 @@
 {% endblock %}  
 {{ super() }}
 {% block content %}
-<body>
 <!--  <div class = "container semesterButtons">
     <div class="row text-center">
       <h2>Choose your semester:</h2>
@@ -37,8 +36,10 @@
       <div class="col-sm-6 courseListContainer">
         <div class="row">
           <div class="headers">
-            <div class="col-xs-6 text-center"> 
-              <button type="button" class="btn btn-default" id="addCourse">Add Course</button>
+            <div class="col-xs-6 text-center">
+            <a href="{{ url_for('auth.changeCalendar') }}">
+              <button type="button" class="btn btn-default">Add Course</button>
+            </a>
             </div>
 <!--             <div class="col-xs-4 text-center"> 
               <h6>Course List</h6>
@@ -222,5 +223,4 @@
       </div>
     </div>
   </div>
-</body>
 {% endblock %}

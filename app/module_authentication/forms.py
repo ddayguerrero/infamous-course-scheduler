@@ -16,3 +16,7 @@ class RegistrationForm(Form):
 class LoginForm(Form):
 	username = TextField('Username', [validators.Length(min=4, max=25)])
 	password = PasswordField('Password', [validators.Length(min=1, max=25)])
+
+
+class CourseSelection(Form):
+    courseName = TextField('Course Name', [validators.Length(min=4, max=25)])   

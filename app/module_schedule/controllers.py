@@ -1,5 +1,8 @@
 from flask import Flask, Blueprint, jsonify, abort, request
 
+from app.module_authentication.forms import CourseSelection
+
+
 app = Flask(__name__)
 mod_schedule = Blueprint('schedule', __name__)
 
@@ -37,15 +40,28 @@ schedules = [
     }
 ]
 
+lectures = [
+    {
+        'instructor': 'Don Davis',
+        'id': '1',
+        'semester_id': '1',
+        'tutorials': [
+            {'id': '2', 'startTime': '8:00','endTime': '9:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
+            {'id': '2','startTime': '11:00','endTime': '12:00','dayOne': 'Monday', 'dayTwo': 'Wednesday'},
+            {'id': '3', 'startTime': '8:00','endTime': '9:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
+            {'id': '3','startTime': '11:00','endTime': '12:00','dayOne': 'Monday', 'dayTwo': 'Wednesday'}
+        ],
+        'labs': [
+             {'id': '4', 'startTime': '10:00','endTime': '11:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
+             {'id': 'None', 'startTime': 'None','endTime': 'None','dayOne': 'None', 'dayTwo': 'None'}
+        ],
+        'startTime': '18:00',
+        'endTime': '21:00',
+        'dayOne': 'Monday',
+        'dayTwo': 'None'
+    }
+]
 
-# RESTful resources must be defined as 'nouns' not verbs
-# e.g. /courses istead of /addcourses
-#
-# GET request example
-@mod_schedule.route('/courses', methods=['GET'])
-def get_courses():
-    # logic goes here
-    return jsonify({'courses': courses})
 
 if __name__ == '__main__':
     app.run(debug=True)
@@ -54,15 +70,19 @@ if __name__ == '__main__':
 # Say you want to retrieve a specific course (e.g. based on id)
 #
 # GET request example
-@mod_schedule.route('/courses/<int:id>', methods=['GET'])
-def get_course(id):
-    course = [course for course in courses if course['id'] == id]
-
-    # no existing course
-    if len(course) == 0:
-        abort(404)
-
-    return jsonify({'course': course[0]})
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_course():
+    course = request.form.get('course') #the course inputed by user to be added
+    lecture = {
+        'name':'ENGR 201',
+        'instructor': 'Don Davis',
+        'id': '1',
+        'startTime': '18:00',
+        'endTime': '21:00',
+        'dayOne': 'Monday',
+        'dayTwo': 'None'
+    }
+    return jsonify(lecture) #for now return the lecture object created at the top. this object has to be queried from database
 
 if __name__ == '__main__':
     app.run(debug=True)
@@ -82,3 +102,10 @@ def generate_schedule():
     }
     schedules.append(schedule)
     return jsonify({'schedule': schedule}), 201
+
+
+@mod_schedule.route('/changeCalendar', methods=['GET', 'POST'])
+def verifyCourse():
+    form = CourseSelection()
+    # addCourse(form.courseName.data) implement 
+    return None
