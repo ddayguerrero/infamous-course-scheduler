@@ -2,53 +2,90 @@
 {% block title %}Registration{% endblock %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
+<script type="text/javascript">
+function tableCreate(){
+ var parent = document.getElementById("calendar-location"); 
+ tbl  = document.createElement('table');
+ tbl.className = "table table-striped";
+
+   var header = tbl.createTHead();
+   var row = header.insertRow(0);
+   var cell = row.insertCell(0);
+   var cell = row.insertCell(1);
+   cell.innerHTML = "Monday";
+   var cell = row.insertCell(2);
+   cell.innerHTML = "Tuesday";
+   var cell = row.insertCell(3);
+   cell.innerHTML = "Wednesday";
+   var cell = row.insertCell(4);
+   cell.innerHTML = "Thursday";
+   var cell = row.insertCell(5);
+   cell.innerHTML = "Friday";
+   var cell = row.insertCell(6);
+   cell.innerHTML = "Saturday";
+   var cell = row.insertCell(7);
+   cell.innerHTML = "Sunday";
+ 
+
+ for(var i = 0; i < 52; i++){
+  var tr = tbl.insertRow();
+  for(var j = 0; j < 8; j++){
+      var td = tr.insertCell();
+    if(j==0){
+      var hour = 8+Math.floor(i/4);
+      td.appendChild(document.createTextNode(hour+":00"));
+      td.style.border = '1px solid black';  
+    } 
+      td.appendChild(document.createTextNode(""));
+      td.style.border = '1px solid black';  
+      
+  }
+}
+parent.appendChild(tbl);
+}
+</script>
 {% endblock %}
 {{ super() }}
 {% from "auth/_formhelpers.html" import render_field %}
 
 {% block content %}
-<body>
-  <div class="container schedule">
-    <div class="row">
-      <div class="col-sm-6 courseListContainer">
-        <div class="row">
-          <form id="verifyCourse-form" class="text-left" method="POST" role="form">
-            <div class="form-group">
-              {{ render_field(form.courseName, class_="form-group") }}
-            </div>
-            <button type="submit"> Add Course</button>
-          </form>
-        </div>
-          <div class="col-sm-12 courseList">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Section</th>
-                  <th>Time</th>
-                  <th>Selection</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Random class</td>
-                  <td>Random section</td>
-                  <td>Random Time</td>
-                  <td><input type="checkbox" value="class1"></td>
-                </tr>
-              </tbody>
-            </table>
+<div class="container schedule">
+  <div class="row">
+    <div class="col-sm-6 courseListContainer">
+      <div class="row">
+        <form id="verifyCourse-form" class="text-left" method="POST" role="form">
+          <div class="form-group">
+            {{ render_field(form.courseName, class_="form-group") }}
           </div>
+          <button type="submit"> Add Course</button>
+        </form>
+        <button onclick="tableCreate()">Test</button>
       </div>
-      <div class="col-sm-6">
-        <div class="row headers">
-<!--           <div class="text-center"> 
-            <h6>Add Course</h6>
-          </div> -->
-        </div>
+      <div class="col-sm-12 courseList">
         <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Section</th>
+              <th>Time</th>
+              <th>Selection</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Random class</td>
+              <td>Random section</td>
+              <td>Random Time</td>
+              <td><input type="checkbox" value="class1"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-6" id ="calendar-location">
+        <!--<table class="table table-striped">
           <thead>
             <tr>
               <th></th>
@@ -62,56 +99,56 @@
           </thead> 
           <tbody>
             <tr>
-              <td>8:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="calendar">8:00</td>
+              <td class="calendar"><div>comp 348</div></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
             </tr>
             <tr>
-              <td>9:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="calendar">9:00</td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
             </tr>
             <tr>
-              <td>10:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="calendar">10:00</td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
             </tr>
             <tr>
-              <td>11:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="calendar">11:00</td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
             </tr>
             <tr>
-              <td>12:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="calendar">12:00</td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
             </tr>
             <tr>
-              <td>13:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="calendar">13:00</td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
+              <td class="calendar"></td>
               <td></td>
               <td></td>
             </tr>
@@ -188,10 +225,9 @@
               <td></td>
             </tr>    
           </tbody> 
-        </table>
+        </table> -->
       </div>
     </div>
     <button>Generate</button>
   </div>
-</body>
-{% endblock %}
+  {% endblock %}
