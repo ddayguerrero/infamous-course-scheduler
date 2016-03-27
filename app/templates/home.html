@@ -1,226 +1,78 @@
 {% extends "base.html" %}
- 
+
 {% block head %}
+<script src="../static/js/home.js"></script>
 <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
 {% endblock %}  
 {{ super() }}
 {% block content %}
-<!--  <div class = "container semesterButtons">
-    <div class="row text-center">
-      <h2>Choose your semester:</h2>
-    </div>
-    <div class="row"> 
-      <div class="col-md-4 text-center">
-        <button type="button" class="btn btn-default btn-block">Fall</button>
-      </div> 
-      <div class="col-md-4 text-center">
-        <button type="button" class="btn btn-default btn-block">Winter</button>
-      </div> 
-       <div class="col-md-4 text-center">
-        <button type="button" class="btn btn-default btn-block">Summer</button>
-      </div> 
-    </div>
-  </div>-->
-  <div class="container schedule">
-    <div class="row">
-      <div class="col-sm-10">
-        <h2>Now displaying the {% block semester %}{% endblock %} semester</h2>
-      </div>
-<!--       <div class="col-sm-offset-11">
-        <button class="btn btn-default" type="button">Log Out</button>
-      </div> -->
-    </div>
 
-    <div class="row">
+<div class="container schedule">
+  <div class="row">
+    <div class="col-sm-10">
+      <h2>{% block semester %}{% endblock %} Semester</h2>
+    </div>
+    <!--       <div class="col-sm-offset-11">
+               <button class="btn btn-default" type="button">Log Out</button>
+    </div> -->
+  </div>
 
-      <div class="col-sm-6 courseListContainer">
-        <div class="row">
-          <div class="headers">
-            <div class="col-xs-6 text-center">
+  <div class="row">
+    <!-- Left Hand Side : Controls + Course List  -->
+    <div class="col-sm-6 courseListContainer">
+      <div class="row">
+
+	<!-- Header -->
+        <div class="headers">
+	  <!-- Add Course Button -->
+          <div class="col-xs-6 text-center">
             <a href="{{ url_for('auth.changeCalendar') }}">
               <button type="button" class="btn btn-default">Add Course</button>
             </a>
-            </div>
-<!--             <div class="col-xs-4 text-center"> 
-              <h6>Course List</h6>
-            </div> -->
-            <div class="col-xs-6 text-center"> 
-              <button type="button" class="btn btn-default">Delete Course(s)</button>
-            </div>
           </div>
-          <div class="col-sm-12 courseList">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Section</th>
-                  <th>Time</th>
-                  <th>Selection</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Random class</td>
-                  <td>Random section</td>
-                  <td>Random Time</td>
-                  <td><input type="checkbox" value="class1"></td>
-                </tr>
-              </tbody>
-            </table>
+	  <!-- Delete Course Button -->
+          <div class="col-xs-6 text-center"> 
+            <button type="button" class="btn btn-default">Delete Course(s)</button>
           </div>
         </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="row headers">
-<!--           <div class="text-center"> 
-            <h6>Add Course</h6>
-          </div> -->
+	<!-- End of Header -->
+
+	<!-- Course List -->
+        <div class="col-sm-12 courseList">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Section</th>
+                <th>Time</th>
+                <th>Selection</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Random class</td>
+                <td>Random section</td>
+                <td>Random Time</td>
+                <td><input type="checkbox" value="class1"></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
-              <th>Saturday</th>
-            </tr>
-          </thead> 
-          <tbody>
-            <tr>
-              <td>8:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>9:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>10:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>11:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>12:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>13:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>14:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>15:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr> 
-            <tr>
-              <td>16:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr> 
-            <tr>
-              <td>17:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>   
-            <tr>
-              <td>18:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>  
-            <tr>
-              <td>19:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>     
-            <tr>
-              <td>20:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>  
-            <tr>
-              <td>21:00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>    
-          </tbody> 
-        </table>
-      </div>
+	<!-- End of Course List -->
       </div>
     </div>
+
+    <!-- Right Hand Side : Calendar Schedule  -->
+    <div class="col-sm-6">
+      <div class="row headers">
+      </div>
+      <table class="table table-striped" id="homeCalendar">
+        
+      </table>
+    </div>
   </div>
+</div>
+</div>
 {% endblock %}

@@ -1,51 +1,58 @@
-function tableCreate(){
-    var parent = document.getElementById("calendar-location"); 
+function createCalendar(){
     var tbl  = document.createElement('table');
-    var header = tbl.createTHead();
+    var head = document.createElement('thead');
+    var headRow = document.createElement('tr');
+    var tbody = document.createElement('tbody');
     let daysOfWeek = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    var row, cell;
+    var row, dayHeader;
 
     var createCells = function(days){
-	row = header.insertRow(0);
-	row.insertCell(0);
-	for (var i = 0; i < days.length ; i++){
-	    cell = row.insertCell(i+1);
-	    cell.innerHTML = days[i];
+	for (var i = 0; i < days.length + 1 ; i++){
+	    dayHeader = document.createElement('th');
+	    if(i==0) {
+		dayHeader.innerHTML = " ";
+	    } else {
+		dayHeader.innerHTML = days[i-1];
+	    }
+	    headRow.appendChild(dayHeader);
 	}
+	head.appendChild(headRow);
     }
 
     var createTimeSlots = function(){
 	var tr, td, min, hour;
 	for (var i = 0; i < 52; i++){
-	    tr = tbl.insertRow();
-	    for (var j = 0; j < 8; j++){
-		td = tr.insertCell();
+	    row = document.createElement('tr');
+	    for (var j = 0; j < daysOfWeek.length + 1; j++){
+		td = document.createElement('td');
 		if(j==0){
 		    hour = 8+Math.floor(i/4);
 		    min = (i%4)*15;
-		    if(min!=0)
-			td.appendChild(document.createTextNode(hour+":"+min));
-		    else
-			td.appendChild(document.createTextNode(hour+":00")); // min would only be 0 instead of 00
-		    td.style.border = '1px solid black';  
-		} 
-		td.appendChild(document.createTextNode(""));
-		td.style.border = '1px solid black';  
+		    if(min!=0) td.innerHTML = hour+":"+min;
+		    else td.innerHTML = hour+":00";
+		    td.style.border = '1px solid black';
+		    row.appendChild(td);
+		}
+		else td.innerHTML = " ";
+		td.style.border = '1px solid black';
+		row.appendChild(td); 
 	    }
+	    tbody.appendChild(row);
 	}
     }
 
     createCells(daysOfWeek);
     createTimeSlots();
     tbl.className = "table table-striped";
-    parent.appendChild(tbl);
+    tbl.appendChild(head);
+    tbl.appendChild(tbody);
+    return tbl;
 }
 
 //////////
 // HTTP Requests for searching for courses
 //////////
 $( document ).ready(function() {
-  tableCreate();
   $('#addCourse').click(function(){
     var inputCourse = $('input[name="courseSearch"]').val()
     $.ajax({
