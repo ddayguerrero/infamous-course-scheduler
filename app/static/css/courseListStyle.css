@@ -1,0 +1,148 @@
+.courses {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+.courses > li {
+    background-color: rgb(255, 255, 255);
+    padding: 0px;
+    margin: 0px 0px 3px;
+}
+.courses > li > #type {
+    display: inline-block;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    background-color: rgba(51, 51, 51, 0.7);
+    padding: 5px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.courses > li > #type > span {
+    display: none;
+}
+.courses > li #type > .month {
+    display: block;
+    font-size: 12pt;
+}
+.courses > li > .info {
+    padding-top: 5px;
+    text-align: center;
+}
+.courses > li > .info > .title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0px;
+}
+.courses > li > .info > .desc {
+    font-size: 15px;
+    font-weight: 300;
+    margin: 0px;
+}
+.courses > li > .info > .section {
+    font-size: 12px;
+    font-weight: 300;
+    margin: 0px;
+}
+.courses > li > .info > ul,
+.courses > li > .actions > ul {
+    display: table;
+    list-style: none;
+    margin: 10px 0px 0px;
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+}
+.courses > li > .actions > ul {
+    margin: 0px;
+}
+.courses > li > .info > ul > li,
+.courses > li > .actions > ul > li {
+    display: table-cell;
+    cursor: pointer;
+    color: rgb(30, 30, 30);
+    font-size: 11pt;
+    font-weight: 300;
+    padding: 3px 0px;
+}
+.courses > li > .info > ul > li > a {
+    display: block;
+    width: 100%;
+    color: rgb(30, 30, 30);
+    text-decoration: none;
+} 
+.courses > li > .actions > ul > li {    
+    padding: 0px;
+}
+.courses > li > .actions > ul > li > a {
+    padding: 3px 0px;
+} 
+
+@media (min-width: 768px) {
+    .courses > li {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 80px;
+	padding: 0px;
+    }
+
+    .courses > li > #type  {
+	display: inline-block;
+	width: 80px;
+	float: left;
+	height: 80px;
+	padding: 15px;
+	margin: 0px;
+    }
+
+    .courses > li > .info {
+	background-color: rgb(245, 245, 245);
+	overflow: hidden;
+	position: relative;
+	height: 80px;
+	text-align: left;
+    }
+	
+    .courses > li > .info > .title, 
+    .courses > li > .info > .desc,
+    .courses > li > .info > .section {
+	padding: 0px 10px;
+    }
+    .courses > li > .info > ul {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+    }
+    .courses > li > .actions {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	display: block;
+	width: 40px;
+    }
+    .courses > li > .actions > ul {
+        border-left: 1px solid rgb(230, 230, 230);
+    }
+    .courses > li > .actions > ul > li {			
+	display: block;
+        padding: 0px;
+    }
+    .courses > li > .actions > ul > li > a {
+	display: block;
+	width: 40px;
+	padding: 10px 0px 9px;
+    }
+}
+
+/* WIP: Controls */
+
+.delete a{
+    display: block;
+    width: 100%;
+    color: rgb(75, 110, 168) !important;
+}
+.delete:hover a {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(75, 110, 168) !important;
+}

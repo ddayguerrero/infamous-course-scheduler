@@ -56,6 +56,13 @@ var HTMLModule = (function(){
     }
 
     function createCourseList(){
+	var list = document.createElement('ul');
+	var courseSlot = document.createLEment('li');
 
+	var createCourseType = function(){
+	    var courseType = document.createElement('div');
+	    var section = document.createElement('span');
+	    section.className = "section";
+	}
     }
 }());
