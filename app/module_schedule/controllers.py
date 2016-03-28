@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, abort, request
+from flask import Flask, Blueprint, jsonify, abort, request, current_app
 
 app = Flask(__name__)
 mod_schedule = Blueprint('schedule', __name__)
@@ -70,7 +70,8 @@ from app.module_schedule.models import Lecture
 @mod_schedule.route('/courses', methods=['GET','POST'])
 def get_lectures(semester_integer):
     lectures = db.session.query(Lecture).filter_by(semester_id=semester_integer).all()
-    print lectures
+    if(current_app):
+        return jsonify(lectures=lectures)
 
 # Say you want to retrieve a specific course (e.g. based on id)
 #
@@ -91,7 +92,6 @@ def get_course():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
 
 # Say you want to create a specific resource (e.g. schedule)
 #
