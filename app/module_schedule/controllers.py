@@ -1,7 +1,4 @@
-from flask import Flask, Blueprint, jsonify, abort, request
-
-from app.module_authentication.forms import CourseSelection
-
+from flask import Flask, Blueprint, jsonify, abort, request, current_app
 
 app = Flask(__name__)
 mod_schedule = Blueprint('schedule', __name__)
@@ -66,6 +63,41 @@ lectures = [
 if __name__ == '__main__':
     app.run(debug=True)
 
+#get the db object to query
+from app import db
+from app.module_schedule.models import Lecture, Tutorial, Lab
+
+#Gets all the lectures for a specified semester (id from 1-4)
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_lectures(semester_integer):
+    lectures = db.session.query(Lecture).filter_by(semester_id=semester_integer).all()
+    if(current_app):
+        return jsonify(lectures=lectures)
+
+
+#Gets all the lectures of a specified course id
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_lectures_for_course(course_number):
+    lectures = db.session.query(Lecture).filter_by(course_id=course_number).all()
+    if(current_app):
+        return jsonify(lectures=lectures)
+
+
+# Gets the tutorial for a specified lecture
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_tutorials(lecture_id):
+    tutorials = db.session.query(Tutorial).filter_by(lecture_id=lecture_id).all()
+    if(current_app):
+        return jsonify(tutorials=tutorials)
+
+
+# Gets the lab for a specified lecture
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_labs(lecture_id):
+    labs = db.session.query(Lab).filter_by(lecture_id=lecture_id).all()
+    if(current_app):
+        return jsonify(labs=labs)
+
 
 # Say you want to retrieve a specific course (e.g. based on id)
 #
@@ -86,7 +118,6 @@ def get_course():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
 
 # Say you want to create a specific resource (e.g. schedule)
 #
