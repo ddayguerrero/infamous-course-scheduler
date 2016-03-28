@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
 #get the db object to query
 from app import db
-from app.module_schedule.models import Lecture
+from app.module_schedule.models import Lecture, Tutorial
 
 #Gets all the lectures for a specified semester (id from 1-4)
 @mod_schedule.route('/courses', methods=['GET','POST'])
@@ -81,6 +81,13 @@ def get_lectures_for_course(course_number):
     lectures = db.session.query(Lecture).filter_by(course_id=course_number).all()
     if(current_app):
         return jsonify(lectures=lectures)
+
+# Gets the tutorial for a specified lecture
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_tutorials(lecture_id):
+    tutorials = db.session.query(Tutorial).filter_by(lecture_id=lecture_id).all()
+    if(current_app):
+        return jsonify(tutorials=tutorials)
 
 
 # Say you want to retrieve a specific course (e.g. based on id)
