@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, jsonify, abort, request
 
 from app.module_authentication.forms import CourseSelection
 
+#get the db object to query
+from app import db
 
 app = Flask(__name__)
 mod_schedule = Blueprint('schedule', __name__)
@@ -65,6 +67,12 @@ lectures = [
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_lectures(semester_integer):
+    courses = db.session.query(Lecture).filter_by(semester_id=semster_integer).all()
+    print courses
 
 
 # Say you want to retrieve a specific course (e.g. based on id)
