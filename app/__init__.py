@@ -34,10 +34,10 @@ app.register_blueprint(mod_auth)
 app.register_blueprint(mod_schedule)
 
 # Define and populate the database
+from populate import populate
+
 if(os.path.exists(BASE_DIR + '/app.db')):
     print "Database already populated."
 else:
     db.create_all()
-
-from populate import populate
-populate()
+    populate()
