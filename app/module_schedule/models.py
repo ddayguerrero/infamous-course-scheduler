@@ -73,7 +73,7 @@ class Lecture(Abstract_ClassType):
         self.semester_id = semester_id
 
     def __repr__(self):
-        return '<Lecture %r>' % (self.code)
+        return '<Lecture %r>' % (self.course_id)
 
 
 class AcademicRecord(Abstract_Base):
