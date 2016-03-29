@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
 #get the db object to query
 from app import db
-from app.module_schedule.models import Lecture, Tutorial, Lab
+from app.module_schedule.models import Lecture, Tutorial, Lab, AcademicRecord, Mapping
 
 #Gets all the lectures for a specified semester (id from 1-4)
 @mod_schedule.route('/courses', methods=['GET','POST'])
@@ -97,6 +97,48 @@ def get_labs(lecture_id):
     labs = db.session.query(Lab).filter_by(lecture_id=lecture_id).all()
     if(current_app):
         return jsonify(labs=labs)
+
+
+# Gets the lectures a student is registered for
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_student_lectures():
+    registered_lectures = []
+    academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='registered').all()
+    for ac in academic_records:
+        registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
+    if(current_app):
+        return jsonify(Lectures=registered_lectures)
+
+
+# Gets the lectures a student is registered for
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def register_lecture(lecture_id):
+    lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
+    mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
+    prerequisites = []
+    for mapping in mappings:
+        prerequisites.append(db.session.query(Course).filter_by(id=mapping.course_req_id).first())
+
+    for prerequisite in prerequisites:
+        if not student_completed_course(prerequisite.id):
+            return False
+
+    db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
+    return True
+
+
+# Gets the lectures a student is registered for
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def student_completed_course(course_id):
+    academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
+    for ac in academic_records:
+        lecture = db.session.query(Lecture).filter_by(id=ac.lecture_id).first()
+        completed_course = db.session.query(Course).filter_by(id=lecture.course_id).first()
+        query_course = db.session.query(Course).filter_by(id=course_id).first()
+        if completed_course == query_course:
+            return True
+
+    return False
 
 
 # Say you want to retrieve a specific course (e.g. based on id)
