@@ -102,12 +102,24 @@ def get_labs(lecture_id):
 # Gets the lectures a student is registered for
 @mod_schedule.route('/courses', methods=['GET','POST'])
 def get_student_lectures():
+    registered_lectures = []
+    academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='registered').all()
+    for ac in academic_records:
+        registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
+    if(current_app):
+        return jsonify(Lectures=registered_lectures)
+
+
+# Gets the lectures a student is registered for
+@mod_schedule.route('/courses', methods=['GET','POST'])
+def get_student_lectures():
     lectures = []
     academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id']).all()
     for ac in academic_records:
         lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
     if(current_app):
         return jsonify(Lectures=lectures)
+
 
 
 
