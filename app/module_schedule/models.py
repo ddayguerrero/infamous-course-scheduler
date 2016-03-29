@@ -73,19 +73,19 @@ class Lecture(Abstract_ClassType):
         self.semester_id = semester_id
 
     def __repr__(self):
-        return '<Lecture %r>' % (self.code)
+        return '<Lecture %r>' % (self.course_id)
 
 
 class AcademicRecord(Abstract_Base):
     __tablename__ = 'academic_records'
     user_id = db.Column(db.Integer)
-    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
-    course_status = db.Column(db.String(50))
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
+    lecture_status = db.Column(db.String(50))
 
-    def __init__(self, user_id=None, course_id=None, course_status=None):
+    def __init__(self, user_id=None, lecture_id=None, lecture_status=None):
         self.user_id = user_id
-        self.course_id = course_id
-        self.course_status = course_status
+        self.lecture_id = lecture_id
+        self.lecture_status = lecture_status
 
     def __repr__(self):
         return '<AcademicRecord %r>' % (self.id)
