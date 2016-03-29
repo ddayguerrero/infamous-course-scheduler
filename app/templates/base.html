@@ -45,6 +45,11 @@
 				</li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
+		    	<li>
+				{% if session['logged_in'] %}
+					<a class="navlink" href="{{ url_for('auth.logout') }}">Log out</a>
+				{% endif %}
+				</li>
 			{% block navbarRight %}{% endblock %}
 			</ul>
 		  </div>

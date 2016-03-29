@@ -34,7 +34,6 @@ def login():
 			session['user_id'] = user.username
 			session['user_name'] = user.username
 			session['logged_in'] = True
-			flash('Welcome %s' % user.username)
 			return redirect(url_for('auth.home'))
 		flash('Wrong username or password', 'error-message')
 	return render_template('auth/login.html', form=form)
