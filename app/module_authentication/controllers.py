@@ -31,7 +31,8 @@ def login():
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
 		if user:
-			session['user_id'] = user.id
+			session['user_id'] = user.username
+			session['user_name'] = user.username
 			session['logged_in'] = True
 			flash('Welcome %s' % user.username)
 			return redirect(url_for('auth.home'))
@@ -59,7 +60,6 @@ def register():
 			db.session.add(student)
 			db.session.add(user)
 			db.session.commit()
-			session['user_id'] = user.id
 			flash('Thank you for registering')
 			return redirect(url_for('auth.login'))
 	return render_template('auth/registration.html', form=form)
