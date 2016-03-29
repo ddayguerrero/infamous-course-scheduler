@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
 #get the db object to query
 from app import db
-from app.module_schedule.models import Lecture, Tutorial, Lab, AcademicRecord, mapping
+from app.module_schedule.models import Lecture, Tutorial, Lab, AcademicRecord, Mapping
 
 #Gets all the lectures for a specified semester (id from 1-4)
 @mod_schedule.route('/courses', methods=['GET','POST'])
