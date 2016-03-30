@@ -19,11 +19,9 @@
 			<div class="main-login-form">
 				<div class="login-group">
 					{% with messages = get_flashed_messages() %}
-  					{% if messages %}
+  					{% if session['user_name'] %}
     					<ul class="form-control">
-    						{% for message in messages %}
-      						<li>{{ message }}</li>
-    						{% endfor %}
+      						<li>Welcome {{ session['user_name'] }}</li>
     					</ul>
   					{% endif %}
 					{% endwith %}

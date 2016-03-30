@@ -1,2 +1,5 @@
-User profile coded here.
-Allows for username and password change and any other stuff we think of.
+{% extends "base.html" %}
+
+{% block content %}
+Your student username is: {{ session['user_name'] }}
+{% endblock %}
