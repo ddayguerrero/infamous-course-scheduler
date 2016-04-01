@@ -67,6 +67,9 @@ if __name__ == '__main__':
 from app import db
 from app.module_schedule.models import Lecture, Tutorial, Lab, AcademicRecord, Mapping
 
+def get_student():
+    return db.session.query(Student).filter_by(full_name=session['user_id']).first()
+
 #Gets all the lectures for a specified semester (id from 1-4)
 @mod_schedule.route('/courses', methods=['GET','POST'])
 def get_lectures(semester_integer):
@@ -102,12 +105,8 @@ def get_labs(lecture_id):
 # Gets the lectures a student is registered for
 @mod_schedule.route('/courses', methods=['GET','POST'])
 def get_student_lectures():
-    registered_lectures = []
-    academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='registered').all()
-    for ac in academic_records:
-        registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
-    if(current_app):
-        return jsonify(Lectures=registered_lectures)
+    student = get_student()
+    return student.get_lectures()
 
 
 # Gets the lectures a student is registered for

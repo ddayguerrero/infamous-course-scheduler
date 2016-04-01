@@ -1,6 +1,7 @@
 from app import db
 from app.abstract_models import Abstract_Base, Abstract_ClassType, Abstract_Course
 from app.module_authentication.models import User
+from app.module_schedule.models import AcademicRecord, Lecture
 
 
 # Concrete Models
@@ -16,6 +17,14 @@ class Student(Abstract_Base):
         self.academic_record = academic_record
         self.sequence = sequence
         self.user = user
+
+    def get_courses():
+        registered_lectures = []
+        academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='registered').all()
+        for ac in academic_records:
+            registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
+        if(current_app):
+            return jsonify(Lectures=registered_lectures)
 
     def __repr__(self):
         return '<User %r>' % (self.full_name)
