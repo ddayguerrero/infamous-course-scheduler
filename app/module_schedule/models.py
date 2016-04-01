@@ -32,12 +32,25 @@ class Student(Abstract_Base):
         lectures = self.get_lectures()
 
         for lecture in lectures:
-            labs = db.session.query(Lab).filter_by(lecture_id=lecture_id).all()
-            for lab in labs:
+            labs_query = db.session.query(Lab).filter_by(lecture_id=lecture_id).all()
+            for lab in labs_query:
                 labs.append(lab)
 
         if(current_app):
             return labs
+
+    def get_tutorials():
+        tutorials = []
+        lectures = self.get_lectures()
+
+        for lecture in lectures:
+            tutorials_query = db.session.query(Tutorial).filter_by(lecture_id=lecture_id).all()
+            for tutorial in tutorials_query:
+                tutorials.append(tutorial)
+
+        if(current_app):
+            return tutorials
+
 
     def register_lecture(lecture_id):
         lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
