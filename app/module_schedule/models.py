@@ -24,7 +24,7 @@ class Student(Abstract_Base):
         for ac in academic_records:
             registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
         if(current_app):
-            return jsonify(Lectures=registered_lectures)
+            return registered_lectures
 
     def __repr__(self):
         return '<User %r>' % (self.full_name)

@@ -106,7 +106,7 @@ def get_labs(lecture_id):
 @mod_schedule.route('/courses', methods=['GET','POST'])
 def get_student_lectures():
     student = get_student()
-    return student.get_lectures()
+    return jsonify(lectures=student.get_lectures())
 
 
 # Gets the lectures a student is registered for
