@@ -2,7 +2,6 @@ from app import db
 from flask import current_app
 from app.abstract_models import Abstract_Base, Abstract_ClassType, Abstract_Course
 from app.module_authentication.models import User
-from app.module_schedule.models import AcademicRecord, Lecture, Mapping, Course, Tutorial, Lab
 
 
 # Concrete Models

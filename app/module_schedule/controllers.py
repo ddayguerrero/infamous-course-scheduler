@@ -77,15 +77,16 @@ def get_lecture(lecture_id):
     return db.session.query(Lecture).filter_by(id=lecture_id).first()
 
 #Gets all the lectures for a specified semester (id from 1-4)
-@mod_schedule.route('/courses', methods=['GET','POST'])
+@mod_schedule.route('/lectures_semester', methods=['POST'])
 def get_lectures(semester_integer):
     lectures = db.session.query(Lecture).filter_by(semester_id=semester_integer).all()
+
     if(current_app):
         return jsonify(lectures=lectures)
 
 
 #Gets all the lectures of a specified course id
-@mod_schedule.route('/courses', methods=['GET','POST'])
+@mod_schedule.route('/lectures_course', methods=['GET','POST'])
 def get_lectures_for_course(course_number):
     lectures = db.session.query(Lecture).filter_by(course_id=course_number).all()
     if(current_app):
@@ -93,7 +94,7 @@ def get_lectures_for_course(course_number):
 
 
 # Gets the tutorial for a specified lecture
-@mod_schedule.route('/courses', methods=['GET','POST'])
+@mod_schedule.route('/tutorials', methods=['GET','POST'])
 def get_tutorials(lecture_id):
     tutorials = db.session.query(Tutorial).filter_by(lecture_id=lecture_id).all()
     if(current_app):
@@ -101,7 +102,7 @@ def get_tutorials(lecture_id):
 
 
 # Gets the lab for a specified lecture
-@mod_schedule.route('/courses', methods=['GET','POST'])
+@mod_schedule.route('/labs', methods=['GET','POST'])
 def get_labs(lecture_id):
     labs = db.session.query(Lab).filter_by(lecture_id=lecture_id).all()
     if(current_app):
@@ -109,14 +110,14 @@ def get_labs(lecture_id):
 
 
 # Gets the lectures a student is registered for
-@mod_schedule.route('/courses', methods=['GET','POST'])
+@mod_schedule.route('/student_lectures', methods=['GET','POST'])
 def get_student_lectures():
     student = get_student()
     return jsonify(lectures=student.get_lectures())
 
 
 # Gets the lectures a student is registered for
-@mod_schedule.route('/courses', methods=['GET','POST'])
+@mod_schedule.route('/register', methods=['GET','POST'])
 def register_lecture(lecture_id):
     student = get_student()
     return student.register_lecture(lecture_id)
