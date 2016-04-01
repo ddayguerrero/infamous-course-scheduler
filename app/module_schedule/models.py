@@ -2,7 +2,7 @@ from app import db
 from flask import current_app
 from app.abstract_models import Abstract_Base, Abstract_ClassType, Abstract_Course
 from app.module_authentication.models import User
-from app.module_schedule.models import AcademicRecord, Lecture, Mapping, Course
+from app.module_schedule.models import AcademicRecord, Lecture, Mapping, Course, Tutorial, Lab
 
 
 # Concrete Models
@@ -60,7 +60,7 @@ class Student(Abstract_Base):
             prerequisites.append(db.session.query(Course).filter_by(id=mapping.course_req_id).first())
 
         for prerequisite in prerequisites:
-            if not student_completed_course(prerequisite.id):
+            if not self.completed_course(prerequisite.id):
                 return False
 
         db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
