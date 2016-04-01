@@ -37,9 +37,9 @@ class Student(Abstract_Base):
             if not student_completed_course(prerequisite.id):
                 return False
 
-    db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
-    db.session.commit()
-    return True
+        db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
+        db.session.commit()
+        return True
 
     def __repr__(self):
         return '<User %r>' % (self.full_name)
