@@ -1,4 +1,5 @@
 from app import db
+from flask import current_app
 from app.abstract_models import Abstract_Base, Abstract_ClassType, Abstract_Course
 from app.module_authentication.models import User
 from app.module_schedule.models import AcademicRecord, Lecture, Mapping, Course
@@ -18,13 +19,25 @@ class Student(Abstract_Base):
         self.sequence = sequence
         self.user = user
 
-    def get_courses():
+    def get_lectures():
         registered_lectures = []
         academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='registered').all()
         for ac in academic_records:
             registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
         if(current_app):
             return registered_lectures
+
+    def get_labs():
+        labs = []
+        lectures = self.get_lectures()
+
+        for lecture in lectures:
+            labs = db.session.query(Lab).filter_by(lecture_id=lecture_id).all()
+            for lab in labs:
+                labs.append(lab)
+
+        if(current_app):
+            return labs
 
     def register_lecture(lecture_id):
         lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
@@ -44,7 +57,7 @@ class Student(Abstract_Base):
     def completed_course(course_id):
         academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
         for ac in academic_records:
-            
+
             lecture = db.session.query(Lecture).filter_by(id=ac.lecture_id).first()
             completed_course = db.session.query(Course).filter_by(id=lecture.course_id).first()
             query_course = db.session.query(Course).filter_by(id=course_id).first()
