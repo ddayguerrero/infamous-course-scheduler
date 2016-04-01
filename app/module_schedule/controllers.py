@@ -112,18 +112,8 @@ def get_student_lectures():
 # Gets the lectures a student is registered for
 @mod_schedule.route('/courses', methods=['GET','POST'])
 def register_lecture(lecture_id):
-    lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
-    mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
-    prerequisites = []
-    for mapping in mappings:
-        prerequisites.append(db.session.query(Course).filter_by(id=mapping.course_req_id).first())
-
-    for prerequisite in prerequisites:
-        if not student_completed_course(prerequisite.id):
-            return False
-
-    db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
-    return True
+    student = get_student()
+    return student.register_lecture(lecture_id)
 
 
 # Gets the lectures a student is registered for

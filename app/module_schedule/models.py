@@ -1,7 +1,7 @@
 from app import db
 from app.abstract_models import Abstract_Base, Abstract_ClassType, Abstract_Course
 from app.module_authentication.models import User
-from app.module_schedule.models import AcademicRecord, Lecture
+from app.module_schedule.models import AcademicRecord, Lecture, Mapping, Course
 
 
 # Concrete Models
@@ -25,6 +25,21 @@ class Student(Abstract_Base):
             registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
         if(current_app):
             return registered_lectures
+
+    def register_lecture(lecture_id):
+        lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
+        mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
+        prerequisites = []
+        for mapping in mappings:
+            prerequisites.append(db.session.query(Course).filter_by(id=mapping.course_req_id).first())
+
+        for prerequisite in prerequisites:
+            if not student_completed_course(prerequisite.id):
+                return False
+
+    db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
+    db.session.commit()
+    return True
 
     def __repr__(self):
         return '<User %r>' % (self.full_name)
