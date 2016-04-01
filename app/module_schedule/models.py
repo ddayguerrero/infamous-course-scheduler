@@ -93,6 +93,10 @@ class Course(Abstract_Course):
         super(type(self), self).__init__(program=None, number=None, credits=None, name=None)
         self.requisite = requisite
 
+
+    def get_lectures():
+        return db.session.query(Lecture).filter_by(course_id=self.id).all()
+
     def __repr__(self):
         return '<Course %r>' % (self.name)
 
@@ -134,6 +138,9 @@ class Lecture(Abstract_ClassType):
         self.instructor = instructor
         self.course_id = course_id
         self.semester_id = semester_id
+
+    def get_tutorials():
+        return db.session.query(Tutorial).filter_by(lecture_id=self.id).all()
 
     def __repr__(self):
         return '<Lecture %r>' % (self.course_id)
