@@ -65,10 +65,16 @@ if __name__ == '__main__':
 
 #get the db object to query
 from app import db
-from app.module_schedule.models import Lecture, Tutorial, Lab, AcademicRecord, Mapping
+from app.module_schedule.models import Lecture, Tutorial, Lab, AcademicRecord, Mapping, Course
 
 def get_student():
     return db.session.query(Student).filter_by(full_name=session['user_id']).first()
+
+def get_course(course_id):
+    return db.session.query(Course).filter_by(id=course_id).first()
+
+def get_lecture(lecture_id):
+    return db.session.query(Lecture).filter_by(id=lecture_id).first()
 
 #Gets all the lectures for a specified semester (id from 1-4)
 @mod_schedule.route('/courses', methods=['GET','POST'])
