@@ -119,15 +119,8 @@ def register_lecture(lecture_id):
 # Gets the lectures a student is registered for
 @mod_schedule.route('/courses', methods=['GET','POST'])
 def student_completed_course(course_id):
-    academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
-    for ac in academic_records:
-        lecture = db.session.query(Lecture).filter_by(id=ac.lecture_id).first()
-        completed_course = db.session.query(Course).filter_by(id=lecture.course_id).first()
-        query_course = db.session.query(Course).filter_by(id=course_id).first()
-        if completed_course == query_course:
-            return True
-
-    return False
+    student = get_student()
+    return student.completed_course(course_id)
 
 
 # Say you want to retrieve a specific course (e.g. based on id)
