@@ -10,24 +10,25 @@ function hoverOutLogo(){
 // HTTP Requests for searching for courses
 //////////
 $( document ).ready(function() {
-  $('#addCourse').click(function(){
-    var inputCourse = $('input[name="courseSearch"]').val()
+  $('#addCourse').click(function() {
+    alert('hi')
     $.ajax({
       url: '/courses',
-      data: {
-        course: inputCourse
-      },
+      data: {courses : course}
+      type: 'POST',
+      dataType: "json"
       error: function(error) {
         console.log(error)
       },
       success: function(data) {
-        $("#courseIdNum").html(data.id)
-        $("#courseName").html(data.name)
-        $("#startTime").html(data.startTime)
-        $("#endTime").html(data.endTime)
-        $("#instructor").html(data.instructor)
-      },
-      type: 'POST'
+        $.each($.parseJSON(data), function(idx, obj) {
+          $('#table tr:last').after(
+            '<tr>
+              <td>' + data.id + '<td>
+              <td>' + data.name + '<td>
+            <tr>')
+        });
+      }
     });
   });
 });

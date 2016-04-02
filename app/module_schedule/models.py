@@ -88,10 +88,11 @@ class Course(Abstract_Course):
     requisite = db.Column(db.Integer, db.ForeignKey('mappings.id'))
     lectures = db.relationship("Lecture")
 
-    def __init__(self, program=None, credits=None, number=None, name=None, requisite=None):
-        super(type(self), self).__init__(program=None, number=None, credits=None, name=None)
-        self.requisite = requisite
-
+    def __init__(self, program=None, credits=None, number=None, name=None):
+        self.program = program
+        self.credits = credits
+        self.number = number
+        self.name = name
 
     def get_lectures():
         return db.session.query(Lecture).filter_by(course_id=self.id).all()
@@ -99,14 +100,26 @@ class Course(Abstract_Course):
     def __repr__(self):
         return '<Course %r>' % (self.name)
 
+    def serialize(self):
+        return 
+        {
+            'name': self.name,
+            'program': self.program,
+            'number': self.number,
+            'credits': credits
+        }
+
 
 class Lab(Abstract_ClassType):
     __tablename__ = 'labs'
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
 
     def __init__(self, lecture_id=None, section_code=None, start_time=None, end_time=None, day_one=None):
-        super(type(self), self).__init__(code=None, start_time=None,end_time=None, day_one=None, day_two=None)
         self.lecture_id = lecture_id
+        self.section_code = section_code
+        self.start_time = start_time
+        self.end_time = end_time
+        self.day_one = day_one
 
     def __repr__(self):
         return '<Lab %r>' % (self.code)
@@ -117,8 +130,13 @@ class Tutorial(Abstract_ClassType):
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
 
     def __init__(self, lecture_id=None, section_code=None, start_time=None, end_time=None, day_one=None, day_two=None):
-        super(type(self), self).__init__(code=None, start_time=None,end_time=None, day_one=None, day_two=None)
         self.lecture_id = lecture_id
+        self.section_code = section_code
+        self.start_time = start_time
+        self.end_time = end_time
+        self.day_one = day_one
+        self.day_two = day_two
+
     def __repr__(self):
         return '<Tutorial %r>' % (self.code)
 
@@ -132,11 +150,14 @@ class Lecture(Abstract_ClassType):
     tutorial = db.relationship("Tutorial")
     lab = db.relationship("Lab")
 
-    def __init__(self, instructor=None, course_id=None, semester_id=None, code=None, start_time=None, end_time=None, day_one=None, day_two=None):
-        super(type(self), self).__init__(code=None, start_time=None, end_time=None, day_one=None, day_two=None)
+    def __init__(self, instructor=None, course_id=None, semester_id=None, start_time=None, end_time=None, day_one=None, day_two=None):
         self.instructor = instructor
         self.course_id = course_id
         self.semester_id = semester_id
+        self.start_time = start_time
+        self.end_time = end_time
+        self.day_one = day_one
+        self.day_two = day_two
 
     def get_tutorials():
         return db.session.query(Tutorial).filter_by(lecture_id=self.id).all()

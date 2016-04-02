@@ -84,17 +84,6 @@ def get_lectures(semester_integer):
     if(current_app):
         return jsonify(lectures=lectures)
 
-@mod_schedule.route('/courses', methods=['POST'])
-def get_courses():
-	semesters = db.session.query(Semester).filter_by(semester_id=0).all()
-
-	courses = []
-	for semester in semesters:
-		print semester
-		courses.append(db.session.query(Course).filter_by(id=semester.course_id).first())
-
-	return jsonify(Courses=courses)
-
 
 #Gets all the lectures of a specified course id
 @mod_schedule.route('/lectures_course', methods=['GET','POST'])
@@ -111,6 +100,18 @@ def get_tutorials(lecture_id):
     if(current_app):
         return jsonify(tutorials=tutorials)
 
+
+@mod_schedule.route('/courses', methods=['POST'])
+def get_courses():
+    semesters = db.session.query(Semester).filter_by(semester_id=0).all()
+
+    courses = []
+    for semester in semesters:
+        course = db.session.query(Course).filter_by(id=semester.course_id).first()
+        if course is not None:
+            courses.append(course)
+
+    return jsonify(courses=[course.serialize() for course in courses])
 
 # Gets the lab for a specified lecture
 @mod_schedule.route('/labs', methods=['GET','POST'])
