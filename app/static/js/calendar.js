@@ -66,3 +66,23 @@ var HTMLModule = (function(){
 	}
     }
 }());
+
+
+//////////
+// HTTP Requests for searching for courses
+//////////
+$( document ).ready(function() {
+    var courses = 1
+    $.ajax({
+      url: '/courses',
+      data: $('form').serialize(),
+      type: 'POST',
+      dataType: "json"
+      error: function(error) {
+        console.log(error)
+      },
+      success: function(data) {
+        $("#courseIdNum").html(data.id)
+      }
+    });
+});

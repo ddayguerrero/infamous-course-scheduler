@@ -148,7 +148,7 @@ class Lecture(Abstract_ClassType):
 class AcademicRecord(Abstract_Base):
     __tablename__ = 'academic_records'
     user_id = db.Column(db.Integer)
-    lecture_id = db.Column(db.Integer, db.ForeignKey('lecture.id'))
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
     lecture_status = db.Column(db.String(50))
 
     def __init__(self, user_id=None, lecture_id=None, lecture_status=None):

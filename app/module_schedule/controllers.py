@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
 #get the db object to query
 from app import db
-from app.module_schedule.models import Lecture, Tutorial, Lab, AcademicRecord, Mapping, Course
+from app.module_schedule.models import Lecture, Semester, Tutorial, Lab, AcademicRecord, Mapping, Course
 
 def get_student():
     return db.session.query(Student).filter_by(full_name=session['user_id']).first()
@@ -83,6 +83,17 @@ def get_lectures(semester_integer):
 
     if(current_app):
         return jsonify(lectures=lectures)
+
+@mod_schedule.route('/courses', methods=['POST'])
+def get_courses():
+	semesters = db.session.query(Semester).filter_by(semester_id=0).all()
+
+	courses = []
+	for semester in semesters:
+		print semester
+		courses.append(db.session.query(Course).filter_by(id=semester.course_id).first())
+
+	return jsonify(Courses=courses)
 
 
 #Gets all the lectures of a specified course id

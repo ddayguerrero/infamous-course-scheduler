@@ -37,6 +37,9 @@ def parseLectures():
             db.session.add(Lecture(row['instructor'], row['course_id'], semester_id, row['start_time'], row['end_time'], days[0], days[1]))
             db.session.add(Semester(semester_id, row['course_id']))
             db.session.commit()
+
+        db.session.add(Semester(1, 1))
+        db.session.commit()
     print "Parsing successful"
 
 
