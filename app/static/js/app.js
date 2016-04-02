@@ -11,22 +11,21 @@ function hoverOutLogo(){
 //////////
 $( document ).ready(function() {
   $('#addCourse').click(function() {
-    alert('hi')
     $.ajax({
       url: '/courses',
-      data: {courses : course}
+      data: {courses : course},
       type: 'POST',
-      dataType: "json"
+      dataType: "json",
       error: function(error) {
         console.log(error)
       },
       success: function(data) {
         $.each($.parseJSON(data), function(idx, obj) {
           $('#table tr:last').after(
-            '<tr>
-              <td>' + data.id + '<td>
-              <td>' + data.name + '<td>
-            <tr>')
+            '<tr>' +
+              '<td>' + data.id + '<td>' +
+              '<td>' + data.name + '<td>' +
+            '<tr>')
         });
       }
     });

@@ -79,6 +79,30 @@
 	<!-- End of Course List -->
       </div>
     </div>
+    <script>
+      $( document ).ready(function() {
+        $("#fall").click(function() {     
+            fall_courses = null;  
+            $.ajax({
+                url: '/test',
+                type: 'POST',
+                dataType: "json",
+                error: function(error) {
+                   alert('error');
+                },
+                success: function(data) {
+                  fall_courses = data;
+                }
+              });
+        });
+        $("#winter").click(function() {       
+          alert('winter');
+        });
+        $("#summer").click(function() {       
+          alert('summer');
+        });
+      });
+    </script>
 
     <!-- Right Hand Side : Calendar Schedule  -->
     <div class="col-sm-6">
