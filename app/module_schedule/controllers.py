@@ -80,6 +80,28 @@ def test():
     return jsonify(name=name)
 
 
+@mod_schedule.route('/student_fall_lectures', methods=['GET', 'POST'])
+def student_fall_lectures():
+	student = get_student()
+	fall_lectures = student.get_fall_lectures()
+
+	return jsonify(lectures=[lecture.serialize() for lecture in fall_lectures])
+
+
+@mod_schedule.route('/student_winter_lectures', methods=['GET', 'POST'])
+def student_winter_lectures():
+	student = get_student()
+	winter_lectures = student.get_winter_lectures()
+
+	return jsonify(lectures=[lecture.serialize() for lecture in winter_lectures])
+
+
+@mod_schedule.route('/student_summer_lectures', methods=['GET', 'POST'])
+def student_summer_lectures():
+	student = get_student()
+	summer_lectures = student.get_summer_lectures()
+
+	return jsonify(lectures=[lecture.serialize() for lecture in summer_lectures])
 
 
 @mod_schedule.route('/fall_lectures', methods=['GET', 'POST'])
@@ -95,7 +117,7 @@ def get_fall_lectures():
 
 
 @mod_schedule.route('/winter_lectures', methods=['GET', 'POST'])
-def get_winter_courses():
+def get_winter_lectures():
     semesters = db.session.query(Semester).filter_by(semester_id=1).all()
     lectures = []
     for semester in semesters:
@@ -103,11 +125,11 @@ def get_winter_courses():
         if lecture is not None:
             lectures.append(lecture)
 
-    #return jsonify(lectures=[lecture.serialize() for lecture in lectures])
+    return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
 
 @mod_schedule.route('/summer_lectures', methods=['GET', 'POST'])
-def get_summer_courses():
+def get_summer_lectures():
     semesters = db.session.query(Semester).filter_by(semester_id=2).all()
 
     lectures = []

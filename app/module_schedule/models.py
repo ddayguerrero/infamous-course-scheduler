@@ -1,5 +1,5 @@
 from app import db
-from flask import current_app
+from flask import current_app, session
 from app.abstract_models import Abstract_Base, Abstract_ClassType, Abstract_Course
 from app.module_authentication.models import User
 
@@ -18,15 +18,56 @@ class Student(Abstract_Base):
         self.sequence = sequence
         self.user = user
 
-    def get_lectures():
+    def get_lectures(self):
         registered_lectures = []
         academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='registered').all()
         for ac in academic_records:
             registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
-        if(current_app):
-            return registered_lectures
 
-    def get_labs():
+        for lecture in registered_lectures:
+            print lecture
+
+        return registered_lectures
+
+
+    def get_fall_lectures(self):
+
+        fall_lectures = []
+
+        registered_lectures = self.get_lectures()
+        
+        for lecture in registered_lectures:
+            if lecture.semester_id == 0:
+                fall_lectures.append(lecture)
+
+        return fall_lectures
+
+    def get_winter_lectures(self):
+
+        winter_lectures = []
+        
+        registered_lectures = self.get_lectures()
+
+        for lecture in registered_lectures:
+            if lecture.semester_id == 1:
+                winter_lectures.append(lecture)
+
+        return winter_lectures
+
+    def get_summer_lectures(self):
+        
+        summer_lectures = []
+
+        registered_lectures = self.get_lectures()
+
+        for lecture in registered_lectures:
+            if lecture.semester_id == 2:
+                summer_lectures.append(lecture)
+
+        return summer_lectures
+
+
+    def get_labs(self):
         labs = []
         lectures = self.get_lectures()
 
@@ -38,7 +79,7 @@ class Student(Abstract_Base):
         if(current_app):
             return labs
 
-    def get_tutorials():
+    def get_tutorials(self):
         tutorials = []
         lectures = self.get_lectures()
 

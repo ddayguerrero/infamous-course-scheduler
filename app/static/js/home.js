@@ -5,7 +5,7 @@ $( document ).ready(function() {
     $("#fall").click(function(e) {
         e.preventDefault()      
         $.ajax({
-            url: '/fall_lectures',
+            url: '/student_fall_lectures',
             type: 'POST',
             dataType: "json",
             error: function(error) {
@@ -13,7 +13,7 @@ $( document ).ready(function() {
             },
             success: function(data) {
                 $.each(data.lectures, function(idx, lecture) {
-                 console.log(lecture);
+                    console.log(lecture);
               });
             }
         });
