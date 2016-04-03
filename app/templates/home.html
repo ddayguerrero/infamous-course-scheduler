@@ -27,7 +27,7 @@
         <div class="headers">
 	  <!-- Add Course Button -->
           <div class="col-xs-6 text-center">
-            <a href="{{ url_for('auth.changeCalendar') }}">
+            <a  {% if active_page == "fall" %} href="{{ url_for('auth.change_fall') }}" {% elif active_page == "winter" %} href="{{ url_for('auth.change_winter') }}" {% elif active_page == "summer" %} href="{{ url_for('auth.change_summer') }}" {% endif %} >
               <button type="button" class="btn btn-default">Add Course</button>
             </a>
           </div>
@@ -55,26 +55,6 @@
               </div>
             </li>
           </ul>
-          <!--<table class="table table-striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Section</th>
-                <th>Time</th>
-                <th>Selection</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Random class</td>
-                <td>Random section</td>
-                <td>Random Time</td>
-                <td><input type="checkbox" value="class1"></td>
-              </tr>
-            </tbody>
-          </table>-->
         </div>
 	<!-- End of Course List -->
       </div>
