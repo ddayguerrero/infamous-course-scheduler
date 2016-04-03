@@ -211,7 +211,9 @@ class Lecture(Abstract_ClassType):
             'credits': course.credits,
             'start_time': self.start_time,
             'end_time': self.end_time,
-            'instructor': self.instructor
+            'instructor': self.instructor,
+            'day_one': self.day_one,
+            'day_two': self.day_two
         }
 
     def get_tutorials(self):
