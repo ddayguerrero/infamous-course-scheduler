@@ -11,9 +11,33 @@ function hoverOutLogo(){
 //////////
 $( document ).ready(function() {
   $('#addCourse').click(function(e) {
-    
     e.preventDefault();
-    $.ajax({
+
+    if($('.ui-page-active').attr('id') == 'change_fall') 
+    {
+      $.ajax({
+      url: '/',
+      type: 'POST',
+      dataType: "json",
+      error: function(error) {
+        console.log(error);
+      },
+      success: function(data) {
+        $.each(data.lectures, function(idx, lecture) {
+          $('#table tr:last').after('<tr>' + 
+            '<td>' + lecture.section + '</td>' + 
+            '<td>' + lecture.name + '</td>' + 
+            '<td>' + lecture.start_time + '</td>' + 
+            '<td>' + lecture.end_time + '</td>' + 
+            '<td>' + lecture.instructor + '</td>' +
+            '<td><input type="checkbox" value="class1"></td></tr>');
+        });
+      }
+    });
+    }
+    else if($('.ui-page-active').attr('id') == 'change_winter')
+    {
+      $.ajax({
       url: '/',
       type: 'POST',
       dataType: "json",
@@ -22,13 +46,26 @@ $( document ).ready(function() {
       },
       success: function(data) {
         $.each($.parseJSON(data), function(idx, obj) {
-          $('#table tr:last').after(
-            '<tr>' +
-              '<td>' + data.id + '<td>' +
-              '<td>' + data.name + '<td>' +
-            '<tr>')
+          
         });
       }
     });
+    }
+    else if($('.ui-page-active').attr('id') == 'change_summer')
+    {
+      $.ajax({
+      url: '/',
+      type: 'POST',
+      dataType: "json",
+      error: function(error) {
+        console.log(error);
+      },
+      success: function(data) {
+        $.each($.parseJSON(data), function(idx, obj) {
+          
+        });
+      }
+    });
+    }
   });
 });
