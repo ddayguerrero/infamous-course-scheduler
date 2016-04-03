@@ -82,10 +82,9 @@ def test():
 
 
 
-@mod_schedule.route('/fall_lectures', methods=['GET','POST'])
+@mod_schedule.route('/fall_lectures', methods=['GET'])
 def get_fall_lectures():
     semesters = db.session.query(Semester).filter_by(semester_id=0).all()
-
     lectures = []
     for semester in semesters:
         lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()

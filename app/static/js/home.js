@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     $('#homeCalendar').append(HTMLModule.createCalendar());
+    $('#courseList').append(HTMLModule.createCourseList());
 
     $("#fall").click(function(e) {
         e.preventDefault()      
