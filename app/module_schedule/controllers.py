@@ -82,13 +82,13 @@ def test():
 
 
 
-@mod_schedule.route('/fall_lectures', methods=['GET'])
+@mod_schedule.route('/fall_lectures', methods=['GET', 'POST'])
 def get_fall_lectures():
     semesters = db.session.query(Semester).filter_by(semester_id=0).all()
     lectures = []
     for semester in semesters:
         lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
-        if lecture is not None:
+        if lecture is not None and lecture.get_course() is not None:
             lectures.append(lecture)
 
     return jsonify(lectures=[lecture.serialize() for lecture in lectures])
