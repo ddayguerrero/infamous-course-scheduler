@@ -10,10 +10,12 @@ function hoverOutLogo(){
 // HTTP Requests for searching for courses
 //////////
 $( document ).ready(function() {
-  $('#addCourse').click(function(e) {
+  $('#add_course').click(function(e) {
     e.preventDefault();
 
-    if($('.ui-page-active').attr('id') == 'change_fall') 
+    console.log($('.active_page').attr('id'));
+    console.log("hello");
+    if($('.ui-page-active').attr('id') == 'fall') 
     {
       $.ajax({
       url: '/',
@@ -35,7 +37,7 @@ $( document ).ready(function() {
       }
     });
     }
-    else if($('.ui-page-active').attr('id') == 'change_winter')
+    else if($('.ui-page-active').attr('id') == 'winter')
     {
       $.ajax({
       url: '/',
@@ -51,7 +53,7 @@ $( document ).ready(function() {
       }
     });
     }
-    else if($('.ui-page-active').attr('id') == 'change_summer')
+    else if($('.ui-page-active').attr('id') == 'summer')
     {
       $.ajax({
       url: '/',
