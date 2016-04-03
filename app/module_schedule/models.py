@@ -101,12 +101,11 @@ class Course(Abstract_Course):
         return '<Course %r>' % (self.name)
 
     def serialize(self):
-        return 
-        {
+        return {
             'name': self.name,
             'program': self.program,
             'number': self.number,
-            'credits': credits,
+            'credits': credits
         }
 
 
@@ -161,15 +160,14 @@ class Lecture(Abstract_ClassType):
 
     def serialize(self):
         course = self.get_course()
-        return 
-        {
+        return {
             'name': course.name,
             'program': course.program,
             'number': course.number,
             'credits': course.credits,
             'start_time': self.start_time,
             'end_time': self.end_time,
-            'instructor': self.instructor,
+            'instructor': self.instructor
         }
 
     def get_tutorials(self):

@@ -12,7 +12,9 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-                console.log(data);
+                $.each(data.lectures, function(idx, lecture) {
+                 console.log(lecture);
+              });
             }
         });
     });
