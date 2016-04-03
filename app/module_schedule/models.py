@@ -186,13 +186,15 @@ class Lecture(Abstract_ClassType):
     instructor = db.Column(db.String(50))
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     semester_id = db.Column(db.Integer, db.ForeignKey('semesters.id'))
+    section = db.Column(db.String(50))
 
     tutorial = db.relationship("Tutorial")
     lab = db.relationship("Lab")
 
-    def __init__(self, instructor=None, course_id=None, semester_id=None, start_time=None, end_time=None, day_one=None, day_two=None):
+    def __init__(self, instructor=None, course_id=None, section=None, semester_id=None, start_time=None, end_time=None, day_one=None, day_two=None):
         self.instructor = instructor
         self.course_id = course_id
+        self.section = section
         self.semester_id = semester_id
         self.start_time = start_time
         self.end_time = end_time
@@ -205,6 +207,7 @@ class Lecture(Abstract_ClassType):
             'name': course.name,
             'program': course.program,
             'number': course.number,
+            'section': self.section,
             'credits': course.credits,
             'start_time': self.start_time,
             'end_time': self.end_time,

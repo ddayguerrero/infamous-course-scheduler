@@ -11,10 +11,10 @@ function hoverOutLogo(){
 //////////
 $( document ).ready(function() {
   $('#addCourse').click(function(e) {
+    
     e.preventDefault();
     $.ajax({
-      url: '/courses',
-      data: {courses : course},
+      url: '/',
       type: 'POST',
       dataType: "json",
       error: function(error) {

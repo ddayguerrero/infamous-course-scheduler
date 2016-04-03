@@ -19,7 +19,7 @@ $( document ).ready(function() {
         });
     });
 
-    $("#winter").click(function() {  
+    $("#winter").click(function(e) {  
         e.preventDefault()      
         $.ajax({
             url: '/student_winter_lectures',
@@ -36,7 +36,7 @@ $( document ).ready(function() {
         });     
     });
 
-    $("#summer").click(function() { 
+    $("#summer").click(function(e) { 
         e.preventDefault()      
         $.ajax({
             url: '/student_summer_lectures',
