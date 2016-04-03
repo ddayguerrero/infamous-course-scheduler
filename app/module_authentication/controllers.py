@@ -92,3 +92,17 @@ def summer():
 def changeCalendar():
 	form = CourseSelection()
 	return render_template('auth/changeCalendar.html', form = form)
+
+@mod_auth.route('/change_fall/', methods=['GET', 'POST'])
+def change_fall():
+	return render_template('auth/fallchangeCalendar.html', page="change_fall")
+
+
+@mod_auth.route('/change_winter/', methods=['GET', 'POST'])
+def change_winter():
+	return render_template('auth/winterchangeCalendar.html', page="change_winter")
+
+
+@mod_auth.route('/change_summer/', methods=['GET', 'POST'])
+def change_summer():
+	return render_template('auth/summerchangeCalendar.html', page="change_summer")

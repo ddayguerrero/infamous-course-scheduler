@@ -4,14 +4,13 @@ var HTMLModule = (function(){
 	createCourseList : createCourseList
     };
     
-    function createCalendar(){
+    function createCalendar(listOfClasses){
 	var tbl  = document.createElement('table');
 	var head = document.createElement('thead');
 	var headRow = document.createElement('tr');
 	var tbody = document.createElement('tbody');
 	let daysOfWeek = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 	var row, dayHeader;
-
 	var createCells = function(days){
 	    for (var i = 0; i < days.length + 1 ; i++){
 		dayHeader = document.createElement('th');
@@ -27,21 +26,29 @@ var HTMLModule = (function(){
 
 	var createTimeSlots = function(){
 	    var tr, td, min, hour;
-	    for (var i = 0; i < 52; i++){
+	    for (var i = 0; i < 52; i++){ //rows
 		row = document.createElement('tr');
-		for (var j = 0; j < daysOfWeek.length + 1; j++){
+		for (var j = 0; j < daysOfWeek.length + 1; j++){ //column
 		    td = document.createElement('td');
-		    if(j==0){
-			hour = 8+Math.floor(i/4);
-			min = (i%4)*15;
-			if(min!=0) td.innerHTML = hour+":"+min;
-			else td.innerHTML = hour+":00";
-			td.style.border = '1px solid black';
-			row.appendChild(td);
-		    }
-		    else td.innerHTML = " ";
-		    td.style.border = '1px solid black';
-		    row.appendChild(td); 
+		    if(j==0){//hours and min
+				hour = 8+Math.floor(i/4);
+				min = (i%4)*15;
+				if(min!=0)
+					td.innerHTML = hour+":"+min;
+				else td.innerHTML = hour+":00";
+				td.style.border = '1px solid black';
+				row.appendChild(td);
+		    }		    
+		    else{
+		    	for
+		    	var lecture1;
+		     $.each(listOfClasses.lectures, function(idx, lecture) {
+                lecture1=lecture
+              });
+		     td.innerHTML = lecture1.name;
+		    } 
+		    //td.style.border = '1px solid black';
+		    //row.appendChild(td); 
 		}
 		tbody.appendChild(row);
 	    }
