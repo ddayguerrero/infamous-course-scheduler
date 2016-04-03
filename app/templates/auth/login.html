@@ -2,7 +2,6 @@
 {% block title %}Login{% endblock %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="../../static/css/loginStyle.css">
-<script type="text/javascript" src="login.js"></script>
 <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 {% endblock %}
@@ -19,11 +18,9 @@
 			<div class="main-login-form">
 				<div class="login-group">
 					{% with messages = get_flashed_messages() %}
-  					{% if messages %}
+  					{% if session['user_name'] %}
     					<ul class="form-control">
-    						{% for message in messages %}
-      						<li>{{ message }}</li>
-    						{% endfor %}
+      						<li>Welcome {{ session['user_name'] }}</li>
     					</ul>
   					{% endif %}
 					{% endwith %}
