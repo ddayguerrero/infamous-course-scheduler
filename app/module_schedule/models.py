@@ -106,7 +106,7 @@ class Course(Abstract_Course):
             'name': self.name,
             'program': self.program,
             'number': self.number,
-            'credits': credits
+            'credits': credits,
         }
 
 
@@ -159,11 +159,27 @@ class Lecture(Abstract_ClassType):
         self.day_one = day_one
         self.day_two = day_two
 
-    def get_tutorials():
+    def serialize(self):
+        course = self.get_course()
+        return 
+        {
+            'name': course.name,
+            'program': course.program,
+            'number': course.number,
+            'credits': course.credits,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'instructor': self.instructor,
+        }
+
+    def get_tutorials(self):
         return db.session.query(Tutorial).filter_by(lecture_id=self.id).all()
 
+    def get_course(self):
+        return db.session.query(Course).filter_by(id=self.course_id).first()
+
     def __repr__(self):
-        return '<Lecture %r>' % (self.course_id)
+        return '<Lecture %r>' % (self.instructor)
 
 
 class AcademicRecord(Abstract_Base):
@@ -184,11 +200,11 @@ class AcademicRecord(Abstract_Base):
 class Semester(Abstract_Base):
     __tablename__ = 'semesters'
     semester_id = db.Column(db.String(50))
-    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
 
-    def __init__(self, semester_id=None, course_id=None):
+    def __init__(self, semester_id=None, lecture_id=None):
         self.semester_id = semester_id
-        self.course_id = course_id
+        self.lecture_id = lecture_id
 
     def __repr__(self):
         return '<Semester %r>' % (self.id)

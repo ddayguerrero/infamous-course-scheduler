@@ -81,17 +81,19 @@
     </div>
     <script>
       $( document ).ready(function() {
-        $("#fall").click(function() {     
-            fall_courses = null;  
+        $("#fall").click(function(e) {
+            e.preventDefault()      
             $.ajax({
-                url: '/test',
+                url: '/fall_lectures',
                 type: 'POST',
                 dataType: "json",
                 error: function(error) {
-                   alert('error');
+                   console.log(error);
                 },
                 success: function(data) {
-                  fall_courses = data;
+                  $.each(data.lectures, function(idx, lecture) {
+                    console.log(lecture);
+                  });
                 }
               });
         });
