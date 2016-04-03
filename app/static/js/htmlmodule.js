@@ -39,18 +39,7 @@ var HTMLModule = (function(){
 				td.style.border = '1px solid black';
 				row.appendChild(td);
 		    }		    
-		    else{
-		    	if(j==1){
-		    		for(lecture in listOfClasses){
-		    			if(lecture.dayOne=='Monday'){
-		    				td.innerHTML = " ";
-		    			}
-		    		}
-		    	}	
-		    	var lecture1;
-		     $.each(listOfClasses.lectures, function(idx, lecture) {
-                lecture1=lecture
-              });
+		    else{ //days of the week
 		     td.innerHTML = " ";
 		    } 
 		    //td.style.border = '1px solid black';
@@ -59,6 +48,22 @@ var HTMLModule = (function(){
 		tbody.appendChild(row);
 	    }
 	}
+
+ 	var checkAndPrintCourse = function(dayOftheWeek,lecture){
+
+				for(lecture in listOfClasses){
+		    			if(lecture.dayOne=='M'){
+		    				td.innerHTML = lecture.name + " " + lecture.number;
+		    			}
+		    			var lecture1;
+		     $.each(listOfClasses.lectures, function(idx, lecture) {
+                lecture1=lecture
+              });
+		    		}
+		    }	
+		    	
+	}
+
 
 	createCells(daysOfWeek);
 	createTimeSlots();
