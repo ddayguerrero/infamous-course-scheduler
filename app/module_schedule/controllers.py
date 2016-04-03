@@ -5,38 +5,6 @@ mod_schedule = Blueprint('schedule', __name__)
 
 # Test Data - to be removed later
 # JSON stores values in key-value pairs
-courses = [
-    {
-        'id': 1,
-        'program': 'ENGR',
-        'number': 201,
-        'credits': 1.5,
-        'name': "Professional Practice and Responsibility"
-    },
-    {
-        'id': 2,
-        'program': 'ENGR',
-        'number': 202,
-        'credits': 3,
-        'name': 'Sustainable Development and Environmental Stewardship'
-    }
-]
-
-schedules = [
-    {
-        'id': 1,
-        'name': "Lerrad"
-    },
-    {
-        'id': 2,
-        'name': "Neomis"
-    },
-    {
-        'id': 3,
-        'name': "Divad"
-    }
-]
-
 lectures = [
     {
         'instructor': 'Don Davis',
