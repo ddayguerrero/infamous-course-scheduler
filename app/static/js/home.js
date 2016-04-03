@@ -19,9 +19,37 @@ $( document ).ready(function() {
         });
     });
 
-    $("#winter").click(function() {       
+    $("#winter").click(function() {  
+        e.preventDefault()      
+        $.ajax({
+            url: '/student_winter_lectures',
+            type: 'POST',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+                $.each(data.lectures, function(idx, lecture) {
+                    console.log(lecture);
+              });
+            }
+        });     
     });
 
-    $("#summer").click(function() {       
+    $("#summer").click(function() { 
+        e.preventDefault()      
+        $.ajax({
+            url: '/student_summer_lectures',
+            type: 'POST',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+                $.each(data.lectures, function(idx, lecture) {
+                    console.log(lecture);
+              });
+            }
+        });      
     });
 });

@@ -226,11 +226,13 @@ class AcademicRecord(Abstract_Base):
     user_id = db.Column(db.Integer)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
     lecture_status = db.Column(db.String(50))
+    year = db.Column(db.Integer)
 
-    def __init__(self, user_id=None, lecture_id=None, lecture_status=None):
+    def __init__(self, user_id=None, lecture_id=None, lecture_status=None, year=None):
         self.user_id = user_id
         self.lecture_id = lecture_id
         self.lecture_status = lecture_status
+        self.year = year
 
     def __repr__(self):
         return '<AcademicRecord %r>' % (self.id)

@@ -10,14 +10,15 @@ function hoverOutLogo(){
 // HTTP Requests for searching for courses
 //////////
 $( document ).ready(function() {
-  $('#addCourse').click(function() {
+  $('#addCourse').click(function(e) {
+    e.preventDefault();
     $.ajax({
       url: '/courses',
       data: {courses : course},
       type: 'POST',
       dataType: "json",
       error: function(error) {
-        console.log(error)
+        console.log(error);
       },
       success: function(data) {
         $.each($.parseJSON(data), function(idx, obj) {
