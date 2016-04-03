@@ -39,13 +39,19 @@ var HTMLModule = (function(){
 				td.style.border = '1px solid black';
 				row.appendChild(td);
 		    }		    
-		    else{ /*
-		    	for
+		    else{
+		    	if(j==1){
+		    		for(lecture in listOfClasses){
+		    			if(lecture.dayOne=='Monday'){
+		    				td.innerHTML = " ";
+		    			}
+		    		}
+		    	}	
 		    	var lecture1;
 		     $.each(listOfClasses.lectures, function(idx, lecture) {
                 lecture1=lecture
               });
-		     td.innerHTML = lecture1.name;*/
+		     td.innerHTML = " ";
 		    } 
 		    //td.style.border = '1px solid black';
 		    //row.appendChild(td); 
