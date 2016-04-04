@@ -13,17 +13,17 @@
       <div class="row">
         <form id="verifyCourse-form" class="text-left" method="POST" role="form" onsubmit="return false">
           <div class="form-group">
-            <input type="text" class="form-group" name="courseSearch"></input>
+            <input type="text" class="form-group" id="searchBox" name="courseSearch"></input>
           </div>
-          <button type="submit" id="addCourse">Search Course</button>
         </form>
         <button id="add">Add Selection</button>
       </div>
       <div class="col-sm-12 courseList">
         <table class="table table-striped" id="table">
-          <thead>
+          <thead id="head">
             <tr>
               <th>#</th>
+              <th>Code</th>
               <th>Name</th>
               <th>Start Time</th>
               <th>End Time</th>
@@ -31,16 +31,7 @@
               <th>Selection</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td id="courseIdNum"></td>
-              <td id="courseName"></td>
-              <td id="startTime"></td>
-              <td id="endTime"></td>
-              <td id="instructor"></td>
-              <td id="selection"></td>
-              <td><input type="checkbox" value="class1"></td>
-            </tr>
+          <tbody id="body">
           </tbody>
         </table>
       </div>

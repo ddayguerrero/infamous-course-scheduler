@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, jsonify, abort, request, current_app, session, json
+from flask import Flask, Blueprint, jsonify, abort, request, current_app, session, json, request
 
 app = Flask(__name__)
 mod_schedule = Blueprint('schedule', __name__)
@@ -106,39 +106,78 @@ def student_summer_lectures():
 
 @mod_schedule.route('/fall_lectures', methods=['GET', 'POST'])
 def get_fall_lectures():
-    semesters = db.session.query(Semester).filter_by(semester_id=0).all()
-    lectures = []
-    for semester in semesters:
-        lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
-        if lecture is not None and lecture.get_course() is not None:
-            lectures.append(lecture)
+	lectures = []
+	semesters = db.session.query(Semester).filter_by(semester_id=0).all()
+	for semester in semesters:
+	    lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
+	    if lecture is not None and lecture.get_course() is not None:
+	        lectures.append(lecture)
 
-    return jsonify(lectures=[lecture.serialize() for lecture in lectures])
+	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
+
+@mod_schedule.route('/fall_lectures_search', methods=['GET', 'POST'])
+def get_fall_lectures_search():
+	lectures = []
+	search = request.form['search']
+	semesters = db.session.query(Semester).filter_by(semester_id=0).all()
+	for semester in semesters:
+		lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
+		if lecture is not None and lecture.get_course() is not None:
+			if search.upper() in lecture.get_course().full_name:
+				lectures.append(lecture)
+
+	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
 
 @mod_schedule.route('/winter_lectures', methods=['GET', 'POST'])
 def get_winter_lectures():
-    semesters = db.session.query(Semester).filter_by(semester_id=1).all()
-    lectures = []
-    for semester in semesters:
-        lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
-        if lecture is not None and lecture.get_course() is not None:
-            lectures.append(lecture)
+	lectures = []
+	semesters = db.session.query(Semester).filter_by(semester_id=1).all()
+	for semester in semesters:
+	    lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
+	    if lecture is not None and lecture.get_course() is not None:
+	        lectures.append(lecture)
 
-    return jsonify(lectures=[lecture.serialize() for lecture in lectures])
+	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
+
+
+@mod_schedule.route('/winter_lectures_search', methods=['GET', 'POST'])
+def get_winter_lectures_search():
+	lectures = []
+	search = request.form['search']
+	semesters = db.session.query(Semester).filter_by(semester_id=1).all()
+	for semester in semesters:
+		lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
+		if lecture is not None and lecture.get_course() is not None:
+			if search.upper() in lecture.get_course().full_name:
+				lectures.append(lecture)
+
+	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
 
 @mod_schedule.route('/summer_lectures', methods=['GET', 'POST'])
 def get_summer_lectures():
-    semesters = db.session.query(Semester).filter_by(semester_id=2).all()
+	lectures = []
+	semesters = db.session.query(Semester).filter_by(semester_id=2).all()
+	for semester in semesters:
+	    lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
+	    if lecture is not None and lecture.get_course() is not None:
+	        lectures.append(lecture)
 
-    lectures = []
-    for semester in semesters:
-        lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
-        if lecture is not None and lecture.get_course() is not None:
-            lectures.append(lecture)
+	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
-    return jsonify(lectures=[lecture.serialize() for lecture in lectures])
+@mod_schedule.route('/summer_lectures_search', methods=['GET', 'POST'])
+def get_summer_lectures_search():
+	lectures = []
+	search = request.form['search']
+	semesters = db.session.query(Semester).filter_by(semester_id=2).all()
+	for semester in semesters:
+		lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
+		if lecture is not None and lecture.get_course() is not None:
+			if search.upper() in lecture.get_course().full_name:
+				lectures.append(lecture)
+
+	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
 # Gets the lab for a specified lecture
 @mod_schedule.route('/labs', methods=['GET','POST'])
