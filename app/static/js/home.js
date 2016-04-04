@@ -1,6 +1,8 @@
 $( document ).ready(function() {
-    $("#fall").click(function(e) {
-        e.preventDefault()      
+    var url = window.location.pathname;
+    console.log(url);
+    if(url == '/fall/')
+    {      
         $.ajax({
             url: '/fall_lectures',
             type: 'POST',
@@ -9,6 +11,7 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
+                $("#fall").unbind('click');
                 $.each(data.lectures, function(idx, lecture) {
                     console.log(lecture);
               });
@@ -16,10 +19,9 @@ $( document ).ready(function() {
             $('#courseList').append(HTMLModule.createCourseList(data));
             }
         });
-    });
-    
-    $("#winter").click(function(e) {  
-        e.preventDefault()      
+    }
+    else if(url == '/winter/')
+    {
         $.ajax({
             url: '/student_winter_lectures',
             type: 'POST',
@@ -28,15 +30,15 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
+                $("#winter").unbind('click');
                 $.each(data.lectures, function(idx, lecture) {
                     console.log(lecture);
               });
             }
-        });     
-    });
-
-    $("#summer").click(function(e) { 
-        e.preventDefault()      
+        }); 
+    }
+    else if(url == '/summer/')
+    {
         $.ajax({
             url: '/student_summer_lectures',
             type: 'POST',
@@ -45,10 +47,11 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
+                $("#summer").unbind('click');
                 $.each(data.lectures, function(idx, lecture) {
                     console.log(lecture);
               });
             }
-        });      
-    });
+        }); 
+    }
 });
