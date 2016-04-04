@@ -108,6 +108,11 @@ var HTMLModule = (function(){
 	td.innerHTML = d.section;
 	row.appendChild(td);
 	td = document.createElement('td');
+	td.className = "code";
+	td.innerHTML = d.full_name;
+	row.appendChild(td);
+	$('#fallList').add(row);
+	td = document.createElement('td');
 	td.className = "name";
 	td.innerHTML = d.name;
 	row.appendChild(td);
