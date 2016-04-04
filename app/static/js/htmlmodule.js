@@ -101,8 +101,38 @@ var HTMLModule = (function(){
 	return list;
     }
 
-    function createSearchList(lectures){
+    function createSearchList(d){
 	var row = document.createElement('tr');
 	var td = document.createElement('td');
+	td.className = "section";
+	td.innerHTML = d.section;
+	row.appendChild(td);
+	td = document.createElement('td');
+	td.className = "name";
+	td.innerHTML = d.name;
+	row.appendChild(td);
+	$('#fallList').add(row);
+	td = document.createElement('td');
+	td.className = "startTime";
+	td.innerHTML = d.start_time;
+	row.appendChild(td);
+	$('#fallList').add(row);
+	td = document.createElement('td');
+	td.className = "endTime";
+	td.innerHTML = d.end_time;
+	row.appendChild(td);
+	$('#fallList').add(row);
+	td = document.createElement('td');
+	td.className = "instructor";
+	td.innerHTML = d.instructor;
+	row.appendChild(td);
+	$('#fallList').add(row);
+	td = document.createElement('td');
+	input = document.createElement('input');
+	input.setAttribute('type', 'checkbox');
+	input.setAttribute('value', 'class1');
+	td.appendChild(input);
+	row.appendChild(td);
+	return row;	
     }
 }());
