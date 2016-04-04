@@ -14,9 +14,23 @@ $( document ).ready(function() {
           console.log(error);
       },
       success: function(data) {
-	  data.lectures.forEach((d)=>{
-	      $('#courseList').append(HTMLModule.createSearchList(d));
-	  });
+        $('#body').empty();
+        $.each(data.lectures, function(idx, lecture) {
+          var entry = '<tr>' + 
+            '<td>' + lecture.section + '</td>' + 
+            '<td>' + lecture.full_name + '</td>' +
+            '<td>' + lecture.name + '</td>' + 
+            '<td>' + lecture.start_time + '</td>' + 
+            '<td>' + lecture.end_time + '</td>' + 
+            '<td>' + lecture.instructor + '</td>' +
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
+          $('#body').append(entry);
+        });
+	     data.lectures.forEach((d)=>{
+	        $('#courseList').append(HTMLModule.createSearchList(d));
+	     });
       }
     });
   }
@@ -31,9 +45,23 @@ $( document ).ready(function() {
         console.log(error);
       },
       success: function(data) {
-	  data.lectures.forEach((d)=>{
-	      $('#courseList').append(HTMLModule.createSearchList(d));
-	  });
+        $('#body').empty();
+        $.each(data.lectures, function(idx, lecture) {
+          var entry = '<tr>' + 
+            '<td>' + lecture.section + '</td>' + 
+            '<td>' + lecture.full_name + '</td>' +
+            '<td>' + lecture.name + '</td>' + 
+            '<td>' + lecture.start_time + '</td>' + 
+            '<td>' + lecture.end_time + '</td>' + 
+            '<td>' + lecture.instructor + '</td>' +
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
+          $('#body').append(entry);
+        });
+	       data.lectures.forEach((d)=>{
+	         $('#courseList').append(HTMLModule.createSearchList(d));
+	       });
       }
     });
   }
@@ -48,9 +76,23 @@ $( document ).ready(function() {
         console.log(error);
       },
       success: function(data) {
+        $('#body').empty();
+        $.each(data.lectures, function(idx, lecture) {
+          var entry = '<tr>' + 
+            '<td>' + lecture.section + '</td>' + 
+            '<td>' + lecture.full_name + '</td>' +
+            '<td>' + lecture.name + '</td>' + 
+            '<td>' + lecture.start_time + '</td>' + 
+            '<td>' + lecture.end_time + '</td>' + 
+            '<td>' + lecture.instructor + '</td>' +
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
+          $('#body').append(entry);
+        });
         data.lectures.forEach((d)=>{
-	      $('#courseList').append(HTMLModule.createSearchList(d));
-	});
+	         $('#courseList').append(HTMLModule.createSearchList(d));
+	       });
       }
     });
   }
@@ -90,7 +132,9 @@ $( document ).ready(function() {
               '<td>' + lecture.start_time + '</td>' + 
               '<td>' + lecture.end_time + '</td>' + 
               '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+              '<td><input type="checkbox" value="class1"' +
+              'id="' + lecture.full_name + '/' + lecture.section +
+              '"></td></tr>';
             $('#body').append(entry);
           });
         }
@@ -119,7 +163,9 @@ $( document ).ready(function() {
               '<td>' + lecture.start_time + '</td>' + 
               '<td>' + lecture.end_time + '</td>' + 
               '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+              '<td><input type="checkbox" value="class1"' +
+              'id="' + lecture.full_name + '/' + lecture.section +
+              '"></td></tr>';
             $('#body').append(entry);
           });
         }
@@ -148,14 +194,54 @@ $( document ).ready(function() {
               '<td>' + lecture.start_time + '</td>' + 
               '<td>' + lecture.end_time + '</td>' + 
               '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+              '<td><input type="checkbox" value="class1"' +
+              'id="' + lecture.full_name + '/' + lecture.section +
+              '"></td></tr>';
             $('#body').append(entry);
           });
         }
       });
     }
   }
-    function hoverInLogo(){
+
+  $('#add').click(function(){
+    var selected = [];
+    $('td input:checkbox', $('#table')).each(function() {
+        if($(this).is(":checked"))
+        {
+          selected.push($(this).attr('id'));
+        }
+    });
+
+    if(selected.length === 0)
+    {
+      alert('no courses were selected');
+    }
+    else
+    {
+      $.each(selected, function(i, id) {
+        console.log(id);
+        $.ajax({
+          url: '/add_lecture',
+          type: 'POST',
+          cache: false,
+          data: {
+            lecture_id: id
+          },
+          error: function(error) {
+            console.log(error);
+          },
+          success: function(data) {
+            console.log(data);
+          }
+        });
+      });
+    }
+  });
+
+
+
+  function hoverInLogo(){
 	     document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
     }
 

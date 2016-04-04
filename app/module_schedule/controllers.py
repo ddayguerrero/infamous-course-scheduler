@@ -1,4 +1,6 @@
 from flask import Flask, Blueprint, jsonify, abort, request, current_app, session, json, request
+import logging
+
 
 app = Flask(__name__)
 mod_schedule = Blueprint('schedule', __name__)
@@ -43,6 +45,26 @@ def get_course(course_id):
 
 def get_lecture(lecture_id):
     return db.session.query(Lecture).filter_by(id=lecture_id).first()
+
+
+
+@mod_schedule.route('/add_lecture', methods=['GET', 'POST'])
+def add_lecture():
+	student = get_student()
+	info = request.form['lecture_id']
+	info_split = info.split('/')
+	lecture_code = info_split[0]
+	lecture_section = info_split[1]
+
+	course = db.session.query(Course).filter_by(full_name=lecture_code).first()
+	lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
+
+	if student.register_lecture(lecture.id):
+		return 'lecture added successfully.'
+	else:
+		return 'lecture not added.'
+
+
 
 #Gets all the lectures for a specified semester (id from 1-4)
 @mod_schedule.route('/lectures_semester', methods=['POST'])
