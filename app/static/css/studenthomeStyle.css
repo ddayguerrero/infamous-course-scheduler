@@ -18,8 +18,18 @@ body {
 	padding:40px;
 }
 
+#head, #body {
+	display: block;
+	width: 500px;
+}
+
+#body {
+	height: 500px;
+	overflow-y: auto;
+	overflow-x: auto;
+}
+
 .courseList{
-	overflow: scroll;
 	padding-top: 10px;
 }
 

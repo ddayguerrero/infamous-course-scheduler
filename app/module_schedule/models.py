@@ -126,6 +126,7 @@ class Student(Abstract_Base):
 
 class Course(Abstract_Course):
     __tablename__ = 'courses'
+    full_name = db.Column(db.String(50))
     requisite = db.Column(db.Integer, db.ForeignKey('mappings.id'))
     lectures = db.relationship("Lecture")
 
@@ -134,6 +135,7 @@ class Course(Abstract_Course):
         self.credits = credits
         self.number = number
         self.name = name
+        self.full_name = self.program + str(self.number)
 
     def get_lectures():
         return db.session.query(Lecture).filter_by(course_id=self.id).all()
@@ -204,6 +206,7 @@ class Lecture(Abstract_ClassType):
     def serialize(self):
         course = self.get_course()
         return {
+            'full_name': course.full_name,
             'name': course.name,
             'program': course.program,
             'number': course.number,
