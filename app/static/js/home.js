@@ -14,7 +14,7 @@ $( document ).ready(function() {
                 $("#fall").unbind('click');
                 $.each(data.lectures, function(idx, lecture) {
                     console.log(lecture);
-              });
+		});
             $('#homeCalendar').append(HTMLModule.createCalendar(data));
             $('#courseList').append(HTMLModule.createCourseList(data));
             }
