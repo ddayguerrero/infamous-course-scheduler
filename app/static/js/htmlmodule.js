@@ -131,6 +131,8 @@ var HTMLModule = (function(){
 	input = document.createElement('input');
 	input.setAttribute('type', 'checkbox');
 	input.setAttribute('value', 'class1');
+	var selectionId = d.name + '/' +  d.section;
+	input.setAttribute('id', selectionId);
 	td.appendChild(input);
 	row.appendChild(td);
 	return row;	
