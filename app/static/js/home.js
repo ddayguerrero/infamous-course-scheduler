@@ -4,7 +4,7 @@ $( document ).ready(function() {
     if(url == '/fall/')
     {      
         $.ajax({
-            url: '/fall_lectures',
+            url: '/student_fall_lectures',
             type: 'POST',
             dataType: "json",
             error: function(error) {
