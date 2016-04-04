@@ -92,7 +92,7 @@ class Student(Abstract_Base):
             return tutorials
 
 
-    def register_lecture(lecture_id):
+    def register_lecture(self, lecture_id):
         lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
         mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
         prerequisites = []
@@ -107,7 +107,7 @@ class Student(Abstract_Base):
         db.session.commit()
         return True
 
-    def completed_course(course_id):
+    def completed_course(self, course_id):
         academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
         for ac in academic_records:
 
@@ -278,7 +278,7 @@ class Mapping(Abstract_Base):
     course_req_type = db.Column(db.Integer)
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
 
-    def __init__(self, course_req_id=None, course_req_type=None, course_id=None):
+    def __init__(self, course_id=None, course_req_type=None, course_req_id=None):
         self.course_req_id = course_req_id
         self.course_req_type = course_req_type
         self.course_id = course_id

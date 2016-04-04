@@ -7,88 +7,59 @@ $( document ).ready(function() {
   {
     $.ajax({
       url: '/fall_lectures',
-      type: 'POST',
+      type: 'GET',
       cache: false,
       dataType: "json",
       error: function(error) {
-          console.log(error);
+        console.log(error);
       },
       success: function(data) {
-        $.each(data.lectures, function(idx, lecture) {
-                    console.log(lecture);
-              });
-        $('#body').empty();
-        $.each(data.lectures, function(idx, lecture) {
-          var entry = '<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.full_name + '</td>' +
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>';
-          $('#body').append(entry);
-        });
-	     HTMLModule.createSearchList(data);
+       $('#courseList').empty();
+       data.lectures.forEach((d)=>{
+        $('#courseList').append(HTMLModule.createSearchList(d));
+      });
+       HTMLModule.createSearchList(data);
        $('#homeCalendar').append(HTMLModule.createCalendar(data));
-      }
-    });
+     }
+   });
   }
   else if(url == '/change_winter/')
   {
     $.ajax({
       url: '/winter_lectures',
-      type: 'POST',
+      type: 'GET',
       cache: false,
       dataType: "json",
       error: function(error) {
         console.log(error);
       },
       success: function(data) {
-        $('#body').empty();
-        $.each(data.lectures, function(idx, lecture) {
-          var entry = '<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.full_name + '</td>' +
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>';
-          $('#body').append(entry);
-        });
-        HTMLModule.createSearchList(data);
-        $('#homeCalendar').append(HTMLModule.createCalendar(data));
-      }
-    });
+       $('#courseList').empty();
+       data.lectures.forEach((d)=>{
+        $('#courseList').append(HTMLModule.createSearchList(d));
+      });
+       $('#homeCalendar').append(HTMLModule.createCalendar(data));
+     }
+   });
   }
   else if(url == '/change_summer/')
   {
     $.ajax({
       url: '/summer_lectures',
-      type: 'POST',
+      type: 'GET',
       cache: false,
       dataType: "json",
       error: function(error) {
         console.log(error);
       },
       success: function(data) {
-        $('#body').empty();
-        $.each(data.lectures, function(idx, lecture) {
-          var entry = '<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.full_name + '</td>' +
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>';
-          $('#body').append(entry);
-        });
-        HTMLModule.createSearchList(data);
-        $('#homeCalendar').append(HTMLModule.createCalendar(data));
-      }
-    });
+       $('#courseList').empty();
+       data.lectures.forEach((d)=>{
+        $('#courseList').append(HTMLModule.createSearchList(d));
+      });
+       $('#homeCalendar').append(HTMLModule.createCalendar(data));
+     }
+   });
   }
 
   var typingTimer;                
@@ -97,7 +68,7 @@ $( document ).ready(function() {
   $('#searchBox').keyup(function(){
     clearTimeout(typingTimer);
     if ($('#searchBox').val) {
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
     }
   });
 
@@ -120,13 +91,15 @@ $( document ).ready(function() {
           $('#body').empty()
           $.each(data.lectures, function(idx, lecture) {
             var entry = '<tr>' + 
-              '<td>' + lecture.section + '</td>' + 
-              '<td>' + lecture.full_name + '</td>' +
-              '<td>' + lecture.name + '</td>' + 
-              '<td>' + lecture.start_time + '</td>' + 
-              '<td>' + lecture.end_time + '</td>' + 
-              '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+            '<td>' + lecture.section + '</td>' + 
+            '<td>' + lecture.full_name + '</td>' +
+            '<td>' + lecture.name + '</td>' + 
+            '<td>' + lecture.start_time + '</td>' + 
+            '<td>' + lecture.end_time + '</td>' + 
+            '<td>' + lecture.instructor + '</td>' +
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
             $('#body').append(entry);
           });
         }
@@ -149,13 +122,15 @@ $( document ).ready(function() {
           $('#body').empty()
           $.each(data.lectures, function(idx, lecture) {
             var entry = '<tr>' + 
-              '<td>' + lecture.section + '</td>' + 
-              '<td>' + lecture.full_name + '</td>' +
-              '<td>' + lecture.name + '</td>' + 
-              '<td>' + lecture.start_time + '</td>' + 
-              '<td>' + lecture.end_time + '</td>' + 
-              '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+            '<td>' + lecture.section + '</td>' + 
+            '<td>' + lecture.full_name + '</td>' +
+            '<td>' + lecture.name + '</td>' + 
+            '<td>' + lecture.start_time + '</td>' + 
+            '<td>' + lecture.end_time + '</td>' + 
+            '<td>' + lecture.instructor + '</td>' +
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
             $('#body').append(entry);
           });
         }
@@ -178,25 +153,65 @@ $( document ).ready(function() {
           $('#body').empty()
           $.each(data.lectures, function(idx, lecture) {
             var entry = '<tr>' + 
-              '<td>' + lecture.section + '</td>' + 
-              '<td>' + lecture.full_name + '</td>' +
-              '<td>' + lecture.name + '</td>' + 
-              '<td>' + lecture.start_time + '</td>' + 
-              '<td>' + lecture.end_time + '</td>' + 
-              '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+            '<td>' + lecture.section + '</td>' + 
+            '<td>' + lecture.full_name + '</td>' +
+            '<td>' + lecture.name + '</td>' + 
+            '<td>' + lecture.start_time + '</td>' + 
+            '<td>' + lecture.end_time + '</td>' + 
+            '<td>' + lecture.instructor + '</td>' +
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
             $('#body').append(entry);
           });
         }
       });
     }
   }
-    function hoverInLogo(){
-	     document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
-    }
 
-    function hoverOutLogo(){
-	     document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
+  $('#add').click(function(){
+    var selected = [];
+    $('td input:checkbox', $('#table')).each(function() {
+      if($(this).is(":checked"))
+      {
+        selected.push($(this).attr('id'));
+      }
+    });
+
+    if(selected.length === 0)
+    {
+      alert('no courses were selected');
     }
+    else
+    {
+      $.each(selected, function(i, id) {
+        console.log(id);
+        $.ajax({
+          url: '/add_lecture',
+          type: 'POST',
+          cache: false,
+          data: {
+            lecture_id: id
+          },
+          error: function(error) {
+            console.log(error);
+          },
+          success: function(data) {
+            console.log(data);
+          }
+        });
+      });
+    }
+  });
+
+
+
+  function hoverInLogo(){
+    document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
+  }
+
+  function hoverOutLogo(){
+    document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
+  }
 
 });
