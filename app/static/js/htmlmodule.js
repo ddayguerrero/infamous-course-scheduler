@@ -63,7 +63,7 @@ var HTMLModule = (function(){
 	return tbl;
     }
 
-    function createCourseList(){
+    function createCourseList(d){
 	var list = document.createElement('ul');
 	list.className="courses"
 	var courseSlot = document.createElement('li');
