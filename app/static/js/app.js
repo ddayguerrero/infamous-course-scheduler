@@ -1,17 +1,8 @@
-function hoverInLogo(){
-  document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
-}
-
-function hoverOutLogo(){
-  document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
-}
-
 //////////
 // HTTP Requests for searching for courses
 //////////
 $( document ).ready(function() {
   var url = window.location.pathname;
-  console.log(url);
   if(url == '/change_fall/')
   {
     $.ajax({
@@ -19,18 +10,10 @@ $( document ).ready(function() {
       type: 'POST',
       dataType: "json",
       error: function(error) {
-        console.log(error);
+          console.log(error);
       },
       success: function(data) {
-        $.each(data.lectures, function(idx, lecture) {
-          $('#table tr:last').after('<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>');
-        });
+	  HTMLModule.createSearchList(data);
       }
     });
   }
@@ -44,15 +27,7 @@ $( document ).ready(function() {
         console.log(error);
       },
       success: function(data) {
-        $.each(data.lectures, function(idx, lecture) {
-          $('#table tr:last').after('<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>');
-        });
+        HTMLModule.createSearchList(data);
       }
     });
   }
@@ -66,16 +41,17 @@ $( document ).ready(function() {
         console.log(error);
       },
       success: function(data) {
-        $.each(data.lectures, function(idx, lecture) {
-          $('#table tr:last').after('<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>');
-        });
+        HTMLModule.createSearchList(data);
       }
     });
   }
+
+    function hoverInLogo(){
+	document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
+    }
+
+    function hoverOutLogo(){
+	document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
+    }
+
 });
