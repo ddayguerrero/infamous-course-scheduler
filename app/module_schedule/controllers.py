@@ -122,7 +122,7 @@ def get_winter_lectures():
     lectures = []
     for semester in semesters:
         lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
-        if lecture is not None:
+        if lecture is not None and lecture.get_course() is not None:
             lectures.append(lecture)
 
     return jsonify(lectures=[lecture.serialize() for lecture in lectures])
@@ -135,7 +135,7 @@ def get_summer_lectures():
     lectures = []
     for semester in semesters:
         lecture = db.session.query(Lecture).filter_by(id=semester.lecture_id).first()
-        if lecture is not None:
+        if lecture is not None and lecture.get_course() is not None:
             lectures.append(lecture)
 
     return jsonify(lectures=[lecture.serialize() for lecture in lectures])

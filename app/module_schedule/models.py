@@ -186,13 +186,15 @@ class Lecture(Abstract_ClassType):
     instructor = db.Column(db.String(50))
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     semester_id = db.Column(db.Integer, db.ForeignKey('semesters.id'))
+    section = db.Column(db.String(50))
 
     tutorial = db.relationship("Tutorial")
     lab = db.relationship("Lab")
 
-    def __init__(self, instructor=None, course_id=None, semester_id=None, start_time=None, end_time=None, day_one=None, day_two=None):
+    def __init__(self, instructor=None, course_id=None, section=None, semester_id=None, start_time=None, end_time=None, day_one=None, day_two=None):
         self.instructor = instructor
         self.course_id = course_id
+        self.section = section
         self.semester_id = semester_id
         self.start_time = start_time
         self.end_time = end_time
@@ -205,10 +207,13 @@ class Lecture(Abstract_ClassType):
             'name': course.name,
             'program': course.program,
             'number': course.number,
+            'section': self.section,
             'credits': course.credits,
             'start_time': self.start_time,
             'end_time': self.end_time,
-            'instructor': self.instructor
+            'instructor': self.instructor,
+            'day_one': self.day_one,
+            'day_two': self.day_two
         }
 
     def get_tutorials(self):
@@ -226,11 +231,13 @@ class AcademicRecord(Abstract_Base):
     user_id = db.Column(db.Integer)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
     lecture_status = db.Column(db.String(50))
+    year = db.Column(db.Integer)
 
-    def __init__(self, user_id=None, lecture_id=None, lecture_status=None):
+    def __init__(self, user_id=None, lecture_id=None, lecture_status=None, year=None):
         self.user_id = user_id
         self.lecture_id = lecture_id
         self.lecture_status = lecture_status
+        self.year = year
 
     def __repr__(self):
         return '<AcademicRecord %r>' % (self.id)

@@ -35,7 +35,7 @@ def parseLectures():
         for row in reader:
             days = getDays(row['days'])
             semester_id = getSemesterId(row['semester'])
-            db.session.add(Lecture(row['instructor'], row['course_id'], semester_id, row['start_time'], row['end_time'], days[0], days[1]))
+            db.session.add(Lecture(row['instructor'], row['course_id'], row['section_code'], semester_id, row['start_time'], row['end_time'], days[0], days[1]))
             db.session.add(Semester(semester_id, number))
             number = number + 1
             db.session.commit()

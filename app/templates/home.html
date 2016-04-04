@@ -27,8 +27,10 @@
         <div class="headers">
 	  <!-- Add Course Button -->
           <div class="col-xs-6 text-center">
-            <a  {% if active_page == "fall" %} href="{{ url_for('auth.change_fall') }}" {% elif active_page == "winter" %} href="{{ url_for('auth.change_winter') }}" {% elif active_page == "summer" %} href="{{ url_for('auth.change_summer') }}" {% endif %} >
-              <button type="button" class="btn btn-default">Add Course</button>
+            <a {% if active_page == "fall" %} href="{{ url_for('auth.change_fall') }}" 
+            {% elif active_page == "winter" %} href="{{ url_for('auth.change_winter') }}" 
+            {% else %} href="{{ url_for('auth.change_summer') }}" {% endif %}>
+              <button id="add_course" type="button" class="btn btn-default">Add Course</button>
             </a>
           </div>
 	  <!-- Delete Course Button -->

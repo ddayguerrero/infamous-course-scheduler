@@ -39,13 +39,13 @@ var HTMLModule = (function(){
 				td.style.border = '1px solid black';
 				row.appendChild(td);
 		    }		    
-		    else{
+		    else{ /*
 		    	for
 		    	var lecture1;
 		     $.each(listOfClasses.lectures, function(idx, lecture) {
                 lecture1=lecture
               });
-		     td.innerHTML = lecture1.name;
+		     td.innerHTML = lecture1.name;*/
 		    } 
 		    //td.style.border = '1px solid black';
 		    //row.appendChild(td); 
