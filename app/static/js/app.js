@@ -14,6 +14,9 @@ $( document ).ready(function() {
           console.log(error);
       },
       success: function(data) {
+        $.each(data.lectures, function(idx, lecture) {
+                    console.log(lecture);
+              });
         $('#body').empty();
         $.each(data.lectures, function(idx, lecture) {
           var entry = '<tr>' + 
@@ -27,6 +30,7 @@ $( document ).ready(function() {
           $('#body').append(entry);
         });
 	     HTMLModule.createSearchList(data);
+       $('#homeCalendar').append(HTMLModule.createCalendar(data));
       }
     });
   }
@@ -54,6 +58,7 @@ $( document ).ready(function() {
           $('#body').append(entry);
         });
         HTMLModule.createSearchList(data);
+        $('#homeCalendar').append(HTMLModule.createCalendar(data));
       }
     });
   }
@@ -81,6 +86,7 @@ $( document ).ready(function() {
           $('#body').append(entry);
         });
         HTMLModule.createSearchList(data);
+        $('#homeCalendar').append(HTMLModule.createCalendar(data));
       }
     });
   }
