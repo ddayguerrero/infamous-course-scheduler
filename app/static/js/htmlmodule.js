@@ -1,7 +1,8 @@
 var HTMLModule = (function(){
     return {
 	createCalendar: createCalendar,
-	createCourseList : createCourseList
+	createCourseList : createCourseList,
+	createSearchList: createSearchList
     };
     
     function createCalendar(listOfClasses){
@@ -90,7 +91,6 @@ var HTMLModule = (function(){
 	section.appendChild(start);
 	section.appendChild(end);
 
-	
 	info.appendChild(title);
 	info.appendChild(name);
 	info.appendChild(section);
@@ -99,5 +99,10 @@ var HTMLModule = (function(){
 	courseSlot.appendChild(info);
 	list.appendChild(courseSlot);
 	return list;
+    }
+
+    function createSearchList(lectures){
+	var row = document.createElement('tr');
+	var td = document.createElement('td');
     }
 }());

@@ -1,17 +1,8 @@
-function hoverInLogo(){
-  document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
-}
-
-function hoverOutLogo(){
-  document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
-}
-
 //////////
 // HTTP Requests for searching for courses
 //////////
 $( document ).ready(function() {
   var url = window.location.pathname;
-  console.log(url);
   if(url == '/change_fall/')
   {
     $.ajax({
@@ -20,7 +11,7 @@ $( document ).ready(function() {
       cache: false,
       dataType: "json",
       error: function(error) {
-        console.log(error);
+          console.log(error);
       },
       success: function(data) {
         $('#body').empty();
@@ -35,6 +26,7 @@ $( document ).ready(function() {
             '<td><input type="checkbox" value="class1"></td></tr>';
           $('#body').append(entry);
         });
+	     HTMLModule.createSearchList(data);
       }
     });
   }
@@ -61,6 +53,7 @@ $( document ).ready(function() {
             '<td><input type="checkbox" value="class1"></td></tr>';
           $('#body').append(entry);
         });
+        HTMLModule.createSearchList(data);
       }
     });
   }
@@ -87,6 +80,7 @@ $( document ).ready(function() {
             '<td><input type="checkbox" value="class1"></td></tr>';
           $('#body').append(entry);
         });
+        HTMLModule.createSearchList(data);
       }
     });
   }
@@ -191,4 +185,12 @@ $( document ).ready(function() {
       });
     }
   }
+    function hoverInLogo(){
+	     document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
+    }
+
+    function hoverOutLogo(){
+	     document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
+    }
+
 });
