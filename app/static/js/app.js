@@ -23,7 +23,9 @@ $( document ).ready(function() {
             '<td>' + lecture.start_time + '</td>' + 
             '<td>' + lecture.end_time + '</td>' + 
             '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>';
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
           $('#body').append(entry);
         });
 	     HTMLModule.createSearchList(data);
@@ -50,7 +52,9 @@ $( document ).ready(function() {
             '<td>' + lecture.start_time + '</td>' + 
             '<td>' + lecture.end_time + '</td>' + 
             '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>';
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
           $('#body').append(entry);
         });
         HTMLModule.createSearchList(data);
@@ -77,7 +81,9 @@ $( document ).ready(function() {
             '<td>' + lecture.start_time + '</td>' + 
             '<td>' + lecture.end_time + '</td>' + 
             '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"></td></tr>';
+            '<td><input type="checkbox" value="class1"' +
+            'id="' + lecture.full_name + '/' + lecture.section +
+            '"></td></tr>';
           $('#body').append(entry);
         });
         HTMLModule.createSearchList(data);
@@ -120,7 +126,9 @@ $( document ).ready(function() {
               '<td>' + lecture.start_time + '</td>' + 
               '<td>' + lecture.end_time + '</td>' + 
               '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+              '<td><input type="checkbox" value="class1"' +
+              'id="' + lecture.full_name + '/' + lecture.section +
+              '"></td></tr>';
             $('#body').append(entry);
           });
         }
@@ -149,7 +157,9 @@ $( document ).ready(function() {
               '<td>' + lecture.start_time + '</td>' + 
               '<td>' + lecture.end_time + '</td>' + 
               '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+              '<td><input type="checkbox" value="class1"' +
+              'id="' + lecture.full_name + '/' + lecture.section +
+              '"></td></tr>';
             $('#body').append(entry);
           });
         }
@@ -178,7 +188,9 @@ $( document ).ready(function() {
               '<td>' + lecture.start_time + '</td>' + 
               '<td>' + lecture.end_time + '</td>' + 
               '<td>' + lecture.instructor + '</td>' +
-              '<td><input type="checkbox" value="class1"></td></tr>';
+              '<td><input type="checkbox" value="class1"' +
+              'id="' + lecture.full_name + '/' + lecture.section +
+              '"></td></tr>';
             $('#body').append(entry);
           });
         }
