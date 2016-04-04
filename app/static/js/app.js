@@ -91,9 +91,18 @@ $( document ).ready(function() {
     });
   }
 
+  var typingTimer;                
+  var doneTypingInterval = 250;
 
-  $("#searchBox").on("change paste keyup", function() {
-    var text = $(this).val(); 
+  $('#searchBox').keyup(function(){
+    clearTimeout(typingTimer);
+    if ($('#searchBox').val) {
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    }
+  });
+
+  function doneTyping () {
+    var text = $('#searchBox').val();
     if(url == '/change_fall/')
     {
       $.ajax({
@@ -181,5 +190,5 @@ $( document ).ready(function() {
         }
       });
     }
-  });
+  }
 });
