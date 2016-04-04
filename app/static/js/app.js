@@ -13,7 +13,9 @@ $( document ).ready(function() {
           console.log(error);
       },
       success: function(data) {
-	  HTMLModule.createSearchList(data);
+	  data.lectures.forEach((d)=>{
+	      $('#courseList').append(HTMLModule.createSearchList(d));
+	  });
       }
     });
   }
@@ -27,7 +29,9 @@ $( document ).ready(function() {
         console.log(error);
       },
       success: function(data) {
-        HTMLModule.createSearchList(data);
+	  data.lectures.forEach((d)=>{
+	      $('#courseList').append(HTMLModule.createSearchList(d));
+	  });
       }
     });
   }
@@ -41,7 +45,9 @@ $( document ).ready(function() {
         console.log(error);
       },
       success: function(data) {
-        HTMLModule.createSearchList(data);
+        data.lectures.forEach((d)=>{
+	      $('#courseList').append(HTMLModule.createSearchList(d));
+	});
       }
     });
   }
