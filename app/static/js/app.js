@@ -197,7 +197,45 @@ $( document ).ready(function() {
       });
     }
   }
-    function hoverInLogo(){
+
+  $('#add').click(function(){
+    var selected = [];
+    $('td input:checkbox', $('#table')).each(function() {
+        if($(this).is(":checked"))
+        {
+          selected.push($(this).attr('id'));
+        }
+    });
+
+    if(selected.length === 0)
+    {
+      alert('no courses were selected');
+    }
+    else
+    {
+      $.each(selected, function(i, id) {
+        console.log(id);
+        $.ajax({
+          url: '/add_lecture',
+          type: 'POST',
+          cache: false,
+          data: {
+            lecture_id: id
+          },
+          error: function(error) {
+            console.log(error);
+          },
+          success: function(data) {
+            console.log(data);
+          }
+        });
+      });
+    }
+  });
+
+
+
+  function hoverInLogo(){
 	     document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
     }
 
