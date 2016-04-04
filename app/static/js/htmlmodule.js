@@ -50,7 +50,7 @@ var HTMLModule = (function(){
 		}
 	}
 
-/*var getTableBoundsForEachCouse = function(tbl){
+var getTableBoundsForEachCouse = function(tbl){
 	var day1, day2, starthour,endhour;
 	for(lecture in listOfClasses){
 		switch (lecture.dayOne) {
@@ -145,7 +145,7 @@ var HTMLModule = (function(){
 			} 
 		}
 	}
-}*/
+}
 
 
 }
@@ -153,7 +153,7 @@ var HTMLModule = (function(){
 
 createCells(daysOfWeek);
 createTimeSlots();
-//getTableBoundsForEachCouse(tbl)
+getTableBoundsForEachCouse(tbl)
 tbl.className = "table table-striped";
 tbl.appendChild(head);
 tbl.appendChild(tbody);
