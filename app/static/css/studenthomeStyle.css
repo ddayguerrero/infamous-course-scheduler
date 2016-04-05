@@ -43,3 +43,11 @@ body {
 h2{
 	padding:25px;
 }
+
+#homeCalendar{
+    font-size: 12px;
+}
+
+#logo{
+    display:none;
+}

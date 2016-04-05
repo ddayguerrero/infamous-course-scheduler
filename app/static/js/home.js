@@ -11,9 +11,9 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-            $('#courseList').empty();
-            $('#courseList').append(HTMLModule.createCourseList(data));
-            $('#homeCalendar').append(HTMLModule.createCalendar(data));
+                $('#courseList').empty();
+                $('#courseList').append(HTMLModule.createCourseList(data));
+                $('#homeCalendar').append(HTMLModule.createCalendar(data));
             }
         });
 
