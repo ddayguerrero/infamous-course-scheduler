@@ -51,6 +51,7 @@ $( document ).ready(function() {
     }
 
     $('#delete_course').click(function(){
+        $('#delete_messages').empty();
          var selected = [];
          var courses = "";
          $('input:checkbox', $('#courseList')).each(function() {
@@ -64,7 +65,7 @@ $( document ).ready(function() {
 
          if(selected.length === 0)
          {
-             alert('no courses were selected');
+             $('#delete_messages').append("<p>No courses were selected.</p>");
          }
          else
          {
@@ -92,7 +93,7 @@ $( document ).ready(function() {
             }
             else
             {
-                alert("Delete aborted.");
+                $('#delete_messages').append("Delete aborted.");
             }
            
          }

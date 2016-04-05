@@ -26,6 +26,7 @@
 	<!-- Header -->
         <div class="headers">
 	  <!-- Add Course Button -->
+          <div id="delete_messages"></div>
           <div class="col-xs-6 text-center">
             <a {% if active_page == "fall" %} href="{{ url_for('auth.change_fall') }}" 
             {% elif active_page == "winter" %} href="{{ url_for('auth.change_winter') }}" 
