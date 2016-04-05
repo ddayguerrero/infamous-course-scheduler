@@ -28,12 +28,9 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-                $("#winter").unbind('click');
-                $.each(data.lectures, function(idx, lecture) {
-                    console.log(lecture);
-              });
-	   $('#homeCalendar').append(HTMLModule.createCalendar(data));
-           $('#courseList').append(HTMLModule.createCourseList(data));
+                $('#courseList').empty();
+	           $('#homeCalendar').append(HTMLModule.createCalendar(data));
+                $('#courseList').append(HTMLModule.createCourseList(data));
             }
         }); 
     }
@@ -47,12 +44,9 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-                $("#summer").unbind('click');
-                $.each(data.lectures, function(idx, lecture) {
-                    console.log(lecture);
-              });
-	    $('#homeCalendar').append(HTMLModule.createCalendar(data));
-	    $('#courseList').append(HTMLModule.createCourseList(data));
+                $('#courseList').empty();
+	           $('#homeCalendar').append(HTMLModule.createCalendar(data));
+	           $('#courseList').append(HTMLModule.createCourseList(data));
             }
         }); 
     }

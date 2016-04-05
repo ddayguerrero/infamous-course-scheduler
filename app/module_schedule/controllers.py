@@ -62,17 +62,6 @@ def get_tutorials(lecture_id):
         return jsonify(tutorials=tutorials)
 
 
-
-# Gets the tutorial for a specified lecture
-@mod_schedule.route('/test', methods=['GET','POST'])
-def test():
-    lecture = db.session.query(Lecture).filter_by(id=1).first()
-    name = lecture.get_course().name
-    print name
-
-    return jsonify(name=name)
-
-
 @mod_schedule.route('/student_fall_lectures', methods=['GET', 'POST'])
 def student_fall_lectures():
 	student = get_student()
