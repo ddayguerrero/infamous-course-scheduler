@@ -208,19 +208,3 @@ def generate_schedule():
     schedules.append(schedule)
     return jsonify({'schedule': schedule}), 201
 
-
-@mod_schedule.route('/add_lecture_test', methods=['GET', 'POST'])
-def add_lecture_test():
-    student = get_student()
-    info = request.form['lecture_id']
-    info_split = info.split('/')
-    lecture_code = info_split[0]
-    lecture_section = info_split[1]
-
-    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
-    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
-    if student.register_lecture(lecture.id):
-        return jsonify(lectures=[lecture.serialize()])
-
-    else:
-        return 'lecture not added.'

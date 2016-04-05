@@ -192,7 +192,7 @@ $( document ).ready(function() {
 	       $.each(selected, function(i, id) {
 		      console.log(id);
 		      $.ajax({
-		          url: '/add_lecture_test',
+		          url: '/add_lecture',
 		          type: 'POST',
 		          cache: false,
 		          data: {
@@ -202,8 +202,7 @@ $( document ).ready(function() {
                 console.log(error);
 		          },
 		          success: function(data) {
-			           $('#homeCalendar').empty();
-			           $('#homeCalendar').append(HTMLModule.createCalendar(data));
+			           console.log(data);
 		          }
 		      });
 	       });
