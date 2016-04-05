@@ -1,6 +1,5 @@
 $( document ).ready(function() {
     var url = window.location.pathname;
-    console.log(url);
     if(url == '/fall/')
     {      
         $.ajax({ //get all the student's fall

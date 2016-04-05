@@ -202,6 +202,10 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
 			name.innerHTML = lecture.name;
 			var section = document.createElement('div');
 			section.className = lecture.section;
+			var checkbox = document.createElement('input');
+			checkbox.setAttribute('type', "checkbox");
+			checkbox.setAttribute('id', lecture.full_name + '/' + lecture.section);
+			section.appendChild(checkbox);
 
 			info.appendChild(title);
 			info.appendChild(name);
