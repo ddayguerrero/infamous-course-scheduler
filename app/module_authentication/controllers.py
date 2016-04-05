@@ -73,19 +73,19 @@ def home():
 @mod_auth.route('/fall/')
 #@requires_login
 def fall():
-    return render_template('auth/semesters/fall.html', page="fall")
+    	return render_template('auth/semesters/fall.html', page="fall")
 
 	
 @mod_auth.route('/winter/')
 #@requires_login
 def winter():
-    return render_template('auth/semesters/winter.html', page="winter")
+    	return render_template('auth/semesters/winter.html', page="winter")
 
 	
 @mod_auth.route('/summer/')
 #@requires_login
 def summer():
-    return render_template('auth/semesters/summer.html', page="summer")
+    	return render_template('auth/semesters/summer.html', page="summer")
 
 
 @mod_auth.route('/changeCalendar/', methods=['GET', 'POST'])
