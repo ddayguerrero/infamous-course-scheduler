@@ -180,13 +180,13 @@ $( document ).ready(function() {
 	     $('td input:checkbox', $('#table')).each(function() {
 	       if($(this).is(":checked"))
 	       {
-		        $('#messages').append('<p>No courses were selected.</p>');
+		        selected.push($(this).attr('id'));
 	       }
 	     });
 
 	     if(selected.length === 0)
 	     {
-	         alert('no courses were selected');
+	         $('#messages').append('<p>No courses were selected.</p>');
 	     }
 	     else
 	     {
