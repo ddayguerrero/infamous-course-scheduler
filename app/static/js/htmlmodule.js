@@ -7,6 +7,7 @@ var HTMLModule = (function(){
     
     function createCalendar(listOfClasses){
 	let tbl  = document.createElement('table');
+	tbl.className = "table table-striped";
 	var head = document.createElement('thead');
 	var headRow = document.createElement('tr');
 	var tbody = document.createElement('tbody');
