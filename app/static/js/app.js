@@ -88,20 +88,10 @@ $( document ).ready(function() {
           console.log(error);
         },
         success: function(data) {
-          $('#body').empty()
-          $.each(data.lectures, function(idx, lecture) {
-            var entry = '<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.full_name + '</td>' +
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"' +
-            'id="' + lecture.full_name + '/' + lecture.section +
-            '"></td></tr>';
-            $('#body').append(entry);
-          });
+          $('#courseList').empty();
+            data.lectures.forEach((d)=>{
+              $('#courseList').append(HTMLModule.createSearchList(d));
+            });
         }
       });
     }
@@ -119,20 +109,10 @@ $( document ).ready(function() {
           console.log(error);
         },
         success: function(data) {
-          $('#body').empty()
-          $.each(data.lectures, function(idx, lecture) {
-            var entry = '<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.full_name + '</td>' +
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"' +
-            'id="' + lecture.full_name + '/' + lecture.section +
-            '"></td></tr>';
-            $('#body').append(entry);
-          });
+          $('#courseList').empty();
+            data.lectures.forEach((d)=>{
+              $('#courseList').append(HTMLModule.createSearchList(d));
+            });
         }
       });
     }
@@ -150,19 +130,9 @@ $( document ).ready(function() {
           console.log(error);
         },
         success: function(data) {
-          $('#body').empty()
-          $.each(data.lectures, function(idx, lecture) {
-            var entry = '<tr>' + 
-            '<td>' + lecture.section + '</td>' + 
-            '<td>' + lecture.full_name + '</td>' +
-            '<td>' + lecture.name + '</td>' + 
-            '<td>' + lecture.start_time + '</td>' + 
-            '<td>' + lecture.end_time + '</td>' + 
-            '<td>' + lecture.instructor + '</td>' +
-            '<td><input type="checkbox" value="class1"' +
-            'id="' + lecture.full_name + '/' + lecture.section +
-            '"></td></tr>';
-            $('#body').append(entry);
+          $('#courseList').empty();
+          data.lectures.forEach((d)=>{
+            $('#courseList').append(HTMLModule.createSearchList(d));
           });
         }
       });

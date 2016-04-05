@@ -5,37 +5,27 @@ import logging
 app = Flask(__name__)
 mod_schedule = Blueprint('schedule', __name__)
 
-# Test Data - to be removed later
-# JSON stores values in key-value pairs
-lectures = [
-    {
-        'instructor': 'Don Davis',
-        'id': '1',
-        'semester_id': '1',
-        'tutorials': [
-            {'id': '2', 'startTime': '8:00','endTime': '9:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
-            {'id': '2','startTime': '11:00','endTime': '12:00','dayOne': 'Monday', 'dayTwo': 'Wednesday'},
-            {'id': '3', 'startTime': '8:00','endTime': '9:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
-            {'id': '3','startTime': '11:00','endTime': '12:00','dayOne': 'Monday', 'dayTwo': 'Wednesday'}
-        ],
-        'labs': [
-             {'id': '4', 'startTime': '10:00','endTime': '11:00','dayOne': 'Monday', 'dayOne': 'Wednesday'},
-             {'id': 'None', 'startTime': 'None','endTime': 'None','dayOne': 'None', 'dayTwo': 'None'}
-        ],
-        'startTime': '18:00',
-        'endTime': '21:00',
-        'dayOne': 'Monday',
-        'dayTwo': 'None'
-    }
-]
-
-
 if __name__ == '__main__':
     app.run(debug=True)
 
 #get the db object to query
 from app import db
 from app.module_schedule.models import Lecture, Semester, Tutorial, Lab, AcademicRecord, Mapping, Course, Student
+
+@mod_schedule.route('/add_lecture', methods=['GET', 'POST'])
+def add_lecture():
+    student = get_student()
+    info = request.form['lecture_id']
+    info_split = info.split('/')
+    lecture_code = info_split[0]
+    lecture_section = info_split[1]
+
+    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
+    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
+    if student.register_lecture(lecture.id):
+        return 'lecture added successfully.'
+    else:
+        return 'lecture not added.'
 
 def get_student():
     return db.session.query(Student).filter_by(full_name=session['user_id']).first()
@@ -45,25 +35,6 @@ def get_course(course_id):
 
 def get_lecture(lecture_id):
     return db.session.query(Lecture).filter_by(id=lecture_id).first()
-
-
-
-@mod_schedule.route('/add_lecture', methods=['GET', 'POST'])
-def add_lecture():
-	student = get_student()
-	info = request.form['lecture_id']
-	info_split = info.split('/')
-	lecture_code = info_split[0]
-	lecture_section = info_split[1]
-
-	course = db.session.query(Course).filter_by(full_name=lecture_code).first()
-	lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
-
-	if student.register_lecture(lecture.id):
-		return 'lecture added successfully.'
-	else:
-		return 'lecture not added.'
-
 
 
 #Gets all the lectures for a specified semester (id from 1-4)
