@@ -6,7 +6,7 @@ var HTMLModule = (function(){
     };
     
     function createCalendar(listOfClasses){
-	var tbl  = document.createElement('table');
+	let tbl  = document.createElement('table');
 	var head = document.createElement('thead');
 	var headRow = document.createElement('tr');
 	var tbody = document.createElement('tbody');
@@ -40,23 +40,138 @@ var HTMLModule = (function(){
 				td.style.border = '1px solid black';
 				row.appendChild(td);
 		    }		    
-		    else{ /*
-		    	for
-		    	var lecture1;
-		     $.each(listOfClasses.lectures, function(idx, lecture) {
-                lecture1=lecture
-              });
-		     td.innerHTML = lecture1.name;*/
+		    else{ 
+		     td.innerHTML = "";	
 		    } 
-		    //td.style.border = '1px solid black';
-		    //row.appendChild(td); 
+		    td.style.border = '1px solid black';
+		    row.appendChild(td); 
 		}
 		tbody.appendChild(row);
 	    }
 	}
 
+	var getTableBoundsForEachCourse = function(){
+	var day1, day2, starthour,endhour;
+	   $.each(listOfClasses.lectures, function(index, lecture) {
+	   	//var lecture = listOfClasses.lectures[0];
+	   	console.log(lecture.day_one+" "+lecture.day_two+" "+lecture.start_time+" "+lecture.end_time);
+		switch (lecture.day_one) {
+			case "M":
+			day1 = 1;
+			break;
+			case "T":
+			day1 = 2;
+			break;
+			case "W":
+			day1 = 3;
+			break;
+			case "J":
+			day1 = 4;
+			break;
+			case "F":
+			day1 = 5;
+			break;
+			case "S":
+			day1 = 6;
+			break;
+			case  "D":
+			day1 = 7;
+			break;
+			default: 
+			day1= ""
+		}
+		switch (lecture.day_two) {
+			case "M":
+			day2 = 1;
+			break;
+			case "T":
+			day2 = 2;
+			break;
+			case "W":
+			day2 = 3;
+			break;
+			case "J":
+			day2 = 4;
+			break;
+			case "F":
+			day2 = 5;
+			break;
+			case "S":
+			day2 = 6;
+			break;
+			case  "D":
+			day2 = 7;
+			break;
+			default: 
+			day2= ""
+		}
+		var time1 = lecture.start_time.split(":");
+		var minutesRows;
+		if(time1[1]<15)
+			minutesRows=4
+		else if(time1[1]<30)
+			minutesRows=3
+		else if(time1[1]<45)
+			minutesRows=2
+		else if(time1[1]>45)
+			minutesRows=1
+		starthour = 4*(parseInt(time1[0])-7)-minutesRows;
+		var time2 = lecture.end_time.split(":");
+		if(time2[1]<15)
+			minutesRows=4
+		else if(time2[1]<30)
+			minutesRows=3
+		else if(time2[1]<45)
+			minutesRows=2
+		else if(time2[1]>45)
+			minutesRows=1
+		endhour = 4*(parseInt(time2[0])-7)-minutesRows;
+		if(day1!="")
+			printCourse(lecture,day1,time1,time2,starthour,endhour);
+		if(day2!="")
+			printCourse(lecture,day2,time2,time2,starthour,endhour);
+
+	});
+}
+
+var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
+		var classDuration = endRow - startRow +1;
+		var startingHour=0;
+		for(row=1; row<=classDuration;row++){
+			var timeOnTable= tbody.rows[startingHour+startRow];
+			var timeCell = timeOnTable.cells[day];
+			//var timeCell = tbl.rows[row].cells[day];
+			timeCell.style.backgroundColor = "yellow";
+			if(row!=1 || row!=classDuration){
+				timeCell.style.borderTop = "thick solid yellow";
+				timeCell.style.borderBottom = "thick solid yellow";
+				if(row==Math.floor(classDuration/2)){
+					timeCell.innerHTML=lecture.name;
+				}
+				else if(row==Math.floor(classDuration/2)+1){
+					timeCell.innerHTML=lecture.number;
+				}
+				else if(row==Math.floor(classDuration/2)+2){
+					timeCell.innerHTML=startTime[0]+":"+startTime[1]+ "-";
+				}
+				else if(row==Math.floor(classDuration/2)+3){
+					timeCell.innerHTML=endTime[0]+":"+endTime[1];
+				}
+			}
+			else if(row==1){//first cell needs bottom border removed
+				timeCell.style.borderBottom = "thick solid yellow";
+			}
+			else if(row==classDuration){
+				timeCell.style.borderTop = "thick solid yellow";
+			}
+			startingHour++; 
+		}
+	}
+
+
 	createCells(daysOfWeek);
 	createTimeSlots();
+	getTableBoundsForEachCourse();
 	tbl.className = "table table-striped";
 	tbl.appendChild(head);
 	tbl.appendChild(tbody);

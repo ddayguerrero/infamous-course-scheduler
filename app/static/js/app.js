@@ -5,23 +5,38 @@ $( document ).ready(function() {
   var url = window.location.pathname;
   if(url == '/change_fall/')
   {
-    $.ajax({
+    $.ajax({ //get all the fall courses
       url: '/fall_lectures',
       type: 'GET',
       cache: false,
       dataType: "json",
       error: function(error) {
-          console.log(error);
+        console.log("error");
       },
       success: function(data) {
-	  $('#courseList').empty();
-	  data.lectures.forEach((d)=>{
-	      $('#courseList').append(HTMLModule.createSearchList(d));
-	  });
-      }
+      console.log("success");
+       $.each(data.lectures, function(idx, lecture) {
+                    console.log(lecture.name);
     });
+       $('#courseList').empty();
+       data.lectures.forEach((d)=>{
+        $('#courseList').append(HTMLModule.createSearchList(d));
+      });
+     }
+   });
+    $.ajax({ //get all the student's fall courses
+            url: '/student_fall_lectures',
+            type: 'POST',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+            $('#homeCalendar').append(HTMLModule.createCalendar(data));
+            }
+        });
   }
-  else if(url == '/change_winter/')
+  else if(url == '/change_winter/')//get all the winter classes
   {
     $.ajax({
       url: '/winter_lectures',
@@ -32,14 +47,26 @@ $( document ).ready(function() {
         console.log(error);
       },
       success: function(data) {
-	  $('#courseList').empty();
-	  data.lectures.forEach((d)=>{
-	      $('#courseList').append(HTMLModule.createSearchList(d));
-	  });
-      }
-    });
+       $('#courseList').empty();
+       data.lectures.forEach((d)=>{
+        $('#courseList').append(HTMLModule.createSearchList(d));
+      });
+     }
+   });
+    $.ajax({ //get all the student's winter courses
+            url: '/student_winter_lectures',
+            type: 'POST',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+            $('#homeCalendar').append(HTMLModule.createCalendar(data));
+            }
+        });
+
   }
-  else if(url == '/change_summer/')
+  else if(url == '/change_summer/')//get all the summer classes
   {
     $.ajax({
       url: '/summer_lectures',
@@ -50,12 +77,23 @@ $( document ).ready(function() {
         console.log(error);
       },
       success: function(data) {
-	  $('#courseList').empty();
-          data.lectures.forEach((d)=>{
-	      $('#courseList').append(HTMLModule.createSearchList(d));
-	  });
-      }
-    });
+       $('#courseList').empty();
+       data.lectures.forEach((d)=>{
+        $('#courseList').append(HTMLModule.createSearchList(d));
+      });
+     }
+   });
+    $.ajax({ //get all the student's summer courses
+            url: '/student_summer_lectures',
+            type: 'POST',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+            $('#homeCalendar').append(HTMLModule.createCalendar(data));
+            }
+        });
   }
 
   var typingTimer;                
@@ -64,7 +102,7 @@ $( document ).ready(function() {
   $('#searchBox').keyup(function(){
     clearTimeout(typingTimer);
     if ($('#searchBox').val) {
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
     }
   });
 
@@ -138,10 +176,10 @@ $( document ).ready(function() {
   $('#add').click(function(){
     var selected = [];
     $('td input:checkbox', $('#table')).each(function() {
-        if($(this).is(":checked"))
-        {
-          selected.push($(this).attr('id'));
-        }
+      if($(this).is(":checked"))
+      {
+        selected.push($(this).attr('id'));
+      }
     });
 
     if(selected.length === 0)
@@ -153,7 +191,7 @@ $( document ).ready(function() {
       $.each(selected, function(i, id) {
         console.log(id);
         $.ajax({
-          url: '/add_lecture',
+          url: '/add_lecture_test',
           type: 'POST',
           cache: false,
           data: {
@@ -163,6 +201,7 @@ $( document ).ready(function() {
             console.log(error);
           },
           success: function(data) {
+            $('#homeCalendar').append(HTMLModule.createCalendar(data));
             console.log(data);
           }
         });
@@ -173,11 +212,11 @@ $( document ).ready(function() {
 
 
   function hoverInLogo(){
-	     document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
-    }
+    document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
+  }
 
-    function hoverOutLogo(){
-	     document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
-    }
+  function hoverOutLogo(){
+    document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
+  }
 
 });
