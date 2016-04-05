@@ -175,51 +175,53 @@ $( document ).ready(function() {
     }
 
     $('#add').click(function(){
-	var selected = [];
-	$('td input:checkbox', $('#table')).each(function() {
-	    if($(this).is(":checked"))
-	    {
-		selected.push($(this).attr('id'));
-	    }
-	});
+	     var selected = [];
+	     $('td input:checkbox', $('#table')).each(function() {
+	       if($(this).is(":checked"))
+	       {
+		        selected.push($(this).attr('id'));
+	       }
+	     });
 
-	if(selected.length === 0)
-	{
-	    alert('no courses were selected');
-	}
-	else
-	{
-	    $.each(selected, function(i, id) {
-		console.log(id);
-		$.ajax({
-		    url: '/add_lecture_test',
-		    type: 'POST',
-		    cache: false,
-		    data: {
-			lecture_id: id
-		    },
-		    error: function(error) {
-		    },
-		    success: function(data) {
-			$('#homeCalendar').empty();
-			$('#homeCalendar').append(HTMLModule.createCalendar(data));
-		    }
-		});
-	    });
-	}
+	     if(selected.length === 0)
+	     {
+	         alert('no courses were selected');
+	     }
+	     else
+	     {
+	       $.each(selected, function(i, id) {
+		      console.log(id);
+		      $.ajax({
+		          url: '/add_lecture_test',
+		          type: 'POST',
+		          cache: false,
+		          data: {
+			           lecture_id: id
+		          },
+		          error: function(error) {
+                console.log(error);
+		          },
+		          success: function(data) {
+			           $('#homeCalendar').empty();
+			           $('#homeCalendar').append(HTMLModule.createCalendar(data));
+		          }
+		      });
+	       });
+	     }
     });
 
     function getClasses(){
-	$.ajax({
-	    url: '/student_fall_lectures',
-	    type: 'GET',
-	    dataType: "json",
-	    error: function(error) {
-	    },
-	    success: function(data) {
-		studentCourses = data;
-	    }
-	});
+	     $.ajax({
+	       url: '/student_fall_lectures',
+	       type: 'GET',
+	       dataType: "json",
+	       error: function(error) {
+          console.log(error);
+	       },
+	       success: function(data) {
+		        studentCourses = data;
+	       }
+	     });
     }
 });
 
