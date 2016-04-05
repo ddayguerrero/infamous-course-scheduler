@@ -94,6 +94,10 @@ class Student(Abstract_Base):
 
     def register_lecture(self, lecture_id):
         lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
+
+        if self.is_registered(lecture.course_id):
+            return False
+
         mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
         prerequisites = []
         for mapping in mappings:
@@ -127,6 +131,22 @@ class Student(Abstract_Base):
             query_course = db.session.query(Course).filter_by(id=course_id).first()
 
             if completed_course == query_course:
+                return True
+
+        return False
+
+    def is_registered(self, course_id):
+
+        for lecture in self.get_fall_lectures():
+            if lecture.course_id == course_id:
+                return True
+
+        for lecture in self.get_winter_lectures():
+            if lecture.course_id == course_id:
+                return True
+
+        for lecture in self.get_summer_lectures():
+            if lecture.course_id == course_id:
                 return True
 
         return False
