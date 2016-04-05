@@ -47,3 +47,7 @@ h2{
 #homeCalendar{
     font-size: 12px;
 }
+
+#logo{
+    display:none;
+}

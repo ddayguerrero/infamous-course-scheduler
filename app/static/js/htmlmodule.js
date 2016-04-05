@@ -178,6 +178,8 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
     }
 
     function createCourseList(d){
+	console.log('Course List: ');
+	console.log(d);
 	var list = document.createElement('ul');
 	list.className="courses"
 	var courseSlot = document.createElement('li');
@@ -185,15 +187,15 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
 	courseType.id = 'type';
 	var course = document.createElement('span');
 	course.className += 'course';
-	course.innerHTML = "COMP";
+	course.innerHTML = d.program
 	var info = document.createElement('div');
 	info.className = 'info';
 	var title = document.createElement('h2');
 	title.className += 'title';
-	title.innerHTML = "232";
+	title.innerHTML = d.number;
 	var name = document.createElement('p');
 	name.className += 'desc';
-	name.innerHTML = "Logic of Programming";
+	name.innerHTML = d.name;
 	var section = document.createElement('div');
 	section.className = "section";
 	var start = document.createElement('input');

@@ -11,7 +11,10 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-            $('#courseList').append(HTMLModule.createCourseList(data));
+		$("#fall").unbind('click');
+                data.lectures.forEach((d) => {
+                    $('#courseList').append(HTMLModule.createCourseList(d));
+		});
             $('#homeCalendar').append(HTMLModule.createCalendar(data));
             }
         });
