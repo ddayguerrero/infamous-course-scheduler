@@ -179,41 +179,49 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
     }
 
     function createCourseList(d){
-	var list = document.createElement('ul');
-	list.className="courses"
-	var courseSlot = document.createElement('li');
-	var courseType = document.createElement('div');
-	courseType.id = 'type';
-	var course = document.createElement('span');
-	course.className += 'course';
-	course.innerHTML = "COMP";
-	var info = document.createElement('div');
-	info.className = 'info';
-	var title = document.createElement('h2');
-	title.className += 'title';
-	title.innerHTML = "232";
-	var name = document.createElement('p');
-	name.className += 'desc';
-	name.innerHTML = "Logic of Programming";
-	var section = document.createElement('div');
-	section.className = "section";
-	var start = document.createElement('input');
-	start.setAttribute('type', "checkbox");
-	start.setAttribute('value', "class1");
-	var end = document.createElement('input');
-	end.setAttribute('type', "checkbox");
-	end.setAttribute('value', "class1");
-	section.appendChild(start);
-	section.appendChild(end);
 
-	info.appendChild(title);
-	info.appendChild(name);
-	info.appendChild(section);
-	courseType.appendChild(course);
-	courseSlot.appendChild(courseType);
-	courseSlot.appendChild(info);
-	list.appendChild(courseSlot);
-	return list;
+		var list = document.createElement('ul');
+		list.className="courses"
+
+		$.each(d.lectures, function(idx, lecture) {
+            console.log(lecture);
+
+	        var courseSlot = document.createElement('li');
+			var courseType = document.createElement('div');
+
+			courseType.id = 'type';
+			var course = document.createElement('span');
+			course.className += 'course';
+			course.innerHTML = lecture.program;
+			var info = document.createElement('div');
+			info.className = 'info';
+			var title = document.createElement('h2');
+			title.className += 'title';
+			title.innerHTML = lecture.number;
+			var name = document.createElement('p');
+			name.className += 'desc';
+			name.innerHTML = lecture.name;
+			var section = document.createElement('div');
+			section.className = lecture.section;
+			var start = document.createElement('input');
+			start.setAttribute('type', "checkbox");
+			start.setAttribute('value', "class1");
+			var end = document.createElement('input');
+			end.setAttribute('type', "checkbox");
+			end.setAttribute('value', "class1");
+			section.appendChild(start);
+			section.appendChild(end);
+
+			info.appendChild(title);
+			info.appendChild(name);
+			info.appendChild(section);
+			courseType.appendChild(course);
+			courseSlot.appendChild(courseType);
+			courseSlot.appendChild(info);
+			list.appendChild(courseSlot);
+		});
+
+		return list;
     }
 
     function createSearchList(d){

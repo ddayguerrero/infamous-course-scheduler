@@ -78,8 +78,8 @@ $( document ).ready(function() {
       },
       success: function(data) {
        $('#courseList').empty();
-       data.lectures.forEach((d)=>{
-        $('#courseList').append(HTMLModule.createSearchList(d));
+        data.lectures.forEach((d)=>{
+          $('#courseList').append(HTMLModule.createSearchList(d));
       });
      }
    });
