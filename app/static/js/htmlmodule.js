@@ -108,6 +108,11 @@ var HTMLModule = (function(){
 	td.innerHTML = d.section;
 	row.appendChild(td);
 	td = document.createElement('td');
+	td.className = "code";
+	td.innerHTML = d.full_name;
+	row.appendChild(td);
+	$('#fallList').add(row);
+	td = document.createElement('td');
 	td.className = "name";
 	td.innerHTML = d.name;
 	row.appendChild(td);
@@ -131,7 +136,7 @@ var HTMLModule = (function(){
 	input = document.createElement('input');
 	input.setAttribute('type', 'checkbox');
 	input.setAttribute('value', 'class1');
-	var selectionId = d.name + '/' +  d.section;
+	var selectionId = d.full_name + '/' +  d.section;
 	input.setAttribute('id', selectionId);
 	td.appendChild(input);
 	row.appendChild(td);
