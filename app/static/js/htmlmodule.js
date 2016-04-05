@@ -129,7 +129,7 @@ var HTMLModule = (function(){
 		if(day1!="")
 			printCourse(lecture,day1,time1,time2,starthour,endhour);
 		if(day2!="")
-			printCourse(lecture,day2,time2,time2,starthour,endhour);
+			printCourse(lecture,day2,time1,time2,starthour,endhour);
 
 	});
 }
