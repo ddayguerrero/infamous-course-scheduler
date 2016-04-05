@@ -52,8 +52,8 @@ var HTMLModule = (function(){
 
 	var getTableBoundsForEachCourse = function(){
 	var day1, day2, starthour,endhour;
-	   //$.each(listOfClasses.lectures, function(index, lecture) {
-	   	var lecture = listOfClasses.lectures[0];
+	   $.each(listOfClasses.lectures, function(index, lecture) {
+	   	//var lecture = listOfClasses.lectures[0];
 	   	console.log(lecture.day_one+" "+lecture.day_two+" "+lecture.start_time+" "+lecture.end_time);
 		switch (lecture.day_one) {
 			case "M":
@@ -106,26 +106,43 @@ var HTMLModule = (function(){
 			day2= ""
 		}
 		var time1 = lecture.start_time.split(":");
-		starthour = parseInt(time1[0]) + 4*Math.floor(parseInt(time1[1])/15)-7;
+		var minutesRows;
+		if(time1[1]<15)
+			minutesRows=4
+		else if(time1[1]<30)
+			minutesRows=3
+		else if(time1[1]<45)
+			minutesRows=2
+		else if(time1[1]>45)
+			minutesRows=1
+		starthour = 4*(parseInt(time1[0])-7)-minutesRows;
 		var time2 = lecture.end_time.split(":");
-		endhour = parseInt(time2[0]) + Math.floor(parseInt(time2[1])/15)-7;
+		if(time2[1]<15)
+			minutesRows=4
+		else if(time2[1]<30)
+			minutesRows=3
+		else if(time2[1]<45)
+			minutesRows=2
+		else if(time2[1]>45)
+			minutesRows=1
+		endhour = 4*(parseInt(time2[0])-7)-minutesRows;
 		if(day1!="")
-			printCourse(lecture,day1,starthour,endhour);
+			printCourse(lecture,day1,time1,time2,starthour,endhour);
 		if(day2!="")
-			printCourse(lecture,day2,starthour,endhour);
+			printCourse(lecture,day2,time2,time2,starthour,endhour);
 
-	//});
+	});
 }
 
-var printCourse = function(lecture,day,startTime,endTime){
-		var classDuration = endTime - startTime;
+var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
+		var classDuration = endRow - startRow +1;
+		var startingHour=0;
 		for(row=1; row<=classDuration;row++){
-			var timeOnTable= tbody.rows[row];
+			var timeOnTable= tbody.rows[startingHour+startRow];
 			var timeCell = timeOnTable.cells[day];
-			timeCell.innerHTML= lecture.name
 			//var timeCell = tbl.rows[row].cells[day];
 			timeCell.style.backgroundColor = "yellow";
-			if(row!=0 || row!=classDuration){
+			if(row!=1 || row!=classDuration){
 				timeCell.style.borderTop = "thick solid yellow";
 				timeCell.style.borderBottom = "thick solid yellow";
 				if(row==Math.floor(classDuration/2)){
@@ -135,10 +152,10 @@ var printCourse = function(lecture,day,startTime,endTime){
 					timeCell.innerHTML=lecture.number;
 				}
 				else if(row==Math.floor(classDuration/2)+2){
-					timeCell.innerHTML=lecture.start_time+ "-";
+					timeCell.innerHTML=startTime[0]+":"+startTime[1]+ "-";
 				}
 				else if(row==Math.floor(classDuration/2)+3){
-					timeCell.innerHTML=lecture.end_time;
+					timeCell.innerHTML=endTime[0]+":"+endTime[1];
 				}
 			}
 			else if(row==1){//first cell needs bottom border removed
@@ -146,7 +163,8 @@ var printCourse = function(lecture,day,startTime,endTime){
 			}
 			else if(row==classDuration){
 				timeCell.style.borderTop = "thick solid yellow";
-			} 
+			}
+			startingHour++; 
 		}
 	}
 
