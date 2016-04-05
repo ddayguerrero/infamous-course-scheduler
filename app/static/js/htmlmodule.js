@@ -53,8 +53,6 @@ var HTMLModule = (function(){
 	var getTableBoundsForEachCourse = function(){
 	var day1, day2, starthour,endhour;
 	   $.each(listOfClasses.lectures, function(index, lecture) {
-	   	//var lecture = listOfClasses.lectures[0];
-	   	console.log(lecture.day_one+" "+lecture.day_two+" "+lecture.start_time+" "+lecture.end_time);
 		switch (lecture.day_one) {
 			case "M":
 			day1 = 1;
