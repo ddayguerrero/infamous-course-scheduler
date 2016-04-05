@@ -11,12 +11,13 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
+                $('#courseList').append(HTMLModule.createCourseList(data));
+                console.log("home.js")
                 $("#fall").unbind('click');
                 $.each(data.lectures, function(idx, lecture) {
                     console.log(lecture);
 		});
             $('#homeCalendar').append(HTMLModule.createCalendar(data));
-            $('#courseList').append(HTMLModule.createCourseList(data));
             }
         });
     }

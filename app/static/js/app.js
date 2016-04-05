@@ -11,15 +11,18 @@ $( document ).ready(function() {
       cache: false,
       dataType: "json",
       error: function(error) {
-        console.log(error);
+        console.log("error");
       },
       success: function(data) {
+      console.log("success");
+       $.each(data.lectures, function(idx, lecture) {
+                    console.log(lecture.name);
+    });
+       $('#homeCalendar').append(HTMLModule.createCalendar(data));
        $('#courseList').empty();
        data.lectures.forEach((d)=>{
         $('#courseList').append(HTMLModule.createSearchList(d));
       });
-       HTMLModule.createSearchList(data);
-       $('#homeCalendar').append(HTMLModule.createCalendar(data));
      }
    });
   }
