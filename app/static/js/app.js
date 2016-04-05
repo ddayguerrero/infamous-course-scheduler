@@ -5,7 +5,7 @@ $( document ).ready(function() {
   var url = window.location.pathname;
   if(url == '/change_fall/')
   {
-    $.ajax({
+    $.ajax({ //get all the fall courses
       url: '/fall_lectures',
       type: 'GET',
       cache: false,
@@ -18,15 +18,25 @@ $( document ).ready(function() {
        $.each(data.lectures, function(idx, lecture) {
                     console.log(lecture.name);
     });
-       $('#homeCalendar').append(HTMLModule.createCalendar(data));
        $('#courseList').empty();
        data.lectures.forEach((d)=>{
         $('#courseList').append(HTMLModule.createSearchList(d));
       });
      }
    });
+    $.ajax({ //get all the student's fall courses
+            url: '/student_fall_lectures',
+            type: 'POST',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+            $('#homeCalendar').append(HTMLModule.createCalendar(data));
+            }
+        });
   }
-  else if(url == '/change_winter/')
+  else if(url == '/change_winter/')//get all the winter classes
   {
     $.ajax({
       url: '/winter_lectures',
@@ -41,11 +51,22 @@ $( document ).ready(function() {
        data.lectures.forEach((d)=>{
         $('#courseList').append(HTMLModule.createSearchList(d));
       });
-       $('#homeCalendar').append(HTMLModule.createCalendar(data));
      }
    });
+    $.ajax({ //get all the student's winter courses
+            url: '/student_winter_lectures',
+            type: 'POST',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+            $('#homeCalendar').append(HTMLModule.createCalendar(data));
+            }
+        });
+
   }
-  else if(url == '/change_summer/')
+  else if(url == '/change_summer/')//get all the summer classes
   {
     $.ajax({
       url: '/summer_lectures',
@@ -60,9 +81,19 @@ $( document ).ready(function() {
        data.lectures.forEach((d)=>{
         $('#courseList').append(HTMLModule.createSearchList(d));
       });
-       $('#homeCalendar').append(HTMLModule.createCalendar(data));
      }
    });
+    $.ajax({ //get all the student's summer courses
+            url: '/student_summer_lectures',
+            type: 'POST',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+            $('#homeCalendar').append(HTMLModule.createCalendar(data));
+            }
+        });
   }
 
   var typingTimer;                
@@ -160,7 +191,7 @@ $( document ).ready(function() {
       $.each(selected, function(i, id) {
         console.log(id);
         $.ajax({
-          url: '/add_lecture',
+          url: '/add_lecture_test',
           type: 'POST',
           cache: false,
           data: {
@@ -170,6 +201,7 @@ $( document ).ready(function() {
             console.log(error);
           },
           success: function(data) {
+            $('#homeCalendar').append(HTMLModule.createCalendar(data));
             console.log(data);
           }
         });

@@ -3,7 +3,7 @@ $( document ).ready(function() {
     console.log(url);
     if(url == '/fall/')
     {      
-        $.ajax({
+        $.ajax({ //get all the student's fall
             url: '/student_fall_lectures',
             type: 'POST',
             dataType: "json",
@@ -11,7 +11,7 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-                $('#courseList').append(HTMLModule.createCourseList(data));
+            $('#courseList').append(HTMLModule.createCourseList(data));
                 console.log("home.js")
                 $("#fall").unbind('click');
                 $.each(data.lectures, function(idx, lecture) {
@@ -20,8 +20,9 @@ $( document ).ready(function() {
             $('#homeCalendar').append(HTMLModule.createCalendar(data));
             }
         });
+
     }
-    else if(url == '/winter/')
+    else if(url == '/winter/') //get all the students winter classes
     {
         $.ajax({
             url: '/student_winter_lectures',
@@ -40,7 +41,7 @@ $( document ).ready(function() {
             }
         }); 
     }
-    else if(url == '/summer/')
+    else if(url == '/summer/') //get all the students summer classes
     {
         $.ajax({
             url: '/student_summer_lectures',
