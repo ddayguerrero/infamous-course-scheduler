@@ -27,6 +27,23 @@ def add_lecture():
     else:
         return 'lecture not added.'
 
+
+@mod_schedule.route('/delete_lecture', methods=['GET', 'POST'])
+def delete_lecture():
+    student = get_student()
+    info = request.form['lecture_id']
+    info_split = info.split('/')
+    lecture_code = info_split[0]
+    lecture_section = info_split[1]
+
+    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
+    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
+
+    if student.delete_lecture(lecture.id):
+        return 'lecture successfully deleted'
+    else:
+        return 'lecture not deleted'
+
 def get_student():
     return db.session.query(Student).filter_by(full_name=session['user_id']).first()
 

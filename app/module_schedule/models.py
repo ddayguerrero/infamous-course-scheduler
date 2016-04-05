@@ -107,6 +107,17 @@ class Student(Abstract_Base):
         db.session.commit()
         return True
 
+    def delete_lecture(self, lecture_id):
+        academic_record = db.session.query(AcademicRecord).filter_by(user_id=self.full_name, lecture_id=lecture_id).first()
+        db.session.delete(academic_record)
+        db.session.commit()
+
+        academic_record_test = db.session.query(AcademicRecord).filter_by(user_id=self.full_name, lecture_id=lecture_id).first()
+        if academic_record_test is None:
+            return True
+        else:
+            return False
+
     def completed_course(self, course_id):
         academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
         for ac in academic_records:

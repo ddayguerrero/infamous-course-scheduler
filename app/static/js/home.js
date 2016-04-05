@@ -52,10 +52,13 @@ $( document ).ready(function() {
 
     $('#delete_course').click(function(){
          var selected = [];
+         var courses = "";
          $('input:checkbox', $('#courseList')).each(function() {
            if($(this).is(":checked"))
            {
-                selected.push($(this).attr('id'));
+                var id = $(this).attr('id');
+                selected.push(id);
+                courses += id + "  ";
            }
          });
 
@@ -65,24 +68,33 @@ $( document ).ready(function() {
          }
          else
          {
-           $.each(selected, function(i, id) {
-              console.log(id);
-              $.ajax({
-                  url: '/add_lecture_test',
+            var should_delete = confirm("Are you sure you want to delete: " + courses);
+            if(should_delete)
+            {
+                $.each(selected, function(i, id) {
+                console.log(id);
+                $.ajax({
+                  url: '/delete_lecture',
                   type: 'POST',
                   cache: false,
                   data: {
-                       lecture_id: id
+                    lecture_id: id
                   },
                   error: function(error) {
-                console.log(error);
+                    console.log(error);
                   },
                   success: function(data) {
-                       $('#homeCalendar').empty();
-                       $('#homeCalendar').append(HTMLModule.createCalendar(data));
+                    console.log(data);
+                    location.reload();
                   }
               });
-           });
+            });
+            }
+            else
+            {
+                alert("Delete aborted.");
+            }
+           
          }
     });
 });
