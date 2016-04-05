@@ -22,11 +22,7 @@ def add_lecture():
 
     course = db.session.query(Course).filter_by(full_name=lecture_code).first()
     lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
-    if student.register_lecture(lecture.id):
-        return 'lecture added successfully.'
-    else:
-        return 'lecture not added.'
-
+    return student.register_lecture(lecture.id)
 
 @mod_schedule.route('/delete_lecture', methods=['GET', 'POST'])
 def delete_lecture():

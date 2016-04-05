@@ -96,7 +96,7 @@ class Student(Abstract_Base):
         lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
 
         if self.is_registered(lecture.course_id):
-            return False
+            return "You are already registered for this course."
 
         mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
         prerequisites = []
@@ -105,11 +105,11 @@ class Student(Abstract_Base):
 
         for prerequisite in prerequisites:
             if not self.completed_course(prerequisite.id):
-                return False
+                return "You have not met the prerequisites for this course."
 
         db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
         db.session.commit()
-        return True
+        return "Successfully registered."
 
     def delete_lecture(self, lecture_id):
         academic_record = db.session.query(AcademicRecord).filter_by(user_id=self.full_name, lecture_id=lecture_id).first()

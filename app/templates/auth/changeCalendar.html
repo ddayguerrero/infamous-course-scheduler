@@ -13,7 +13,11 @@
       <div class="row">
         <form id="verifyCourse-form" class="text-left" method="POST" role="form" onsubmit="return false">
           <div class="form-group">
-            <input type="text" class="form-group" id="searchBox" name="courseSearch"></input>
+
+            <div id="messages"> <!-- Messages pertaining to if a course was added are recorded here -->
+            </div>
+
+            Search for courses: <input type="text" class="form-group" id="searchBox" name="courseSearch"></input>
           </div>
         </form>
         <button id="add">Add Selection</button>

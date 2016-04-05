@@ -175,11 +175,12 @@ $( document ).ready(function() {
     }
 
     $('#add').click(function(){
+      $('#messages').empty();
 	     var selected = [];
 	     $('td input:checkbox', $('#table')).each(function() {
 	       if($(this).is(":checked"))
 	       {
-		        selected.push($(this).attr('id'));
+		        $('#messages').append('<p>No courses were selected.</p>');
 	       }
 	     });
 
@@ -202,7 +203,7 @@ $( document ).ready(function() {
                 console.log(error);
 		          },
 		          success: function(data) {
-			           console.log(data);
+			           $('#messages').append('<p>' + id + ': ' + data + '</p>');
 		          }
 		      });
 	       });
