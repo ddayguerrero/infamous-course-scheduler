@@ -268,10 +268,16 @@ var HTMLModule = (function(){
 	    success: function(data) {
 	       	prerequisites = "";
 	       	$.each(data.courses, function(index, course)
-	       	       {
-	       		   prerequisites += '<td>' + course.program + course.number + '</td>';
-	       	       });	
-
+	       	{
+	       		if(data.completed)
+	       		{
+	       			prerequisites += '<td bgcolor="#66FF66">' + course.program + course.number + '</td>';
+	       		}
+	       		else
+	       		{
+	       			prerequisites += '<td bgcolor="#FF6666">' + course.program + course.number + '</td>';
+	       		}
+	       	});	
 	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td style="background-color: #7FB9FF"></td><td>Prereqs:</td>' + prerequisites + '</tr>');
 	    }
 	});

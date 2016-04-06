@@ -28,7 +28,7 @@ $( document ).ready(function() {
 	});
 	$.ajax({ //get all the student's fall courses
             url: '/student_fall_lectures',
-            type: 'POST',
+            type: 'GET',
             dataType: "json",
             error: function(error) {
 		console.log(error);
@@ -57,7 +57,7 @@ $( document ).ready(function() {
 	});
 	$.ajax({ //get all the student's winter courses
             url: '/student_winter_lectures',
-            type: 'POST',
+            type: 'GET',
             dataType: "json",
             error: function(error) {
             },
@@ -85,7 +85,7 @@ $( document ).ready(function() {
       });
       $.ajax({ //get all the student's summer courses
           url: '/student_summer_lectures',
-          type: 'POST',
+          type: 'GET',
           dataType: "json",
           error: function(error) {
               console.log(error);
@@ -270,20 +270,6 @@ $( document ).ready(function() {
             
         }
     });
-
-
-    function getClasses(){
-	     $.ajax({
-	       url: '/student_fall_lectures',
-	       type: 'GET',
-	       dataType: "json",
-	       error: function(error) {	   
-	       },
-	       success: function(data) {
-		        studentCourses = data;
-	       }
-	     });
-    }
 });
 
 function hoverInLogo(hoveredOver){

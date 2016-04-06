@@ -64,7 +64,7 @@ def register():
 	return render_template('auth/registration.html', form=form)
 
 
-@mod_auth.route('/home/')
+@mod_auth.route('/home/', methods=['GET', 'POST'])
 #@requires_login
 def home():
         return render_template('auth/profile.html', page="home")
