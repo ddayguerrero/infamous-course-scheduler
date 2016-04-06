@@ -290,7 +290,14 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
 	       	prerequisites = "";
 	       	$.each(data.courses, function(index, course)
 	       	{
-	       		prerequisites += '<td>' + course.program + course.number + '</td>';
+	       		if(data.completed)
+	       		{
+	       			prerequisites += '<td bgcolor="#66FF66">' + course.program + course.number + '</td>';
+	       		}
+	       		else
+	       		{
+	       			prerequisites += '<td bgcolor="#FF6666">' + course.program + course.number + '</td>';
+	       		}
 	       	});	
 
 	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td></td><td>Prereqs:</td>' + prerequisites + '</tr>');

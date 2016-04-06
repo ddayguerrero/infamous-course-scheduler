@@ -205,11 +205,14 @@ class Course(Abstract_Course):
         return '<Course %r>' % (self.name)
 
     def serialize(self):
+        student = db.session.query(Student).filter_by(full_name=session['user_id']).first()
+        is_completed = student.completed_course(self.id)
         return {
             'name': self.name,
             'program': self.program,
             'number': self.number,
-            'credits': self.credits
+            'credits': self.credits,
+            'completed': is_completed
         }
 
 
