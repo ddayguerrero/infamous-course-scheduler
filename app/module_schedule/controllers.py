@@ -75,6 +75,25 @@ def get_prerequisites():
     return jsonify(courses=[course.serialize() for course in prerequisites])
 
 
+@mod_schedule.route('/student_completed_courses', methods=['GET', 'POST'])
+def get_student_completed_courses():
+	student = get_student()
+	completed_courses = student.get_completed_courses()
+
+	return jsonify(courses=[course.serialize() for course in completed_courses])
+
+@mod_schedule.route('/student_registered_courses', methods=['GET', 'POST'])
+def get_student_registered_courses():
+	student = get_student()
+	registered_courses = student.get_registered_courses()
+
+	return jsonify(courses=[course.serialize() for course in registered_courses])
+
+@mod_schedule.route('/student_future_courses', methods=['GET', 'POST'])
+def get_student_future_courses():
+	return None #TO DO
+
+
 @mod_schedule.route('/student_fall_lectures', methods=['GET'])
 def student_fall_lectures():
 	student = get_student()

@@ -45,3 +45,37 @@ $(function () {
         }
     });
 });
+
+$( document ).ready(function()
+{
+    $.ajax({ //get all the student's fall
+            url: '/student_completed_courses',
+            type: 'GET',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+                data.courses.forEach((d)=>{
+                    $('#completedCourses').append('<li class="list-group-item" data-color="success">' + d.program + d.number + '</li>');
+                });
+            }
+    });
+
+    $.ajax({ //get all the student's fall
+            url: '/student_registered_courses',
+            type: 'GET',
+            dataType: "json",
+            error: function(error) {
+                console.log(error);
+            },
+            success: function(data) {
+                data.courses.forEach((d)=>{
+                    $('#registeredCourses').append('<li class="list-group-item" data-color="success">' + d.program + d.number + '</li>');
+                });
+            }
+        });
+
+
+
+});
