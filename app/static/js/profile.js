@@ -48,7 +48,10 @@ $(function () {
 
 $( document ).ready(function()
 {
-    $.ajax({ //get all the student's fall
+    var url = window.location.pathname;
+    if(url == '/home/')
+    {
+        $.ajax({ //get all the student's fall
             url: '/student_completed_courses',
             type: 'GET',
             dataType: "json",
@@ -57,7 +60,8 @@ $( document ).ready(function()
             },
             success: function(data) {
                 data.courses.forEach((d)=>{
-                    $('#completedCourses').append('<li class="list-group-item" data-color="success">' + d.program + d.number + '</li>');
+                    $('#completedCourses').append('<li class="list-group-item" data-color="success">' +
+                        '<input type="checkbox" id=' + d.program + d.number + '>' + d.program + d.number + '</li>');
                 });
             }
     });
@@ -71,11 +75,10 @@ $( document ).ready(function()
             },
             success: function(data) {
                 data.courses.forEach((d)=>{
-                    $('#registeredCourses').append('<li class="list-group-item" data-color="success">' + d.program + d.number + '</li>');
+                    $('#registeredCourses').append('<li class="list-group-item" data-color="success">' +
+                        '<input type="checkbox" id=' + d.program + d.number + '>' + d.program + d.number + '</li>');
                 });
             }
         });
-
-
-
+    }
 });

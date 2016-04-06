@@ -11,18 +11,20 @@ Greetings {{ session['user_name'] }},
               <ul class="list-group" id='completedCourses'>
               </ul>
             </div>
+            <button id="uncomplete_course">Revoke Completion</button>
         </div>
         <div class="col-xs-4">
             <h3 class="text-center">In Progress</h3>
             <div class="well" style="max-height: 300px;overflow: auto;">
-	      <ul class="list-group" id='registeredCourses'>
+	             <ul class="list-group" id='registeredCourses'>
               </ul>
             </div>
+            <button id="complete_course">Complete Course</button>
         </div>
 	<div class="col-xs-4">
           <h3 class="text-center">To Take</h3>
           <div class="well" style="max-height: 300px;overflow: auto;">
-	    <ul class="list-group">
+	           <ul class="list-group">
               <li class="list-group-item" data-color="success">A</li>
             </ul>
           </div>
