@@ -26,6 +26,8 @@ body {
 
 .courseList{
 	padding-top: 10px;
+	overflow-x: auto;
+	overflow-y: auto;
 }
 
 .courseListTitles{
