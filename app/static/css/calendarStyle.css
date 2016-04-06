@@ -1,7 +1,7 @@
 table.courseCalendar{
 	border-collapse: separate;
 	border-spacing: 1px;
-	width: 530px;
+	width:100%;
 }
 table.courseCalendar , table.courseCalendar th, table.courseCalendar td{
 	/*border: 1px solid black;*/

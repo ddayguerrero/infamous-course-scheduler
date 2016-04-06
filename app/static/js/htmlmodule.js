@@ -28,11 +28,11 @@ var HTMLModule = (function(){
 
 	var createTimeSlots = function(){
 	    var tr, td, min, hour;
-	    for (var i = 0; i < 52; i++){ //rows
+	    for (var i = 0; i < 52; i++){ // rows
 			row = document.createElement('tr');
-			for (var j = 0; j < daysOfWeek.length + 1; j++){ //column
+			for (var j = 0; j < daysOfWeek.length + 1; j++){ // column
 			    td = document.createElement('td');
-			    if(j==0){//hours and min
+			    if(j==0){ // hours and min
 					hour = 8+Math.floor(i/4);
 					min = (i%4)*15;
 					if(min!=0)
@@ -41,7 +41,6 @@ var HTMLModule = (function(){
 						td.innerHTML = hour+":00";
 
 					td.className = 'time';
-					//row.id=td.innerHTML;
 
 					row.appendChild(td);
 			    }		    
@@ -256,26 +255,26 @@ var HTMLModule = (function(){
     function addPrerequisites(index, id)
     {
     	$.ajax({
-	       url: '/get_prerequisites',
-	       type: 'POST',
-	       cache: false,
-	       data: {
-	       	 lecture_id: id
-	       },
-	       dataType: "json",
-	       error: function(error) {
-          		console.log(error);
-	       },
-	       success: function(data) {
+	    url: '/get_prerequisites',
+	    type: 'POST',
+	    cache: false,
+	    data: {
+	       	lecture_id: id
+	    },
+	    dataType: "json",
+	    error: function(error) {
+          	console.log(error);
+	    },
+	    success: function(data) {
 	       	prerequisites = "";
 	       	$.each(data.courses, function(index, course)
-	       	{
-	       		prerequisites += '<td>' + course.program + course.number + '</td>';
-	       	});	
+	       	       {
+	       		   prerequisites += '<td>' + course.program + course.number + '</td>';
+	       	       });	
 
 	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td style="background-color: #7FB9FF"></td><td>Prereqs:</td>' + prerequisites + '</tr>');
-	       }
-	     });
+	    }
+	});
     }
 
     function removePrerequisites(index)
