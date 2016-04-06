@@ -1,10 +1,31 @@
-
+body {
+    background-color: #efefef !important;
+}
+.semesterButtons{
+	background-color: white;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+.schedule{
+	background-color: white;
+	border-radius: 10px;
+	padding: 5px;
+	opacity: 0.8;
+}
 .courseListContainer{
 	display: inline-block;
+	padding:40px;
+}
+
+#body {
+	height: 500px;
+	overflow-y: auto;
+	overflow-x: auto;
 }
 
 .courseList{
-	overflow: scroll;
+	padding-top: 10px;
 }
 
 .courseListTitles{
@@ -19,7 +40,14 @@
 .courseSchedule{
 
 }
-#nav-logo{
-  max-width:80px;
-  margin-right:10px;
+h2{
+	padding:25px;
+}
+
+#homeCalendar{
+    font-size: 12px;
+}
+
+#logo{
+    display:none;
 }

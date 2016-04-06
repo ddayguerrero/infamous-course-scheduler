@@ -1,20 +1,88 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    {% block head %}
     <title>
-        {% block title %}{% endblock %} - Null Pointer
+        {% block title %}{% endblock %}- Null Pointer
     </title>
+	<link rel="stylesheet" type="text/css" href="../../static/css/calendarStyle.css">
+	<link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="../static/font-awesome-4.5.0/css/font-awesome.min.css">
+	<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans' >
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../static/js/app.js"></script>
+	<script src="../static/js/htmlmodule.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	{% block head %}
     {% endblock %}
-    <link rel="stylesheet" type="text/css" href="../static/css/loginStyle.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
 </head>
-<body>
-    {% block content %}
-    {% endblock %}
-    <div id="footer">
-    </div>
-</body>
+	<body>
+		{% block header %}
+		{% endblock %}
+		<div id="logo" class="container-fluid">
+		      <img src="../../static/images/tempLogo341_transparent.png" alt="Logo" class="img-responsive" width="300" height="120">
+		</div>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		    	<a class="pull-left" href="{{ url_for('auth.home') }}"><img id="nav-logo" src="../../static/images/NullPointer-noarrow.png"></a>
+		    </div>
+		    {% set active_page = active_page|default("home") -%}
+		    <ul class="nav navbar-nav">
+		    	<li>
+		      		<a id="home" {% if active_page == "home" %} id="active" {% endif %} class="navlink" href="{{ url_for('auth.home') }}">Home</a>
+		    	</li>
+				<li>
+					<a id="fall" {% if active_page == "fall" %} id="active" {% endif %} class="navlink" href="{{ url_for('auth.fall') }}">Fall</a>
+				</li>
+				<li>
+					<a id="winter" {% if active_page == "winter" %} id="active" {% endif %} class="navlink" href="{{ url_for('auth.winter') }}">Winter</a>
+				</li>
+				<li>
+					<a id="summer" {% if active_page == "summer" %} id="active" {% endif %} class="navlink" href="{{ url_for('auth.summer') }}">Summer</a>
+				</li>
+		    </ul>
+		    <ul class="nav navbar-nav navbar-right">
+		    	<li>
+				{% if session['logged_in'] %}
+					<a class="navlink" href="{{ url_for('auth.logout') }}">Log out</a>
+				{% endif %}
+				</li>
+			{% block navbarRight %}{% endblock %}
+			</ul>
+		  </div>
+		</nav>
+
+		<div class="modal fade" id="registration-modal" role="dialog">
+		     <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+		        
+		      </div>
+		    </div>
+		</div>
+
+		<div class="modal fade" id="login-modal" role="dialog">
+		   <div class="modal-content">
+		    <div class="modal-header">
+		      <button type="button" class="close" data-dismiss="modal">&times;</button>
+		    </div>
+		    <div class="modal-body">
+		      
+		    </div>
+		  </div>
+		</div>
+	    {% block content %}	
+	    {% endblock %}
+			<div class="text-center">
+				<p>© 2016 NULL POINTER. ALL RIGHTS RESERVED</p>
+			</div>
+		{% block footer %}
+		{% endblock %}
+
+	</body>
 </html>

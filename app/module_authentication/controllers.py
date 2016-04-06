@@ -1,66 +1,109 @@
 # Import flask dependencies
 from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for
 
-# Import password / encryption helper tools
-from werkzeug import check_password_hash, generate_password_hash
-
 # Import module forms
-from app.module_authentication.forms import RegistrationForm, LoginForm
+from app.module_authentication.forms import RegistrationForm, LoginForm, CourseSelection
 
 # Import the database object from the main app module
 from app import db
 
-# Import sessions
-import database
-
 # Import module models
 from app.module_authentication.models import User
+from app.module_schedule.models import Student
+
+# Import decorators
+from app.module_authentication.decorators import requires_login
 
 # Define the blueprint: 'auth'
 mod_auth = Blueprint('auth',__name__)
 
 
-@mod_auth.route('/', methods=['GET', 'POST'])
-def home():
-	form = LoginForm()
-	if(form.validate_on_submit):
-		session = database.start_session()
-		user = session.query(User).filter_by(username=form.username.data).first()
-		session.remove()
-		if(user == None):
-			flash('Log in below')
-			#return redirect(url_for('auth.home'))
-		elif(user.password == form.password.data):
-			flash('You successfully logged in')
-			return render_template('auth/home.html', page="home", form=form)
-		else:
-			flash('The password was incorrect. Try again')
-			#return redirect(url_for('auth.home'))
+@mod_auth.before_request
+def before_request():
+	g.user = None
+	if 'user_id' in session:
+		g.user = User.query.get(session['user_id'])
 
-	return render_template('auth/login.html', page="home", form=form)
+
+@mod_auth.route('/', methods=['GET', 'POST'])
+def login():
+	form = LoginForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(username=form.username.data).first()
+		if user:
+			session['user_id'] = user.username
+			session['user_name'] = user.username
+			session['logged_in'] = True
+			return redirect(url_for('auth.home'))
+		flash('Wrong username or password', 'error-message')
+	return render_template('auth/login.html', form=form)
+
+
+@mod_auth.route('/')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return render_template('auth/login.html', form=form)
 
 
 @mod_auth.route('/registration/', methods=['GET', 'POST'])
 def register():
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		session = database.start_session()
-		user = User(form.username.data, form.password.data, form.email.data)
-		user_exists = session.query(User).filter_by(username=form.username.data).first()
-
-		session.remove()
-		if(user_exists == None):	
-			session.add(user)
-			session.commit()
-			flash('Thanks for registering')
-			return redirect(url_for('auth.home'))
+		user_exists = User.query.filter_by(username=form.username.data).scalar() is not None
+		if(user_exists):
+			flash('The username already exists.')	
 		else:
-			flash('The username already exists')
+			user = User(form.username.data, form.password.data, form.email.data)
+			student = Student(form.username.data, None, None, user.id)
+			db.session.add(student)
+			db.session.add(user)
+			db.session.commit()
+			flash('Thank you for registering')
+			return redirect(url_for('auth.login'))
 	return render_template('auth/registration.html', form=form)
 
 
 @mod_auth.route('/home/')
-def studentHome():
-    return render_template('auth/home.html', page="portal")
+#@requires_login
+def home():
+        return render_template('auth/profile.html', page="home")
 
 
+@mod_auth.route('/fall/')
+#@requires_login
+def fall():
+    	return render_template('auth/semesters/fall.html', page="fall")
+
+	
+@mod_auth.route('/winter/')
+#@requires_login
+def winter():
+    	return render_template('auth/semesters/winter.html', page="winter")
+
+	
+@mod_auth.route('/summer/')
+#@requires_login
+def summer():
+    	return render_template('auth/semesters/summer.html', page="summer")
+
+
+@mod_auth.route('/changeCalendar/', methods=['GET', 'POST'])
+def changeCalendar():
+	form = CourseSelection()
+	return render_template('auth/changeCalendar.html', form = form)
+
+
+@mod_auth.route('/change_fall/')
+def change_fall():
+	return render_template('auth/fallchangeCalendar.html', page="change_fall")
+
+
+@mod_auth.route('/change_winter/')
+def change_winter():
+	return render_template('auth/winterchangeCalendar.html', page="change_winter")
+
+
+@mod_auth.route('/change_summer/')
+def change_summer():
+	return render_template('auth/summerchangeCalendar.html', page="change_summer")
