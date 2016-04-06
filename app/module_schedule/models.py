@@ -107,6 +107,13 @@ class Student(Abstract_Base):
             if not self.completed_course(prerequisite.id):
                 return "You have not met the prerequisites for this course."
 
+        credits = lecture.get_course().credits
+        semester = lecture.semester_id
+        total = credits + self.get_credits(semester)
+
+        if total > 17:
+            return "You have surpassed the allocated number of credits: " + str(total)
+
         db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
         db.session.commit()
         return "Successfully registered."
@@ -150,6 +157,32 @@ class Student(Abstract_Base):
                 return True
 
         return False
+
+    def get_credits(self, semester):
+        credits = 0
+        if semester == 0:
+            lectures = self.get_fall_lectures()
+
+            for lecture in lectures:
+                credits += lecture.get_course().credits
+
+            return credits
+
+        if semester == 1:
+            lectures = self.get_winter_lectures()
+
+            for lecture in lectures:
+                credits += lecture.get_course().credits
+
+            return credits
+
+        if semester == 2:
+            lectures = self.get_summer_lectures()
+
+            for lecture in lectures:
+                credits += lecture.get_course().credits
+
+            return credits
 
     def __repr__(self):
         return '<User %r>' % (self.full_name)
