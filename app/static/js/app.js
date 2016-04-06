@@ -68,33 +68,47 @@ $( document ).ready(function() {
   }
   else if(url == '/change_summer/')//get all the summer classes
   {
-    $.ajax({
-      url: '/summer_lectures',
-      type: 'GET',
-      cache: false,
-      dataType: "json",
-      error: function(error) {
-        console.log(error);
-      },
-      success: function(data) {
-       $('#courseList').empty();
-        data.lectures.forEach((d)=>{
-          $('#courseList').append(HTMLModule.createSearchList(d));
+      $.ajax({
+	  url: '/summer_lectures',
+	  type: 'GET',
+	  cache: false,
+	  dataType: "json",
+	  error: function(error) {
+              console.log(error);
+	  },
+	  success: function(data) {
+	      $('#courseList').empty();
+              data.lectures.forEach((d)=>{
+		  $('#courseList').append(HTMLModule.createSearchList(d));
+	      });
+	  }
       });
-     }
-   });
-    $.ajax({ //get all the student's summer courses
-        url: '/student_summer_lectures',
-        type: 'POST',
-        dataType: "json",
-        error: function(error) {
-            console.log(error);
-        },
-        success: function(data) {
-		      $('#homeCalendar').append(HTMLModule.createCalendar(data));
-        }
+      $.ajax({ //get all the student's summer courses
+          url: '/student_summer_lectures',
+          type: 'POST',
+          dataType: "json",
+          error: function(error) {
+              console.log(error);
+          },
+          success: function(data) {
+	      $('#homeCalendar').append(HTMLModule.createCalendar(data));
+          }
       });
-    }
+  }
+  else if(url == '/home/')
+  {
+       $.ajax({
+	  url: '/completed_course',
+	  type: 'GET',
+	  cache: false,
+	  dataType: "json",
+	  error: function(error) {
+	  },
+	  success: function(data) {
+	      console.log(data);
+	  }
+      });
+  }
 
     var typingTimer;                
     var doneTypingInterval = 250;
