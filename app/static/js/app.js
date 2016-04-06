@@ -95,20 +95,6 @@ $( document ).ready(function() {
           }
       });
   }
-  else if(url == '/home/')
-  {
-       $.ajax({
-	  url: '/completed_course',
-	  type: 'GET',
-	  cache: false,
-	  dataType: "json",
-	  error: function(error) {
-	  },
-	  success: function(data) {
-	      console.log(data);
-	  }
-      });
-  }
 
     var typingTimer;                
     var doneTypingInterval = 250;
@@ -273,11 +259,11 @@ $( document ).ready(function() {
 });
 
 function hoverInLogo(hoveredOver){
-	document.getElementById("active").id="oldActive";
+	//document.getElementById("active").id="oldActive";
 	hoveredOver.id="active";
 }
 
 function hoverOutLogo(hoveredOver){
-	document.getElementById("oldActive").id="active";
+	//document.getElementById("oldActive").id="active";
 	hoveredOver.removeAttribute("id");
 }

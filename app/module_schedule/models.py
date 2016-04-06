@@ -45,12 +45,11 @@ class Student(Abstract_Base):
         return courses
 
     def get_completed_courses(self):
-        acs = db.session.query(AcademicRecord).filter_by(user_id=self.full_name).all()
+        acs = db.session.query(AcademicRecord).filter_by(user_id=self.full_name, lecture_status='completed').all()
         lectures = []
         courses = []
         for ac in acs:
-            if ac.lecture_status == 'completed':
-                lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
+            lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
 
         for lecture in lectures:
             courses.append(db.session.query(Course).filter_by(id=lecture.course_id).first())

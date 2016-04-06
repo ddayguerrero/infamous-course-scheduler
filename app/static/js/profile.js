@@ -48,6 +48,84 @@ $(function () {
 
 $( document ).ready(function()
 {
+
+    $('#complete_course').click(function()
+    {
+        var selected = [];
+        $('#registered_messages').empty();
+        $('input:checkbox', $('#registeredCourses')).each(function() {
+            if($(this).is(":checked"))
+            {
+                selected.push($(this).attr('id'));
+            }
+        });
+
+        if(selected.length === 0)
+        {
+            $('#registered_messages').append('<div class="alert alert-warning">No courses were selected.</div>');
+        }
+        else
+        {
+            jQuery.each(selected, function(index, item) {
+                console.log(item);
+                $.ajax({ //get all the student's fall
+                    url: '/complete_course',
+                    type: 'POST',
+                    cache: false,
+                    data: {
+                        course_id: item
+                    },
+                    dataType: "json",
+                    error: function(error) {
+                        console.log(error);
+                    },
+                    success: function(data) {
+                        $('#registered_messages').append('<div class="alert alert-warning">Completed ' + id +'</div>')
+                    }
+                }); 
+            });
+            location.reload();
+        }
+    });
+
+    $('#uncomplete_course').click(function()
+    {
+        var selected = [];
+        var courses = "";
+        $('#completed_messages').empty();
+        $('input:checkbox', $('#completedCourses > li')).each(function() {
+            if($(this).is(":checked"))
+            {
+                selected.push($(this).attr('id'));
+            }
+        });
+
+        if(selected.length === 0)
+        {
+            $('#completed_messages').append('<div class="alert alert-warning">No courses were selected.</div>');
+        }
+        else
+        {
+            jQuery.each(selected, function(index, item) {
+                $.ajax({ //get all the student's fall
+                    url: '/remove_course',
+                    type: 'GET',
+                    data: {
+                        course_id: item
+                    },
+                    dataType: "json",
+                    error: function(error) {
+                        console.log(error);
+                    },
+                    success: function(data) {
+                        $('#registered_messages').append('<div class="alert alert-warning">Completed ' + id +'</div>')
+                    }
+                }); 
+            });
+            location.reload();
+        }
+    });
+
     var url = window.location.pathname;
     if(url == '/home/')
     {
@@ -60,13 +138,14 @@ $( document ).ready(function()
             },
             success: function(data) {
                 data.courses.forEach((d)=>{
+                    id = d.program + d.number;
                     $('#completedCourses').append('<li class="list-group-item" data-color="success">' +
-                        '<input type="checkbox" id=' + d.program + d.number + '>' + d.program + d.number + '</li>');
+                        '<input type="checkbox" id="' + id + '">' + id + '</li>');
                 });
             }
-    });
+        });
 
-    $.ajax({ //get all the student's fall
+        $.ajax({ //get all the student's fall
             url: '/student_registered_courses',
             type: 'GET',
             dataType: "json",
@@ -76,7 +155,7 @@ $( document ).ready(function()
             success: function(data) {
                 data.courses.forEach((d)=>{
                     $('#registeredCourses').append('<li class="list-group-item" data-color="success">' +
-                        '<input type="checkbox" id=' + d.program + d.number + '>' + d.program + d.number + '</li>');
+                        '<input type="checkbox" id=' + d.program + '/' + d.number + '>' + d.program + d.number + '</li>');
                 });
             }
         });

@@ -141,9 +141,9 @@ var HTMLModule = (function(){
 
 	    //startRow returns NAN sometimes. Someone has to fix that.
 	    if(!isNaN(startRow)){
-		tbody.rows[startRow].cells[day].className="timeSlot";
-		tbody.rows[startRow].cells[day].rowSpan=classDuration;
-		tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
+			tbody.rows[startRow].cells[day].className="timeSlot";
+			tbody.rows[startRow].cells[day].rowSpan=classDuration;
+			tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
 	    }
 	}
 
