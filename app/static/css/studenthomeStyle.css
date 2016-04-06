@@ -10,9 +10,12 @@ body {
 .schedule{
 	background-color: white;
 	border-radius: 10px;
-	padding: 5px;
+	padding: 10px;
 	opacity: 0.8;
+	width:80%;
+	margin: 0 auto;
 }
+
 .courseListContainer{
 	display: inline-block;
 	padding:40px;

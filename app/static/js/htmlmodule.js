@@ -7,7 +7,7 @@ var HTMLModule = (function(){
     
     function createCalendar(listOfClasses){
 	let tbl  = document.createElement('table');
-	tbl.className = "table table-striped";
+	tbl.className="courseCalendar"
 	var head = document.createElement('thead');
 	var headRow = document.createElement('tr');
 	var tbody = document.createElement('tbody');
@@ -15,38 +15,40 @@ var HTMLModule = (function(){
 	var row, dayHeader;
 	var createCells = function(days){
 	    for (var i = 0; i < days.length + 1 ; i++){
-		dayHeader = document.createElement('th');
-		if(i==0) {
-		    dayHeader.innerHTML = " ";
-		} else {
-		    dayHeader.innerHTML = days[i-1];
-		}
-		headRow.appendChild(dayHeader);
+			dayHeader = document.createElement('th');
+			if(i==0) {
+			    dayHeader.innerHTML = " ";
+			} else {
+			    dayHeader.innerHTML = days[i-1];
+			}
+			headRow.appendChild(dayHeader);
 	    }
 	    head.appendChild(headRow);
 	}
 
 	var createTimeSlots = function(){
 	    var tr, td, min, hour;
-	    for (var i = 0; i < 52; i++){ //rows
-		row = document.createElement('tr');
-		for (var j = 0; j < daysOfWeek.length + 1; j++){ //column
-		    td = document.createElement('td');
-		    if(j==0){//hours and min
-				hour = 8+Math.floor(i/4);
-				min = (i%4)*15;
-				if(min!=0)
-					td.innerHTML = hour+":"+min;
-				else td.innerHTML = hour+":00";
-				td.style.border = '1px solid black';
-				row.appendChild(td);
-		    }		    
-		    else{ 
-		     td.innerHTML = "";	
-		    } 
-		    td.style.border = '1px solid black';
-		    row.appendChild(td); 
-		}
+	    for (var i = 0; i < 52; i++){ // rows
+			row = document.createElement('tr');
+			for (var j = 0; j < daysOfWeek.length + 1; j++){ // column
+			    td = document.createElement('td');
+			    if(j==0){ // hours and min
+					hour = 8+Math.floor(i/4);
+					min = (i%4)*15;
+					if(min!=0)
+						td.innerHTML = hour+":"+min;
+					else 
+						td.innerHTML = hour+":00";
+
+					td.className = 'time';
+
+					row.appendChild(td);
+			    }		    
+			    else{ 
+			     td.innerHTML = "";	
+			    } 
+			    row.appendChild(td); 
+			}
 		tbody.appendChild(row);
 	    }
 	}
@@ -133,45 +135,22 @@ var HTMLModule = (function(){
 	});
 }
 
-var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
-		var classDuration = endRow - startRow +1;
-		var startingHour=0;
-		for(row=1; row<=classDuration;row++){
-			var timeOnTable= tbody.rows[startingHour+startRow];
-			var timeCell = timeOnTable.cells[day];
-			//var timeCell = tbl.rows[row].cells[day];
-			timeCell.style.backgroundColor = "yellow";
-			if(row!=1 || row!=classDuration){
-				timeCell.style.borderTop = "thick solid yellow";
-				timeCell.style.borderBottom = "thick solid yellow";
-				if(row==Math.floor(classDuration/2)){
-					timeCell.innerHTML=lecture.name;
-				}
-				else if(row==Math.floor(classDuration/2)+1){
-					timeCell.innerHTML=lecture.number;
-				}
-				else if(row==Math.floor(classDuration/2)+2){
-					timeCell.innerHTML=startTime[0]+":"+startTime[1]+ "-";
-				}
-				else if(row==Math.floor(classDuration/2)+3){
-					timeCell.innerHTML=endTime[0]+":"+endTime[1];
-				}
-			}
-			else if(row==1){//first cell needs bottom border removed
-				timeCell.style.borderBottom = "thick solid yellow";
-			}
-			else if(row==classDuration){
-				timeCell.style.borderTop = "thick solid yellow";
-			}
-			startingHour++; 
-		}
+	function printCourse(lecture,day,startTime,endTime,startRow,endRow){
+	    var classDuration = endRow - startRow +1;
+	    var startingTime = startTime[0] + ":" + startTime[1];
+
+	    //startRow returns NAN sometimes. Someone has to fix that.
+	    if(!isNaN(startRow)){
+		tbody.rows[startRow].cells[day].className="timeSlot";
+		tbody.rows[startRow].cells[day].rowSpan=classDuration;
+		tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
+	    }
 	}
 
 
 	createCells(daysOfWeek);
 	createTimeSlots();
 	getTableBoundsForEachCourse();
-	tbl.className = "table table-striped";
 	tbl.appendChild(head);
 	tbl.appendChild(tbody);
 	return tbl;
@@ -276,17 +255,17 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
     function addPrerequisites(index, id)
     {
     	$.ajax({
-	       url: '/get_prerequisites',
-	       type: 'POST',
-	       cache: false,
-	       data: {
-	       	 lecture_id: id
-	       },
-	       dataType: "json",
-	       error: function(error) {
-          		console.log(error);
-	       },
-	       success: function(data) {
+	    url: '/get_prerequisites',
+	    type: 'POST',
+	    cache: false,
+	    data: {
+	       	lecture_id: id
+	    },
+	    dataType: "json",
+	    error: function(error) {
+          	console.log(error);
+	    },
+	    success: function(data) {
 	       	prerequisites = "";
 	       	$.each(data.courses, function(index, course)
 	       	{
@@ -299,10 +278,9 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
 	       			prerequisites += '<td bgcolor="#FF6666">' + course.program + course.number + '</td>';
 	       		}
 	       	});	
-
-	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td></td><td>Prereqs:</td>' + prerequisites + '</tr>');
-	       }
-	     });
+	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td style="background-color: #7FB9FF"></td><td>Prereqs:</td>' + prerequisites + '</tr>');
+	    }
+	});
     }
 
     function removePrerequisites(index)

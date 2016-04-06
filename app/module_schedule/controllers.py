@@ -12,7 +12,7 @@ if __name__ == '__main__':
 from app import db
 from app.module_schedule.models import Lecture, Semester, Tutorial, Lab, AcademicRecord, Mapping, Course, Student
 
-@mod_schedule.route('/add_lecture', methods=['GET', 'POST'])
+@mod_schedule.route('/add_lecture', methods=['POST'])
 def add_lecture():
     student = get_student()
     info = request.form['lecture_id']
@@ -24,7 +24,7 @@ def add_lecture():
     lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
     return student.register_lecture(lecture.id)
 
-@mod_schedule.route('/delete_lecture', methods=['GET', 'POST'])
+@mod_schedule.route('/delete_lecture', methods=['POST'])
 def delete_lecture():
     student = get_student()
     info = request.form['lecture_id']
@@ -59,7 +59,7 @@ def get_lectures(semester_integer):
         return jsonify(lectures=lectures)
 
 
-@mod_schedule.route('/get_prerequisites', methods=['GET', 'POST'])
+@mod_schedule.route('/get_prerequisites', methods=['GET'])
 def get_prerequisites():
     info = request.form['lecture_id']
     info_split = info.split('/')
@@ -75,7 +75,7 @@ def get_prerequisites():
     return jsonify(courses=[course.serialize() for course in prerequisites])
 
 
-@mod_schedule.route('/student_fall_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/student_fall_lectures', methods=['GET'])
 def student_fall_lectures():
 	student = get_student()
 	fall_lectures = student.get_fall_lectures()
@@ -83,7 +83,7 @@ def student_fall_lectures():
 	return jsonify(lectures=[lecture.serialize() for lecture in fall_lectures])
 
 
-@mod_schedule.route('/student_winter_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/student_winter_lectures', methods=['GET'])
 def student_winter_lectures():
 	student = get_student()
 	winter_lectures = student.get_winter_lectures()
@@ -91,7 +91,7 @@ def student_winter_lectures():
 	return jsonify(lectures=[lecture.serialize() for lecture in winter_lectures])
 
 
-@mod_schedule.route('/student_summer_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/student_summer_lectures', methods=['GET'])
 def student_summer_lectures():
 	student = get_student()
 	summer_lectures = student.get_summer_lectures()
@@ -99,7 +99,7 @@ def student_summer_lectures():
 	return jsonify(lectures=[lecture.serialize() for lecture in summer_lectures])
 
 
-@mod_schedule.route('/fall_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/fall_lectures', methods=['GET'])
 def get_fall_lectures():
 	lectures = []
 	semesters = db.session.query(Semester).filter_by(semester_id=0).all()
@@ -124,7 +124,7 @@ def get_fall_lectures_search():
 	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
 
-@mod_schedule.route('/winter_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/winter_lectures', methods=['GET'])
 def get_winter_lectures():
 	lectures = []
 	semesters = db.session.query(Semester).filter_by(semester_id=1).all()
@@ -150,7 +150,7 @@ def get_winter_lectures_search():
 	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
 
-@mod_schedule.route('/summer_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/summer_lectures', methods=['GET'])
 def get_summer_lectures():
 	lectures = []
 	semesters = db.session.query(Semester).filter_by(semester_id=2).all()
@@ -183,21 +183,21 @@ def get_labs(lecture_id):
 
 
 # Gets the lectures a student is registered for
-@mod_schedule.route('/student_lectures', methods=['GET','POST'])
+@mod_schedule.route('/student_lectures', methods=['GET'])
 def get_student_lectures():
     student = get_student()
     return jsonify(lectures=student.get_lectures())
 
 
 # Gets the lectures a student is registered for
-@mod_schedule.route('/register', methods=['GET','POST'])
+@mod_schedule.route('/register', methods=['POST'])
 def register_lecture(lecture_id):
     student = get_student()
     return student.register_lecture(lecture_id)
 
 
 # Gets the lectures a student is registered for
-@mod_schedule.route('/completed_course', methods=['GET','POST'])
+@mod_schedule.route('/completed_course', methods=['GET'])
 def student_completed_course(course_id):
     student = get_student()
     return student.completed_course(course_id)
@@ -205,19 +205,3 @@ def student_completed_course(course_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-# Say you want to create a specific resource (e.g. schedule)
-#
-# POST request example
-@mod_schedule.route('/schedules', methods=['POST'])
-def generate_schedule():
-    if not request.json or 'name' not in request.json:
-        abort(400)
-    schedule = {
-        'id': schedules[-1]['id'] + 1,  # schedule is equal to last schedule id + 1
-        'name': request.json['name'],
-        'done': False
-    }
-    schedules.append(schedule)
-    return jsonify({'schedule': schedule}), 201
-

@@ -17,6 +17,8 @@ body{
 }
 
 .navlink{
+	width: 85px;
+	text-align: center;
 }
 
 #active{
@@ -24,10 +26,6 @@ body{
 	background-size: 25%;
 	background-repeat: no-repeat;
 	background-position: right top;
-}
-
-#homeLink{
-	width:85px;
 }
 
 #logo{
@@ -38,7 +36,3 @@ body{
   max-width:80px;
   margin-right:10px;
 }
-
-
-
-

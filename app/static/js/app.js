@@ -60,7 +60,6 @@ $( document ).ready(function() {
             type: 'POST',
             dataType: "json",
             error: function(error) {
-                console.log(error);
             },
             success: function(data) {
 		$('#homeCalendar').append(HTMLModule.createCalendar(data));
@@ -69,33 +68,47 @@ $( document ).ready(function() {
   }
   else if(url == '/change_summer/')//get all the summer classes
   {
-    $.ajax({
-      url: '/summer_lectures',
-      type: 'GET',
-      cache: false,
-      dataType: "json",
-      error: function(error) {
-        console.log(error);
-      },
-      success: function(data) {
-       $('#courseList').empty();
-        data.lectures.forEach((d)=>{
-          $('#courseList').append(HTMLModule.createSearchList(d));
+      $.ajax({
+	  url: '/summer_lectures',
+	  type: 'GET',
+	  cache: false,
+	  dataType: "json",
+	  error: function(error) {
+              console.log(error);
+	  },
+	  success: function(data) {
+	      $('#courseList').empty();
+              data.lectures.forEach((d)=>{
+		  $('#courseList').append(HTMLModule.createSearchList(d));
+	      });
+	  }
       });
-     }
-   });
-    $.ajax({ //get all the student's summer courses
-        url: '/student_summer_lectures',
-        type: 'POST',
-        dataType: "json",
-        error: function(error) {
-            console.log(error);
-        },
-        success: function(data) {
-		      $('#homeCalendar').append(HTMLModule.createCalendar(data));
-        }
+      $.ajax({ //get all the student's summer courses
+          url: '/student_summer_lectures',
+          type: 'POST',
+          dataType: "json",
+          error: function(error) {
+              console.log(error);
+          },
+          success: function(data) {
+	      $('#homeCalendar').append(HTMLModule.createCalendar(data));
+          }
       });
-    }
+  }
+  else if(url == '/home/')
+  {
+       $.ajax({
+	  url: '/completed_course',
+	  type: 'GET',
+	  cache: false,
+	  dataType: "json",
+	  error: function(error) {
+	  },
+	  success: function(data) {
+	      console.log(data);
+	  }
+      });
+  }
 
     var typingTimer;                
     var doneTypingInterval = 250;
@@ -175,48 +188,96 @@ $( document ).ready(function() {
     }
 
     $('#add').click(function(){
-      $('#messages').empty();
-	     var selected = [];
-	     $('td input:checkbox', $('#table')).each(function() {
-	       if($(this).is(":checked"))
-	       {
-		        selected.push($(this).attr('id'));
-	       }
-	     });
+	$('#messages').empty();
+	var selected = [];
+	$('td input:checkbox', $('#table')).each(function() {
+	    if($(this).is(":checked"))
+	    {
+		selected.push($(this).attr('id'));
+	    }
+	});
 
-	     if(selected.length === 0)
-	     {
-	         $('#messages').append('<p>No courses were selected.</p>');
-	     }
-	     else
-	     {
-	       $.each(selected, function(i, id) {
-		      console.log(id);
-		      $.ajax({
-		          url: '/add_lecture',
-		          type: 'POST',
-		          cache: false,
-		          data: {
-			           lecture_id: id
-		          },
-		          error: function(error) {
-                console.log(error);
-		          },
-		          success: function(data) {
-			           $('#messages').append('<p>' + id + ': ' + data + '</p>');
-		          }
-		      });
-	       });
-	     }
+	if(selected.length === 0)
+	{
+	    $('#messages').append('<div class="alert alert-warning">No courses were selected.</div>');
+	}
+	else
+	{
+	    $.each(selected, function(i, id) {
+		console.log(id);
+		$.ajax({
+		    url: '/add_lecture',
+		    type: 'POST',
+		    cache: false,
+		    data: {
+			lecture_id: id
+		    },
+		    error: function(error) {
+		    },
+		    success: function(data) {
+			$('#messages').append('<div class="alert alert-info" role="alert">' + id + ': ' + data +'</div>');
+		    }
+		});
+	    });
+	}
     });
+
+     $('#delete_course').click(function(){
+        $('#delete_messages').empty();
+        var selected = [];
+        var courses = "";
+        $('input:checkbox', $('#courseList')).each(function() {
+            if($(this).is(":checked"))
+            {
+                var id = $(this).attr('id');
+                selected.push(id);
+                courses += id + "  ";
+            }
+        });
+
+        if(selected.length === 0)
+        {
+            $('#delete_messages').append('<div class="alert alert-warning">No courses were selected.</div>');
+        }
+        else
+        {
+            var should_delete = confirm("Are you sure you want to delete: " + courses);
+            if(should_delete)
+            {
+                $.each(selected, function(i, id) {
+                    console.log(id);
+                    $.ajax({
+			url: '/delete_lecture',
+			type: 'POST',
+			cache: false,
+			data: {
+			    lecture_id: id
+			},
+			error: function(error) {
+			    console.log(error);
+			},
+			success: function(data) {
+			    console.log(data);
+			    location.reload();
+			}
+		    });
+		});
+            }
+            else
+            {
+                $('#delete_messages').append("Delete aborted.");
+            }
+            
+        }
+    });
+
 
     function getClasses(){
 	     $.ajax({
 	       url: '/student_fall_lectures',
 	       type: 'GET',
 	       dataType: "json",
-	       error: function(error) {
-          console.log(error);
+	       error: function(error) {	   
 	       },
 	       success: function(data) {
 		        studentCourses = data;
@@ -225,11 +286,12 @@ $( document ).ready(function() {
     }
 });
 
-  function hoverInLogo(){
-    document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
-  }
+function hoverInLogo(hoveredOver){
+	document.getElementById("active").id="oldActive";
+	hoveredOver.id="active";
+}
 
-  function hoverOutLogo(){
-    document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
-  }
-
+function hoverOutLogo(hoveredOver){
+	document.getElementById("oldActive").id="active";
+	hoveredOver.removeAttribute("id");
+}
