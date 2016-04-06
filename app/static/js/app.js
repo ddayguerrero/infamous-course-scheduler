@@ -225,11 +225,12 @@ $( document ).ready(function() {
     }
 });
 
-  function hoverInLogo(){
-    document.getElementById("nav-logo").src="../../static/images/NullPointer-noarrow.png";
-  }
+function hoverInLogo(hoveredOver){
+	document.getElementById("active").id="oldActive";
+	hoveredOver.id="active";
+}
 
-  function hoverOutLogo(){
-    document.getElementById("nav-logo").src="../../static/images/NullPointer.png";
-  }
-
+function hoverOutLogo(hoveredOver){
+	document.getElementById("oldActive").id="active";
+	hoveredOver.removeAttribute("id");
+}
