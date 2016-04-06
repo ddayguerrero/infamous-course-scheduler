@@ -136,16 +136,16 @@ var HTMLModule = (function(){
 	});
 }
 
-var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
-		var classDuration = endRow - startRow +1;
-		var startingTime = startTime[0] + ":" + startTime[1];
+	function printCourse(lecture,day,startTime,endTime,startRow,endRow){
+	    var classDuration = endRow - startRow +1;
+	    var startingTime = startTime[0] + ":" + startTime[1];
 
-		//startRow returns NAN sometimes. Someone has to fix that.
-		if(!isNaN(startRow)){
-			tbody.rows[startRow].cells[day].className="timeSlot";
-			tbody.rows[startRow].cells[day].rowSpan=classDuration;
-			tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
-		}
+	    //startRow returns NAN sometimes. Someone has to fix that.
+	    if(!isNaN(startRow)){
+		tbody.rows[startRow].cells[day].className="timeSlot";
+		tbody.rows[startRow].cells[day].rowSpan=classDuration;
+		tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
+	    }
 	}
 
 
@@ -273,7 +273,7 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
 	       		prerequisites += '<td>' + course.program + course.number + '</td>';
 	       	});	
 
-	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td></td><td>Prereqs:</td>' + prerequisites + '</tr>');
+	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td style="background-color: #7FB9FF"></td><td>Prereqs:</td>' + prerequisites + '</tr>');
 	       }
 	     });
     }
