@@ -200,44 +200,86 @@ var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
     }
 
     function createSearchList(d){
-	var row = document.createElement('tr');
-	var td = document.createElement('td');
-	td.className = "section";
-	td.innerHTML = d.section;
-	row.appendChild(td);
-	td = document.createElement('td');
-	td.className = "code";
-	td.innerHTML = d.full_name;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	td.className = "name";
-	td.innerHTML = d.name;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	td.className = "startTime";
-	td.innerHTML = d.start_time;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	td.className = "endTime";
-	td.innerHTML = d.end_time;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	td.className = "instructor";
-	td.innerHTML = d.instructor;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	input = document.createElement('input');
-	input.setAttribute('type', 'checkbox');
-	input.setAttribute('value', 'class1');
-	var selectionId = d.full_name + '/' +  d.section;
-	input.setAttribute('id', selectionId);
-	td.appendChild(input);
-	row.appendChild(td);
-	return row;	
+
+		var row = document.createElement('tr');
+		var td = document.createElement('td');
+		td.className = "section";
+		td.innerHTML = d.section;
+		row.appendChild(td);
+		td = document.createElement('td');
+		td.className = "code";
+		td.innerHTML = d.full_name;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		td.className = "name";
+		td.innerHTML = d.name;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		td.className = "startTime";
+		td.innerHTML = d.start_time;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		td.className = "endTime";
+		td.innerHTML = d.end_time;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		td.className = "instructor";
+		td.innerHTML = d.instructor;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		input = document.createElement('input');
+		input.setAttribute('type', 'checkbox');
+		input.setAttribute('value', 'class1');
+		var selectionId = d.full_name + '/' +  d.section;
+		input.setAttribute('id', selectionId);
+		input.onclick = function()
+		{
+			if(this.checked)
+			{
+				addPrerequisites($(this).closest('tr').index(), this.id);
+			}
+			else
+			{
+				removePrerequisites($(this).closest('tr').index());
+			}
+		};
+		td.appendChild(input);
+		row.appendChild(td);
+		return row;	
+    }
+
+    function addPrerequisites(index, id)
+    {
+    	$.ajax({
+	       url: '/get_prerequisites',
+	       type: 'POST',
+	       cache: false,
+	       data: {
+	       	 lecture_id: id
+	       },
+	       dataType: "json",
+	       error: function(error) {
+          		console.log(error);
+	       },
+	       success: function(data) {
+	       	prerequisites = "";
+	       	$.each(data.courses, function(index, course)
+	       	{
+	       		prerequisites += '<td>' + course.program + course.number + '</td>';
+	       	});	
+
+	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td></td><td>Prereqs:</td>' + prerequisites + '</tr>');
+	       }
+	     });
+    }
+
+    function removePrerequisites(index)
+    {
+    	$('#prerequisites').remove();
     }
 }());

@@ -209,7 +209,7 @@ class Course(Abstract_Course):
             'name': self.name,
             'program': self.program,
             'number': self.number,
-            'credits': credits
+            'credits': self.credits
         }
 
 

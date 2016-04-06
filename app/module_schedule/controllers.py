@@ -59,20 +59,20 @@ def get_lectures(semester_integer):
         return jsonify(lectures=lectures)
 
 
-#Gets all the lectures of a specified course id
-@mod_schedule.route('/lectures_course', methods=['GET','POST'])
-def get_lectures_for_course(course_number):
-    lectures = db.session.query(Lecture).filter_by(course_id=course_number).all()
-    if(current_app):
-        return jsonify(lectures=lectures)
+@mod_schedule.route('/get_prerequisites', methods=['GET', 'POST'])
+def get_prerequisites():
+    info = request.form['lecture_id']
+    info_split = info.split('/')
+    lecture_code = info_split[0]
 
+    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
 
-# Gets the tutorial for a specified lecture
-@mod_schedule.route('/tutorials', methods=['GET','POST'])
-def get_tutorials(lecture_id):
-    tutorials = db.session.query(Tutorial).filter_by(lecture_id=lecture_id).all()
-    if(current_app):
-        return jsonify(tutorials=tutorials)
+    mappings = db.session.query(Mapping).filter_by(course_id=course.id).all()
+    prerequisites = []
+    for mapping in mappings:
+        prerequisites.append(db.session.query(Course).filter_by(id=mapping.course_req_id).first())
+
+    return jsonify(courses=[course.serialize() for course in prerequisites])
 
 
 @mod_schedule.route('/student_fall_lectures', methods=['GET', 'POST'])
