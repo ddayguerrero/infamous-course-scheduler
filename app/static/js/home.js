@@ -1,6 +1,5 @@
 $( document ).ready(function() {
     var url = window.location.pathname;
-    console.log(url);
     if(url == '/fall/')
     {      
         $.ajax({ //get all the student's fall
@@ -11,11 +10,9 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-		$("#fall").unbind('click');
-                data.lectures.forEach((d) => {
-                    $('#courseList').append(HTMLModule.createCourseList(d));
-		});
-            $('#homeCalendar').append(HTMLModule.createCalendar(data));
+                $('#courseList').empty();
+                $('#courseList').append(HTMLModule.createCourseList(data));
+                $('#homeCalendar').append(HTMLModule.createCalendar(data));
             }
         });
 
@@ -30,12 +27,9 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-                $("#winter").unbind('click');
-                $.each(data.lectures, function(idx, lecture) {
-                    console.log(lecture);
-              });
-	   $('#homeCalendar').append(HTMLModule.createCalendar(data));
-           $('#courseList').append(HTMLModule.createCourseList(data));
+                $('#courseList').empty();
+	           $('#homeCalendar').append(HTMLModule.createCalendar(data));
+                $('#courseList').append(HTMLModule.createCourseList(data));
             }
         }); 
     }
@@ -49,13 +43,59 @@ $( document ).ready(function() {
                 console.log(error);
             },
             success: function(data) {
-                $("#summer").unbind('click');
-                $.each(data.lectures, function(idx, lecture) {
-                    console.log(lecture);
-              });
-	    $('#homeCalendar').append(HTMLModule.createCalendar(data));
-	    $('#courseList').append(HTMLModule.createCourseList(data));
+                $('#courseList').empty();
+	           $('#homeCalendar').append(HTMLModule.createCalendar(data));
+	           $('#courseList').append(HTMLModule.createCourseList(data));
             }
         }); 
     }
+
+    $('#delete_course').click(function(){
+        $('#delete_messages').empty();
+         var selected = [];
+         var courses = "";
+         $('input:checkbox', $('#courseList')).each(function() {
+           if($(this).is(":checked"))
+           {
+                var id = $(this).attr('id');
+                selected.push(id);
+                courses += id + "  ";
+           }
+         });
+
+         if(selected.length === 0)
+         {
+             $('#delete_messages').append("<p>No courses were selected.</p>");
+         }
+         else
+         {
+            var should_delete = confirm("Are you sure you want to delete: " + courses);
+            if(should_delete)
+            {
+                $.each(selected, function(i, id) {
+                console.log(id);
+                $.ajax({
+                  url: '/delete_lecture',
+                  type: 'POST',
+                  cache: false,
+                  data: {
+                    lecture_id: id
+                  },
+                  error: function(error) {
+                    console.log(error);
+                  },
+                  success: function(data) {
+                    console.log(data);
+                    location.reload();
+                  }
+              });
+            });
+            }
+            else
+            {
+                $('#delete_messages').append("Delete aborted.");
+            }
+           
+         }
+    });
 });

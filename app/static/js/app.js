@@ -66,36 +66,35 @@ $( document ).ready(function() {
 		$('#homeCalendar').append(HTMLModule.createCalendar(data));
             }
         });
-
-    }
-    else if(url == '/change_summer/')//get all the summer classes
-    {
-	$.ajax({
-	    url: '/summer_lectures',
-	    type: 'GET',
-	    cache: false,
-	    dataType: "json",
-	    error: function(error) {
-		console.log(error);
-	    },
-	    success: function(data) {
-		$('#courseList').empty();
-		data.lectures.forEach((d)=>{
-		    $('#courseList').append(HTMLModule.createSearchList(d));
-		});
-	    }
-	});
-	$.ajax({ //get all the student's summer courses
-            url: '/student_summer_lectures',
-            type: 'POST',
-            dataType: "json",
-            error: function(error) {
-                console.log(error);
-            },
-            success: function(data) {
-		$('#homeCalendar').append(HTMLModule.createCalendar(data));
-            }
-        });
+  }
+  else if(url == '/change_summer/')//get all the summer classes
+  {
+    $.ajax({
+      url: '/summer_lectures',
+      type: 'GET',
+      cache: false,
+      dataType: "json",
+      error: function(error) {
+        console.log(error);
+      },
+      success: function(data) {
+       $('#courseList').empty();
+        data.lectures.forEach((d)=>{
+          $('#courseList').append(HTMLModule.createSearchList(d));
+      });
+     }
+   });
+    $.ajax({ //get all the student's summer courses
+        url: '/student_summer_lectures',
+        type: 'POST',
+        dataType: "json",
+        error: function(error) {
+            console.log(error);
+        },
+        success: function(data) {
+		      $('#homeCalendar').append(HTMLModule.createCalendar(data));
+        }
+      });
     }
 
     var typingTimer;                
@@ -176,51 +175,53 @@ $( document ).ready(function() {
     }
 
     $('#add').click(function(){
-	var selected = [];
-	$('td input:checkbox', $('#table')).each(function() {
-	    if($(this).is(":checked"))
-	    {
-		selected.push($(this).attr('id'));
-	    }
-	});
+      $('#messages').empty();
+	     var selected = [];
+	     $('td input:checkbox', $('#table')).each(function() {
+	       if($(this).is(":checked"))
+	       {
+		        selected.push($(this).attr('id'));
+	       }
+	     });
 
-	if(selected.length === 0)
-	{
-	    alert('no courses were selected');
-	}
-	else
-	{
-	    $.each(selected, function(i, id) {
-		console.log(id);
-		$.ajax({
-		    url: '/add_lecture_test',
-		    type: 'POST',
-		    cache: false,
-		    data: {
-			lecture_id: id
-		    },
-		    error: function(error) {
-		    },
-		    success: function(data) {
-			$('#homeCalendar').empty();
-			$('#homeCalendar').append(HTMLModule.createCalendar(data));
-		    }
-		});
-	    });
-	}
+	     if(selected.length === 0)
+	     {
+	         $('#messages').append('<p>No courses were selected.</p>');
+	     }
+	     else
+	     {
+	       $.each(selected, function(i, id) {
+		      console.log(id);
+		      $.ajax({
+		          url: '/add_lecture',
+		          type: 'POST',
+		          cache: false,
+		          data: {
+			           lecture_id: id
+		          },
+		          error: function(error) {
+                console.log(error);
+		          },
+		          success: function(data) {
+			           $('#messages').append('<p>' + id + ': ' + data + '</p>');
+		          }
+		      });
+	       });
+	     }
     });
 
     function getClasses(){
-	$.ajax({
-	    url: '/student_fall_lectures',
-	    type: 'GET',
-	    dataType: "json",
-	    error: function(error) {
-	    },
-	    success: function(data) {
-		studentCourses = data;
-	    }
-	});
+	     $.ajax({
+	       url: '/student_fall_lectures',
+	       type: 'GET',
+	       dataType: "json",
+	       error: function(error) {
+          console.log(error);
+	       },
+	       success: function(data) {
+		        studentCourses = data;
+	       }
+	     });
     }
 });
 

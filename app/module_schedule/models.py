@@ -24,9 +24,6 @@ class Student(Abstract_Base):
         for ac in academic_records:
             registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
 
-        for lecture in registered_lectures:
-            print lecture
-
         return registered_lectures
 
 
@@ -94,6 +91,10 @@ class Student(Abstract_Base):
 
     def register_lecture(self, lecture_id):
         lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
+
+        if self.is_registered(lecture.course_id):
+            return "You are already registered for this course."
+
         mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
         prerequisites = []
         for mapping in mappings:
@@ -101,11 +102,29 @@ class Student(Abstract_Base):
 
         for prerequisite in prerequisites:
             if not self.completed_course(prerequisite.id):
-                return False
+                return "You have not met the prerequisites for this course."
+
+        credits = lecture.get_course().credits
+        semester = lecture.semester_id
+        total = credits + self.get_credits(semester)
+
+        if total > 17:
+            return "You have surpassed the allocated number of credits: " + str(total)
 
         db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
         db.session.commit()
-        return True
+        return "Successfully registered."
+
+    def delete_lecture(self, lecture_id):
+        academic_record = db.session.query(AcademicRecord).filter_by(user_id=self.full_name, lecture_id=lecture_id).first()
+        db.session.delete(academic_record)
+        db.session.commit()
+
+        academic_record_test = db.session.query(AcademicRecord).filter_by(user_id=self.full_name, lecture_id=lecture_id).first()
+        if academic_record_test is None:
+            return True
+        else:
+            return False
 
     def completed_course(self, course_id):
         academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
@@ -119,6 +138,48 @@ class Student(Abstract_Base):
                 return True
 
         return False
+
+    def is_registered(self, course_id):
+
+        for lecture in self.get_fall_lectures():
+            if lecture.course_id == course_id:
+                return True
+
+        for lecture in self.get_winter_lectures():
+            if lecture.course_id == course_id:
+                return True
+
+        for lecture in self.get_summer_lectures():
+            if lecture.course_id == course_id:
+                return True
+
+        return False
+
+    def get_credits(self, semester):
+        credits = 0
+        if semester == 0:
+            lectures = self.get_fall_lectures()
+
+            for lecture in lectures:
+                credits += lecture.get_course().credits
+
+            return credits
+
+        if semester == 1:
+            lectures = self.get_winter_lectures()
+
+            for lecture in lectures:
+                credits += lecture.get_course().credits
+
+            return credits
+
+        if semester == 2:
+            lectures = self.get_summer_lectures()
+
+            for lecture in lectures:
+                credits += lecture.get_course().credits
+
+            return credits
 
     def __repr__(self):
         return '<User %r>' % (self.full_name)

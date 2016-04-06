@@ -22,10 +22,23 @@ def add_lecture():
 
     course = db.session.query(Course).filter_by(full_name=lecture_code).first()
     lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
-    if student.register_lecture(lecture.id):
-        return 'lecture added successfully.'
+    return student.register_lecture(lecture.id)
+
+@mod_schedule.route('/delete_lecture', methods=['GET', 'POST'])
+def delete_lecture():
+    student = get_student()
+    info = request.form['lecture_id']
+    info_split = info.split('/')
+    lecture_code = info_split[0]
+    lecture_section = info_split[1]
+
+    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
+    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
+
+    if student.delete_lecture(lecture.id):
+        return 'lecture successfully deleted'
     else:
-        return 'lecture not added.'
+        return 'lecture not deleted'
 
 def get_student():
     return db.session.query(Student).filter_by(full_name=session['user_id']).first()
@@ -60,17 +73,6 @@ def get_tutorials(lecture_id):
     tutorials = db.session.query(Tutorial).filter_by(lecture_id=lecture_id).all()
     if(current_app):
         return jsonify(tutorials=tutorials)
-
-
-
-# Gets the tutorial for a specified lecture
-@mod_schedule.route('/test', methods=['GET','POST'])
-def test():
-    lecture = db.session.query(Lecture).filter_by(id=1).first()
-    name = lecture.get_course().name
-    print name
-
-    return jsonify(name=name)
 
 
 @mod_schedule.route('/student_fall_lectures', methods=['GET', 'POST'])
@@ -219,19 +221,3 @@ def generate_schedule():
     schedules.append(schedule)
     return jsonify({'schedule': schedule}), 201
 
-
-@mod_schedule.route('/add_lecture_test', methods=['GET', 'POST'])
-def add_lecture_test():
-    student = get_student()
-    info = request.form['lecture_id']
-    info_split = info.split('/')
-    lecture_code = info_split[0]
-    lecture_section = info_split[1]
-
-    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
-    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
-    if student.register_lecture(lecture.id):
-        return jsonify(lectures=[lecture.serialize()])
-
-    else:
-        return 'lecture not added.'
