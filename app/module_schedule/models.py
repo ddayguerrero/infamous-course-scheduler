@@ -24,9 +24,6 @@ class Student(Abstract_Base):
         for ac in academic_records:
             registered_lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
 
-        for lecture in registered_lectures:
-            print lecture
-
         return registered_lectures
 
 
