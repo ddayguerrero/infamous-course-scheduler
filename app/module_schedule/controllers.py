@@ -24,7 +24,7 @@ def add_lecture():
     lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
     return student.register_lecture(lecture.id)
 
-@mod_schedule.route('/delete_lecture', methods=['POST'])
+@mod_schedule.route('/delete_lecture', methods=['GET', 'POST'])
 def delete_lecture():
     student = get_student()
     info = request.form['lecture_id']
@@ -59,7 +59,7 @@ def get_lectures(semester_integer):
         return jsonify(lectures=lectures)
 
 
-@mod_schedule.route('/get_prerequisites', methods=['GET'])
+@mod_schedule.route('/get_prerequisites', methods=['GET', 'POST'])
 def get_prerequisites():
     info = request.form['lecture_id']
     info_split = info.split('/')

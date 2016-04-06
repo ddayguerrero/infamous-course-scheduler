@@ -4,7 +4,7 @@ $( document ).ready(function() {
     {      
         $.ajax({ //get all the student's fall
             url: '/student_fall_lectures',
-            type: 'POST',
+            type: 'GET',
             dataType: "json",
             error: function(error) {
                 console.log(error);
@@ -21,7 +21,7 @@ $( document ).ready(function() {
     {
         $.ajax({
             url: '/student_winter_lectures',
-            type: 'POST',
+            type: 'GET',
             dataType: "json",
             error: function(error) {
                 console.log(error);
@@ -37,7 +37,7 @@ $( document ).ready(function() {
     {
         $.ajax({
             url: '/student_summer_lectures',
-            type: 'POST',
+            type: 'GET',
             dataType: "json",
             error: function(error) {
                 console.log(error);
