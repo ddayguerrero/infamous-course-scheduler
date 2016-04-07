@@ -259,11 +259,11 @@ $( document ).ready(function() {
 });
 
 function hoverInLogo(hoveredOver){
-	//document.getElementById("active").id="oldActive";
+	document.getElementById("active").id="oldActive";
 	hoveredOver.id="active";
 }
 
 function hoverOutLogo(hoveredOver){
-	//document.getElementById("oldActive").id="active";
+	document.getElementById("oldActive").id="active";
 	hoveredOver.removeAttribute("id");
 }
