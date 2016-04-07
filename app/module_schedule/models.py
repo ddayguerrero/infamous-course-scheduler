@@ -124,6 +124,9 @@ class Student(Abstract_Base):
         if self.is_registered(lecture.course_id):
             return "You are already registered for this course."
 
+        if self.completed_course(lecture.course_id):
+            return "You have already completed this course."
+
         mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
         prerequisites = []
         for mapping in mappings:
