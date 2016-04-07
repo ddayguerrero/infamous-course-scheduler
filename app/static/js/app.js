@@ -95,20 +95,6 @@ $( document ).ready(function() {
           }
       });
   }
-  else if(url == '/home/')
-  {
-       $.ajax({
-	  url: '/completed_course',
-	  type: 'GET',
-	  cache: false,
-	  dataType: "json",
-	  error: function(error) {
-	  },
-	  success: function(data) {
-	      console.log(data);
-	  }
-      });
-  }
 
     var typingTimer;                
     var doneTypingInterval = 250;

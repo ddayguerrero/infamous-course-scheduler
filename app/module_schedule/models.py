@@ -27,6 +27,35 @@ class Student(Abstract_Base):
         return registered_lectures
 
 
+    def get_registered_courses(self):
+        courses = []
+        fall_lectures = self.get_fall_lectures()
+        winter_lectures = self.get_winter_lectures()
+        summer_lectures = self.get_summer_lectures()
+
+        for lecture in fall_lectures:
+            courses.append(db.session.query(Course).filter_by(id=lecture.course_id).first())
+
+        for lecture in winter_lectures:
+            courses.append(db.session.query(Course).filter_by(id=lecture.course_id).first())
+
+        for lecture in summer_lectures:
+            courses.append(db.session.query(Course).filter_by(id=lecture.course_id).first())
+
+        return courses
+
+    def get_completed_courses(self):
+        acs = db.session.query(AcademicRecord).filter_by(user_id=self.full_name, lecture_status='completed').all()
+        courses = []
+        for ac in acs:
+            courses.append(db.session.query(Course).filter_by(id=ac.course_id).first())
+
+        return courses
+
+    def get_future_courses(self):
+        return None #TO DO
+
+
     def get_fall_lectures(self):
 
         fall_lectures = []
@@ -89,11 +118,14 @@ class Student(Abstract_Base):
             return tutorials
 
 
-    def register_lecture(self, lecture_id):
+    def register_lecture(self, lecture_id, course_id):
         lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
 
         if self.is_registered(lecture.course_id):
             return "You are already registered for this course."
+
+        if self.completed_course(lecture.course_id):
+            return "You have already completed this course."
 
         mappings = db.session.query(Mapping).filter_by(course_id=lecture.course_id).all()
         prerequisites = []
@@ -111,7 +143,7 @@ class Student(Abstract_Base):
         if total > 17:
             return "You have surpassed the allocated number of credits: " + str(total)
 
-        db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
+        db.session.add(AcademicRecord(session['user_id'], lecture_id, course_id, 'registered'))
         db.session.commit()
         return "Successfully registered."
 
@@ -127,17 +159,13 @@ class Student(Abstract_Base):
             return False
 
     def completed_course(self, course_id):
-        academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
-        for ac in academic_records:
+        academic_record = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], course_id=course_id, lecture_status='completed').first()
 
-            lecture = db.session.query(Lecture).filter_by(id=ac.lecture_id).first()
-            completed_course = db.session.query(Course).filter_by(id=lecture.course_id).first()
-            query_course = db.session.query(Course).filter_by(id=course_id).first()
+        if academic_record is not None:
+            return True
 
-            if completed_course == query_course:
-                return True
-
-        return False
+        else:
+            return False
 
     def is_registered(self, course_id):
 
@@ -297,12 +325,14 @@ class AcademicRecord(Abstract_Base):
     __tablename__ = 'academic_records'
     user_id = db.Column(db.Integer)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     lecture_status = db.Column(db.String(50))
     year = db.Column(db.Integer)
 
-    def __init__(self, user_id=None, lecture_id=None, lecture_status=None, year=None):
+    def __init__(self, user_id=None, lecture_id=None, course_id=None, lecture_status=None, year=None):
         self.user_id = user_id
         self.lecture_id = lecture_id
+        self.course_id = course_id
         self.lecture_status = lecture_status
         self.year = year
 
