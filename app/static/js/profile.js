@@ -46,8 +46,114 @@ $(function () {
     });
 });
 
+function addSequenceCourse(course)
+{
+    id = course.program + '/' + course.number;
+    if(course.completed)
+    {
+        $('#sequenceCourses').append('<li class="list-group-item" style="background-color:#66FFCC">' + id + '</li>');
+    }
+    else
+    {
+        $('#sequenceCourses').append('<li class="list-group-item" style="background-color:#FF9999">' + id + '</li>');
+    }
+}
+
 $( document ).ready(function()
 {
+    $.ajax({
+        url: '/general_sequence_courses',
+        type: 'POST',
+        cache: false,
+        dataType: "json",
+        error: function(error) {
+            console.log(error);
+        },
+        success: function(data) {
+            $('#sequenceCourses').empty();
+            data.courses.forEach((d)=>{
+                addSequenceCourse(d);
+            });
+        }
+    });
+
+
+    $('#sequences').change(function()
+    {
+        selection = $(this).val();
+        if(selection == 'games')
+        {
+            $.ajax({
+                url: '/games_sequence_courses',
+                type: 'POST',
+                cache: false,
+                dataType: "json",
+                error: function(error) {
+                    console.log(error);
+                },
+                success: function(data) {
+                    $('#sequenceCourses').empty();
+                    data.courses.forEach((d)=>{
+                        addSequenceCourse(d);
+                    });
+                }
+            }); 
+        }
+        else if(selection == 'web')
+        {
+            $.ajax({
+                url: '/web_sequence_courses',
+                type: 'POST',
+                cache: false,
+                dataType: "json",
+                error: function(error) {
+                    console.log(error);
+                },
+                success: function(data) {
+                    $('#sequenceCourses').empty();
+                   data.courses.forEach((d)=>{
+                        addSequenceCourse(d);
+                    });
+                }
+            }); 
+        }
+        else if(selection = 'avionics')
+        {
+            $.ajax({
+                url: '/avionics_sequence_courses',
+                type: 'POST',
+                cache: false,
+                dataType: "json",
+                error: function(error) {
+                    console.log(error);
+                },
+                success: function(data) {
+                    $('#sequenceCourses').empty();
+                    data.courses.forEach((d)=>{
+                        addSequenceCourse(d);
+                    });
+                }
+            }); 
+        }
+        else
+        {
+            $.ajax({
+                url: '/general_sequence_courses',
+                type: 'POST',
+                cache: false,
+                dataType: "json",
+                error: function(error) {
+                    console.log(error);
+                },
+                success: function(data) {
+                    $('#sequenceCourses').empty();
+                    data.courses.forEach((d)=>{
+                        addSequenceCourse(d);
+                    });
+                }
+            }); 
+        }
+    });
 
     $('#complete_course').click(function()
     {

@@ -10,7 +10,44 @@ if __name__ == '__main__':
 
 #get the db object to query
 from app import db
-from app.module_schedule.models import Lecture, Semester, Tutorial, Lab, AcademicRecord, Mapping, Course, Student
+from app.module_schedule.models import Lecture, Semester, Tutorial, Lab, AcademicRecord, Mapping, Course, Student, Sequence
+
+@mod_schedule.route('/web_sequence_courses', methods=['GET', 'POST'])
+def get_web_courses():
+    sequences = db.session.query(Sequence).filter_by(option='Web').all()
+    courses = []
+    for sequence in sequences:
+        courses.append(db.session.query(Course).filter_by(id=sequence.course_id).first())
+
+    return jsonify(courses=[course.serialize() for course in courses])
+
+@mod_schedule.route('/avionics_sequence_courses', methods=['GET', 'POST'])
+def get_avionics_courses():
+    sequences = db.session.query(Sequence).filter_by(option='Avionics').all()
+    courses = []
+    for sequence in sequences:
+        courses.append(db.session.query(Course).filter_by(id=sequence.course_id).first())
+
+    return jsonify(courses=[course.serialize() for course in courses])
+
+@mod_schedule.route('/general_sequence_courses', methods=['GET', 'POST'])
+def get_general_courses():
+    sequences = db.session.query(Sequence).filter_by(option='General').all()
+    courses = []
+    for sequence in sequences:
+        courses.append(db.session.query(Course).filter_by(id=sequence.course_id).first())
+
+    return jsonify(courses=[course.serialize() for course in courses])
+
+@mod_schedule.route('/games_sequence_courses', methods=['GET', 'POST'])
+def get_games_courses():
+    sequences = db.session.query(Sequence).filter_by(option='Games').all()
+    courses = []
+    for sequence in sequences:
+        courses.append(db.session.query(Course).filter_by(id=sequence.course_id).first())
+
+    return jsonify(courses=[course.serialize() for course in courses])
+
 
 @mod_schedule.route('/complete_course', methods=['GET', 'POST'])
 def complete_course():
@@ -106,10 +143,6 @@ def get_student_registered_courses():
 	registered_courses = student.get_registered_courses()
 
 	return jsonify(courses=[course.serialize() for course in registered_courses])
-
-@mod_schedule.route('/student_future_courses', methods=['GET', 'POST'])
-def get_student_future_courses():
-	return None #TO DO
 
 
 @mod_schedule.route('/student_fall_lectures', methods=['GET'])

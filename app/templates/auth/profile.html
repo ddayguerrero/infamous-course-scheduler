@@ -25,9 +25,14 @@ Greetings {{ session['user_name'] }},
         </div>
 	<div class="col-xs-4">
           <h3 class="text-center">To Take</h3>
+          <select id="sequences">
+              <option value="general">General</option>
+              <option value="web">Web</option>
+              <option value="avionics">Avionics</option>
+              <option value="games">Video Games</option>
+          </select>
           <div class="well" style="max-height: 300px;overflow: auto;">
-	           <ul class="list-group">
-              <li class="list-group-item" data-color="success">A</li>
+	           <ul class="list-group" id='sequenceCourses'>
             </ul>
           </div>
         </div>
