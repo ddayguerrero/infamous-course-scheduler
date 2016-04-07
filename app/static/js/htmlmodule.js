@@ -114,7 +114,7 @@ var HTMLModule = (function(){
 			minutesRows=3
 		else if(time1[1]<45)
 			minutesRows=2
-		else if(time1[1]>45)
+		else if(time1[1]>=45)
 			minutesRows=1
 		starthour = 4*(parseInt(time1[0])-7)-minutesRows;
 		var time2 = lecture.end_time.split(":");
@@ -124,7 +124,7 @@ var HTMLModule = (function(){
 			minutesRows=3
 		else if(time2[1]<45)
 			minutesRows=2
-		else if(time2[1]>45)
+		else if(time2[1]>=45)
 			minutesRows=1
 		endhour = 4*(parseInt(time2[0])-7)-minutesRows;
 		if(day1!="")
@@ -139,12 +139,9 @@ var HTMLModule = (function(){
 	    var classDuration = endRow - startRow +1;
 	    var startingTime = startTime[0] + ":" + startTime[1];
 
-	    //startRow returns NAN sometimes. Someone has to fix that.
-	    if(!isNaN(startRow)){
-			tbody.rows[startRow].cells[day].className="timeSlot";
-			tbody.rows[startRow].cells[day].rowSpan=classDuration;
-			tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
-	    }
+		tbody.rows[startRow].cells[day].className="timeSlot";
+		tbody.rows[startRow].cells[day].rowSpan=classDuration;
+		tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
 	}
 
 
