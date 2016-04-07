@@ -130,7 +130,7 @@ $( document ).ready(function()
     var url = window.location.pathname;
     if(url == '/home/')
     {
-        $.ajax({ //get all the student's fall
+        $.ajax({
             url: '/student_completed_courses',
             type: 'GET',
             dataType: "json",
@@ -146,7 +146,7 @@ $( document ).ready(function()
             }
         });
 
-        $.ajax({ //get all the student's fall
+        $.ajax({ 
             url: '/student_registered_courses',
             type: 'GET',
             dataType: "json",

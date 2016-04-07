@@ -156,16 +156,13 @@ class Student(Abstract_Base):
             return False
 
     def completed_course(self, course_id):
-        academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
-        for ac in academic_records:
+        academic_record = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], course_id=course_id, lecture_status='completed').first()
 
-            completed_course = db.session.query(Course).filter_by(id=ac.course_id).first()
-            query_course = db.session.query(Course).filter_by(id=course_id).first()
+        if academic_record is not None:
+            return True
 
-            if completed_course == query_course:
-                return True
-
-        return False
+        else:
+            return False
 
     def is_registered(self, course_id):
 

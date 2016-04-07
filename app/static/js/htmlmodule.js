@@ -269,7 +269,7 @@ var HTMLModule = (function(){
 	       	prerequisites = "";
 	       	$.each(data.courses, function(index, course)
 	       	{
-	       		if(data.completed)
+	       		if(course.completed)
 	       		{
 	       			prerequisites += '<td bgcolor="#66FF66">' + course.program + course.number + '</td>';
 	       		}
@@ -278,7 +278,7 @@ var HTMLModule = (function(){
 	       			prerequisites += '<td bgcolor="#FF6666">' + course.program + course.number + '</td>';
 	       		}
 	       	});	
-	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td style="background-color: #7FB9FF"></td><td>Prereqs:</td>' + prerequisites + '</tr>');
+	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td bgcolor="#6699FF"></td><td>Prereqs:</td><td></td>' + prerequisites + '</tr>');
 	    }
 	});
     }
