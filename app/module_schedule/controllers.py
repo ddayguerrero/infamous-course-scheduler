@@ -30,6 +30,22 @@ def complete_course():
     else:
         return False
 
+@mod_schedule.route('/uncomplete_course', methods=['GET', 'POST'])
+def uncomplete_course():
+    info = request.form['course_id']
+    info_split = info.split('/')
+    program = info_split[0]
+    number = info_split[1]
+
+    course = db.session.query(Course).filter_by(program=program, number=number).first()
+    ac = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], course_id=course.id, lecture_status='completed').first()
+    if ac is not None:
+        db.session.delete(ac)
+        db.session.commit()
+        return True
+    else:
+        return False
+
 @mod_schedule.route('/add_lecture', methods=['POST'])
 def add_lecture():
     student = get_student()

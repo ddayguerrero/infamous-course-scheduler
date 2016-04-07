@@ -107,9 +107,10 @@ $( document ).ready(function()
         else
         {
             jQuery.each(selected, function(index, item) {
-                $.ajax({ //get all the student's fall
-                    url: '/remove_course',
-                    type: 'GET',
+                $.ajax({
+                    url: '/uncomplete_course',
+                    type: 'POST',
+                    cache: false,
                     data: {
                         course_id: item
                     },
@@ -138,7 +139,7 @@ $( document ).ready(function()
             },
             success: function(data) {
                 data.courses.forEach((d)=>{
-                    id = d.program + d.number;
+                    id = d.program + '/' + d.number;
                     $('#completedCourses').append('<li class="list-group-item" data-color="success">' +
                         '<input type="checkbox" id="' + id + '">' + id + '</li>');
                 });
@@ -154,8 +155,9 @@ $( document ).ready(function()
             },
             success: function(data) {
                 data.courses.forEach((d)=>{
+                    id = d.program + '/' + d.number;
                     $('#registeredCourses').append('<li class="list-group-item" data-color="success">' +
-                        '<input type="checkbox" id=' + d.program + '/' + d.number + '>' + d.program + d.number + '</li>');
+                        '<input type="checkbox" id="' + id + '"">' + id + '</li>');
                 });
             }
         });
