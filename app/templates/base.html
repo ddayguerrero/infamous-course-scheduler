@@ -34,16 +34,28 @@
 		    {% set active_page = active_page|default("home") -%}
 		    <ul class="nav navbar-nav">
 		    	<li>
-		      		<a {% if active_page == "home" %} id="active" {% endif %} class="navlink" onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" href="{{ url_for('auth.home') }}">Home</a>
+		      		<a {% if active_page == "home" %} id="active" {% endif %} 
+		      		class="navlink" 
+		      		{% if active_page != "home" %} onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" {% endif %} 
+		      		href="{{ url_for('auth.home') }}">Home</a>
 		    	</li>
 				<li>
-					<a {% if active_page == "fall" or active_page == "change_fall"%} id="active" {% endif %} class="navlink" onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" href="{{ url_for('auth.fall') }}">Fall</a>
+					<a {% if active_page == "fall" or active_page == "change_fall" %} id="active" {% endif %} 
+					class="navlink" 
+					{% if active_page != "fall" and active_page != "change_fall"%} onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" {% endif %} 
+					href="{{ url_for('auth.fall') }}">Fall</a>
 				</li>
 				<li>
-					<a {% if active_page == "winter" or active_page == "change_winter"%} id="active" {% endif %} class="navlink" onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" href="{{ url_for('auth.winter') }}">Winter</a>
+					<a {% if active_page == "winter" or active_page == "change_winter" %} id="active" {% endif %} 
+					class="navlink" 
+					{% if active_page != "winter" and active_page != "change_winter"%} onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" {% endif %} 
+					href="{{ url_for('auth.winter') }}">Winter</a>
 				</li>
 				<li>
-					<a {% if active_page == "summer" or active_page == "change_summer"%} id="active" {% endif %} class="navlink" onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" href="{{ url_for('auth.summer') }}">Summer</a>
+					<a {% if active_page == "summer" or active_page == "change_summer" %} id="active" {% endif %} 
+					class="navlink" 
+					{% if active_page != "summer" and active_page != "change_summer"%} onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" {% endif %} 
+					href="{{ url_for('auth.summer') }}">Summer</a>
 				</li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
