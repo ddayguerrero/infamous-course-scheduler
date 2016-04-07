@@ -1,3 +1,28 @@
-.calendar {
-   border: 1px solid black;
+table.courseCalendar{
+	border-collapse: separate;
+	border-spacing: 1px;
+	width:100%;
+}
+table.courseCalendar , table.courseCalendar th, table.courseCalendar td{
+	/*border: 1px solid black;*/
+}
+table.courseCalendar th, table.courseCalendar td{
+	text-align: center !important;
+}
+table.courseCalendar th, table.courseCalendar td:not(.time){
+	max-width: 30px;
+}
+table.courseCalendar tbody>tr:nth-child(odd) {
+  background-color: #efefef;
+}
+table.courseCalendar tbody>tr:nth-child(even) {
+  background-color: white;
+}	
+table.courseCalendar .time{
+	max-width: 15px;
+}
+table.courseCalendar .timeSlot{
+	background-color: #7FB9FF; 
+	/*border: 3px solid lightgrey;*/
+	border-radius: 10px;
 }

@@ -5,6 +5,7 @@
         {% block title %}{% endblock %}- Null Pointer
     </title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/calendarStyle.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/profileStyle.css">
 	<link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/base.css">
 	<link rel="stylesheet" type="text/css" href="../static/font-awesome-4.5.0/css/font-awesome.min.css">
@@ -13,6 +14,7 @@
 	<script src="../static/bootstrap/js/bootstrap.min.js"></script>
 	<script src="../static/js/app.js"></script>
 	<script src="../static/js/htmlmodule.js"></script>
+	<script src="../static/js/profile.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	{% block head %}
     {% endblock %}
@@ -24,7 +26,7 @@
 		<div id="logo" class="container-fluid">
 		      <img src="../../static/images/tempLogo341_transparent.png" alt="Logo" class="img-responsive" width="300" height="120">
 		</div>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default">{% block fullNavbar %}
 		  <div class="container-fluid">
 		    <div class="navbar-header">
 		    	<a class="pull-left" href="{{ url_for('auth.home') }}"><img id="nav-logo" src="../../static/images/NullPointer-noarrow.png"></a>
@@ -32,16 +34,28 @@
 		    {% set active_page = active_page|default("home") -%}
 		    <ul class="nav navbar-nav">
 		    	<li>
-		      		<a id="home" {% if active_page == "home" %} id="active" {% endif %} class="navlink" href="{{ url_for('auth.home') }}">Home</a>
+		      		<a {% if active_page == "home" %} id="active" {% endif %} 
+		      		class="navlink" 
+		      		{% if active_page != "home" %} onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" {% endif %} 
+		      		href="{{ url_for('auth.home') }}">Home</a>
 		    	</li>
 				<li>
-					<a id="fall" {% if active_page == "fall" %} id="active" {% endif %} class="navlink" href="{{ url_for('auth.fall') }}">Fall</a>
+					<a {% if active_page == "fall" or active_page == "change_fall" %} id="active" {% endif %} 
+					class="navlink" 
+					{% if active_page != "fall" and active_page != "change_fall"%} onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" {% endif %} 
+					href="{{ url_for('auth.fall') }}">Fall</a>
 				</li>
 				<li>
-					<a id="winter" {% if active_page == "winter" %} id="active" {% endif %} class="navlink" href="{{ url_for('auth.winter') }}">Winter</a>
+					<a {% if active_page == "winter" or active_page == "change_winter" %} id="active" {% endif %} 
+					class="navlink" 
+					{% if active_page != "winter" and active_page != "change_winter"%} onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" {% endif %} 
+					href="{{ url_for('auth.winter') }}">Winter</a>
 				</li>
 				<li>
-					<a id="summer" {% if active_page == "summer" %} id="active" {% endif %} class="navlink" href="{{ url_for('auth.summer') }}">Summer</a>
+					<a {% if active_page == "summer" or active_page == "change_summer" %} id="active" {% endif %} 
+					class="navlink" 
+					{% if active_page != "summer" and active_page != "change_summer"%} onmouseover="hoverInLogo(this)" onmouseleave="hoverOutLogo(this)" {% endif %} 
+					href="{{ url_for('auth.summer') }}">Summer</a>
 				</li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
@@ -52,7 +66,7 @@
 				</li>
 			{% block navbarRight %}{% endblock %}
 			</ul>
-		  </div>
+		  </div>{% endblock %}
 		</nav>
 
 		<div class="modal fade" id="registration-modal" role="dialog">

@@ -10,9 +10,80 @@ if __name__ == '__main__':
 
 #get the db object to query
 from app import db
-from app.module_schedule.models import Lecture, Semester, Tutorial, Lab, AcademicRecord, Mapping, Course, Student
+from app.module_schedule.models import Lecture, Semester, Tutorial, Lab, AcademicRecord, Mapping, Course, Student, Sequence
 
-@mod_schedule.route('/add_lecture', methods=['GET', 'POST'])
+@mod_schedule.route('/web_sequence_courses', methods=['GET', 'POST'])
+def get_web_courses():
+    sequences = db.session.query(Sequence).filter_by(option='Web').all()
+    courses = []
+    for sequence in sequences:
+        courses.append(db.session.query(Course).filter_by(id=sequence.course_id).first())
+
+    return jsonify(courses=[course.serialize() for course in courses])
+
+@mod_schedule.route('/avionics_sequence_courses', methods=['GET', 'POST'])
+def get_avionics_courses():
+    sequences = db.session.query(Sequence).filter_by(option='Avionics').all()
+    courses = []
+    for sequence in sequences:
+        courses.append(db.session.query(Course).filter_by(id=sequence.course_id).first())
+
+    return jsonify(courses=[course.serialize() for course in courses])
+
+@mod_schedule.route('/general_sequence_courses', methods=['GET', 'POST'])
+def get_general_courses():
+    sequences = db.session.query(Sequence).filter_by(option='General').all()
+    courses = []
+    for sequence in sequences:
+        courses.append(db.session.query(Course).filter_by(id=sequence.course_id).first())
+
+    return jsonify(courses=[course.serialize() for course in courses])
+
+@mod_schedule.route('/games_sequence_courses', methods=['GET', 'POST'])
+def get_games_courses():
+    sequences = db.session.query(Sequence).filter_by(option='Games').all()
+    courses = []
+    for sequence in sequences:
+        courses.append(db.session.query(Course).filter_by(id=sequence.course_id).first())
+
+    return jsonify(courses=[course.serialize() for course in courses])
+
+
+@mod_schedule.route('/complete_course', methods=['GET', 'POST'])
+def complete_course():
+    info = request.form['course_id']
+    info_split = info.split('/')
+    program = info_split[0]
+    number = info_split[1]
+
+    course = db.session.query(Course).filter_by(program=program, number=number).first()
+
+    ac = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], course_id=course.id, lecture_status='registered').first()
+    if ac is not None:
+        db.session.add(AcademicRecord(session['user_id'], -1, course.id, 'completed'))
+        db.session.delete(ac)
+        db.session.commit()
+        return True
+    else:
+        return False
+
+@mod_schedule.route('/uncomplete_course', methods=['GET', 'POST'])
+def uncomplete_course():
+    info = request.form['course_id']
+    info_split = info.split('/')
+    program = info_split[0]
+    number = info_split[1]
+
+    course = db.session.query(Course).filter_by(program=program, number=number).first()
+    ac = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], course_id=course.id, lecture_status='completed').first()
+    if ac is not None:
+        db.session.delete(ac)
+        db.session.commit()
+        return True
+    else:
+        return False
+
+@mod_schedule.route('/add_lecture', methods=['POST'])
 def add_lecture():
     student = get_student()
     info = request.form['lecture_id']
@@ -22,58 +93,59 @@ def add_lecture():
 
     course = db.session.query(Course).filter_by(full_name=lecture_code).first()
     lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
-    if student.register_lecture(lecture.id):
-        return 'lecture added successfully.'
+    return student.register_lecture(lecture.id, course.id)
+
+@mod_schedule.route('/delete_lecture', methods=['GET', 'POST'])
+def delete_lecture():
+    student = get_student()
+    info = request.form['lecture_id']
+    info_split = info.split('/')
+    lecture_code = info_split[0]
+    lecture_section = info_split[1]
+
+    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
+    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
+
+    if student.delete_lecture(lecture.id):
+        return 'lecture successfully deleted'
     else:
-        return 'lecture not added.'
+        return 'lecture not deleted'
 
 def get_student():
     return db.session.query(Student).filter_by(full_name=session['user_id']).first()
 
-def get_course(course_id):
-    return db.session.query(Course).filter_by(id=course_id).first()
+@mod_schedule.route('/get_prerequisites', methods=['GET', 'POST'])
+def get_prerequisites():
+    info = request.form['lecture_id']
+    info_split = info.split('/')
+    lecture_code = info_split[0]
 
-def get_lecture(lecture_id):
-    return db.session.query(Lecture).filter_by(id=lecture_id).first()
+    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
 
+    mappings = db.session.query(Mapping).filter_by(course_id=course.id).all()
+    prerequisites = []
+    for mapping in mappings:
+        prerequisites.append(db.session.query(Course).filter_by(id=mapping.course_req_id).first())
 
-#Gets all the lectures for a specified semester (id from 1-4)
-@mod_schedule.route('/lectures_semester', methods=['POST'])
-def get_lectures(semester_integer):
-    lectures = db.session.query(Lecture).filter_by(semester_id=semester_integer).all()
-
-    if(current_app):
-        return jsonify(lectures=lectures)
-
-
-#Gets all the lectures of a specified course id
-@mod_schedule.route('/lectures_course', methods=['GET','POST'])
-def get_lectures_for_course(course_number):
-    lectures = db.session.query(Lecture).filter_by(course_id=course_number).all()
-    if(current_app):
-        return jsonify(lectures=lectures)
+    return jsonify(courses=[course.serialize() for course in prerequisites])
 
 
-# Gets the tutorial for a specified lecture
-@mod_schedule.route('/tutorials', methods=['GET','POST'])
-def get_tutorials(lecture_id):
-    tutorials = db.session.query(Tutorial).filter_by(lecture_id=lecture_id).all()
-    if(current_app):
-        return jsonify(tutorials=tutorials)
+@mod_schedule.route('/student_completed_courses', methods=['GET', 'POST'])
+def get_student_completed_courses():
+	student = get_student()
+	completed_courses = student.get_completed_courses()
+
+	return jsonify(courses=[course.serialize() for course in completed_courses])
+
+@mod_schedule.route('/student_registered_courses', methods=['GET', 'POST'])
+def get_student_registered_courses():
+	student = get_student()
+	registered_courses = student.get_registered_courses()
+
+	return jsonify(courses=[course.serialize() for course in registered_courses])
 
 
-
-# Gets the tutorial for a specified lecture
-@mod_schedule.route('/test', methods=['GET','POST'])
-def test():
-    lecture = db.session.query(Lecture).filter_by(id=1).first()
-    name = lecture.get_course().name
-    print name
-
-    return jsonify(name=name)
-
-
-@mod_schedule.route('/student_fall_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/student_fall_lectures', methods=['GET'])
 def student_fall_lectures():
 	student = get_student()
 	fall_lectures = student.get_fall_lectures()
@@ -81,7 +153,7 @@ def student_fall_lectures():
 	return jsonify(lectures=[lecture.serialize() for lecture in fall_lectures])
 
 
-@mod_schedule.route('/student_winter_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/student_winter_lectures', methods=['GET'])
 def student_winter_lectures():
 	student = get_student()
 	winter_lectures = student.get_winter_lectures()
@@ -89,7 +161,7 @@ def student_winter_lectures():
 	return jsonify(lectures=[lecture.serialize() for lecture in winter_lectures])
 
 
-@mod_schedule.route('/student_summer_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/student_summer_lectures', methods=['GET'])
 def student_summer_lectures():
 	student = get_student()
 	summer_lectures = student.get_summer_lectures()
@@ -97,7 +169,7 @@ def student_summer_lectures():
 	return jsonify(lectures=[lecture.serialize() for lecture in summer_lectures])
 
 
-@mod_schedule.route('/fall_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/fall_lectures', methods=['GET'])
 def get_fall_lectures():
 	lectures = []
 	semesters = db.session.query(Semester).filter_by(semester_id=0).all()
@@ -122,7 +194,7 @@ def get_fall_lectures_search():
 	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
 
-@mod_schedule.route('/winter_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/winter_lectures', methods=['GET'])
 def get_winter_lectures():
 	lectures = []
 	semesters = db.session.query(Semester).filter_by(semester_id=1).all()
@@ -148,7 +220,7 @@ def get_winter_lectures_search():
 	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
 
-@mod_schedule.route('/summer_lectures', methods=['GET', 'POST'])
+@mod_schedule.route('/summer_lectures', methods=['GET'])
 def get_summer_lectures():
 	lectures = []
 	semesters = db.session.query(Semester).filter_by(semester_id=2).all()
@@ -180,58 +252,5 @@ def get_labs(lecture_id):
         return jsonify(labs=labs)
 
 
-# Gets the lectures a student is registered for
-@mod_schedule.route('/student_lectures', methods=['GET','POST'])
-def get_student_lectures():
-    student = get_student()
-    return jsonify(lectures=student.get_lectures())
-
-
-# Gets the lectures a student is registered for
-@mod_schedule.route('/register', methods=['GET','POST'])
-def register_lecture(lecture_id):
-    student = get_student()
-    return student.register_lecture(lecture_id)
-
-
-# Gets the lectures a student is registered for
-@mod_schedule.route('/completed_course', methods=['GET','POST'])
-def student_completed_course(course_id):
-    student = get_student()
-    return student.completed_course(course_id)
-
-
 if __name__ == '__main__':
     app.run(debug=True)
-
-# Say you want to create a specific resource (e.g. schedule)
-#
-# POST request example
-@mod_schedule.route('/schedules', methods=['POST'])
-def generate_schedule():
-    if not request.json or 'name' not in request.json:
-        abort(400)
-    schedule = {
-        'id': schedules[-1]['id'] + 1,  # schedule is equal to last schedule id + 1
-        'name': request.json['name'],
-        'done': False
-    }
-    schedules.append(schedule)
-    return jsonify({'schedule': schedule}), 201
-
-
-@mod_schedule.route('/add_lecture_test', methods=['GET', 'POST'])
-def add_lecture_test():
-    student = get_student()
-    info = request.form['lecture_id']
-    info_split = info.split('/')
-    lecture_code = info_split[0]
-    lecture_section = info_split[1]
-
-    course = db.session.query(Course).filter_by(full_name=lecture_code).first()
-    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
-    if student.register_lecture(lecture.id):
-        return jsonify(lectures=[lecture.serialize()])
-
-    else:
-        return 'lecture not added.'

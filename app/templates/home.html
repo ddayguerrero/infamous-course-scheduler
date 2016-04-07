@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block head %}
-<script src="../static/js/home.js"></script>
 <link rel="stylesheet" type="text/css" href="../../static/css/studenthomeStyle.css">
 <link rel="stylesheet" type="text/css" href="../../static/css/courseListStyle.css">
 {% endblock %}  
@@ -26,6 +25,7 @@
 	<!-- Header -->
         <div class="headers">
 	  <!-- Add Course Button -->
+          <div id="delete_messages"></div>
           <div class="col-xs-6 text-center">
             <a {% if active_page == "fall" %} href="{{ url_for('auth.change_fall') }}" 
             {% elif active_page == "winter" %} href="{{ url_for('auth.change_winter') }}" 
@@ -35,7 +35,7 @@
           </div>
 	  <!-- Delete Course Button -->
           <div class="col-xs-6 text-center"> 
-            <button type="button" class="btn btn-default">Delete Course(s)</button>
+            <button id="delete_course" type="button" class="btn btn-default">Delete Course(s)</button>
           </div>
         </div>
 	<!-- End of Header -->
@@ -51,9 +51,9 @@
     <div class="col-sm-6">
       <div class="row headers">
       </div>
-      <table class="table table-striped" id="homeCalendar">
+      <div id="homeCalendar">
         
-      </table>
+      </div>
     </div>
   </div>
 </div>

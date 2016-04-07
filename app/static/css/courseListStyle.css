@@ -21,7 +21,7 @@
 .courses > li > #type > span {
     display: none;
 }
-.courses > li #type > .month {
+.courses > li #type > .course {
     display: block;
     font-size: 12pt;
 }

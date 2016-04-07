@@ -7,6 +7,7 @@ var HTMLModule = (function(){
     
     function createCalendar(listOfClasses){
 	let tbl  = document.createElement('table');
+	tbl.className="courseCalendar"
 	var head = document.createElement('thead');
 	var headRow = document.createElement('tr');
 	var tbody = document.createElement('tbody');
@@ -14,38 +15,40 @@ var HTMLModule = (function(){
 	var row, dayHeader;
 	var createCells = function(days){
 	    for (var i = 0; i < days.length + 1 ; i++){
-		dayHeader = document.createElement('th');
-		if(i==0) {
-		    dayHeader.innerHTML = " ";
-		} else {
-		    dayHeader.innerHTML = days[i-1];
-		}
-		headRow.appendChild(dayHeader);
+			dayHeader = document.createElement('th');
+			if(i==0) {
+			    dayHeader.innerHTML = " ";
+			} else {
+			    dayHeader.innerHTML = days[i-1];
+			}
+			headRow.appendChild(dayHeader);
 	    }
 	    head.appendChild(headRow);
 	}
 
 	var createTimeSlots = function(){
 	    var tr, td, min, hour;
-	    for (var i = 0; i < 52; i++){ //rows
-		row = document.createElement('tr');
-		for (var j = 0; j < daysOfWeek.length + 1; j++){ //column
-		    td = document.createElement('td');
-		    if(j==0){//hours and min
-				hour = 8+Math.floor(i/4);
-				min = (i%4)*15;
-				if(min!=0)
-					td.innerHTML = hour+":"+min;
-				else td.innerHTML = hour+":00";
-				td.style.border = '1px solid black';
-				row.appendChild(td);
-		    }		    
-		    else{ 
-		     td.innerHTML = "";	
-		    } 
-		    td.style.border = '1px solid black';
-		    row.appendChild(td); 
-		}
+	    for (var i = 0; i < 52; i++){ // rows
+			row = document.createElement('tr');
+			for (var j = 0; j < daysOfWeek.length + 1; j++){ // column
+			    td = document.createElement('td');
+			    if(j==0){ // hours and min
+					hour = 8+Math.floor(i/4);
+					min = (i%4)*15;
+					if(min!=0)
+						td.innerHTML = hour+":"+min;
+					else 
+						td.innerHTML = hour+":00";
+
+					td.className = 'time';
+
+					row.appendChild(td);
+			    }		    
+			    else{ 
+			     td.innerHTML = "";	
+			    } 
+			    row.appendChild(td); 
+			}
 		tbody.appendChild(row);
 	    }
 	}
@@ -53,8 +56,6 @@ var HTMLModule = (function(){
 	var getTableBoundsForEachCourse = function(){
 	var day1, day2, starthour,endhour;
 	   $.each(listOfClasses.lectures, function(index, lecture) {
-	   	//var lecture = listOfClasses.lectures[0];
-	   	console.log(lecture.day_one+" "+lecture.day_two+" "+lecture.start_time+" "+lecture.end_time);
 		switch (lecture.day_one) {
 			case "M":
 			day1 = 1;
@@ -113,7 +114,7 @@ var HTMLModule = (function(){
 			minutesRows=3
 		else if(time1[1]<45)
 			minutesRows=2
-		else if(time1[1]>45)
+		else if(time1[1]>=45)
 			minutesRows=1
 		starthour = 4*(parseInt(time1[0])-7)-minutesRows;
 		var time2 = lecture.end_time.split(":");
@@ -123,7 +124,7 @@ var HTMLModule = (function(){
 			minutesRows=3
 		else if(time2[1]<45)
 			minutesRows=2
-		else if(time2[1]>45)
+		else if(time2[1]>=45)
 			minutesRows=1
 		endhour = 4*(parseInt(time2[0])-7)-minutesRows;
 		if(day1!="")
@@ -134,127 +135,153 @@ var HTMLModule = (function(){
 	});
 }
 
-var printCourse = function(lecture,day,startTime,endTime,startRow,endRow){
-		var classDuration = endRow - startRow +1;
-		var startingHour=0;
-		for(row=1; row<=classDuration;row++){
-			var timeOnTable= tbody.rows[startingHour+startRow];
-			var timeCell = timeOnTable.cells[day];
-			//var timeCell = tbl.rows[row].cells[day];
-			timeCell.style.backgroundColor = "yellow";
-			if(row!=1 || row!=classDuration){
-				timeCell.style.borderTop = "thick solid yellow";
-				timeCell.style.borderBottom = "thick solid yellow";
-				if(row==Math.floor(classDuration/2)){
-					timeCell.innerHTML=lecture.name;
-				}
-				else if(row==Math.floor(classDuration/2)+1){
-					timeCell.innerHTML=lecture.number;
-				}
-				else if(row==Math.floor(classDuration/2)+2){
-					timeCell.innerHTML=startTime[0]+":"+startTime[1]+ "-";
-				}
-				else if(row==Math.floor(classDuration/2)+3){
-					timeCell.innerHTML=endTime[0]+":"+endTime[1];
-				}
-			}
-			else if(row==1){//first cell needs bottom border removed
-				timeCell.style.borderBottom = "thick solid yellow";
-			}
-			else if(row==classDuration){
-				timeCell.style.borderTop = "thick solid yellow";
-			}
-			startingHour++; 
-		}
+	function printCourse(lecture,day,startTime,endTime,startRow,endRow){
+	    var classDuration = endRow - startRow +1;
+	    var startingTime = startTime[0] + ":" + startTime[1];
+
+		tbody.rows[startRow].cells[day].className="timeSlot";
+		tbody.rows[startRow].cells[day].rowSpan=classDuration;
+		tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
 	}
 
 
 	createCells(daysOfWeek);
 	createTimeSlots();
 	getTableBoundsForEachCourse();
-	tbl.className = "table table-striped";
 	tbl.appendChild(head);
 	tbl.appendChild(tbody);
 	return tbl;
     }
 
     function createCourseList(d){
-	var list = document.createElement('ul');
-	list.className="courses"
-	var courseSlot = document.createElement('li');
-	var courseType = document.createElement('div');
-	courseType.id = 'type';
-	var course = document.createElement('span');
-	course.className += 'course';
-	course.innerHTML = "COMP";
-	var info = document.createElement('div');
-	info.className = 'info';
-	var title = document.createElement('h2');
-	title.className += 'title';
-	title.innerHTML = "232";
-	var name = document.createElement('p');
-	name.className += 'desc';
-	name.innerHTML = "Logic of Programming";
-	var section = document.createElement('div');
-	section.className = "section";
-	var start = document.createElement('input');
-	start.setAttribute('type', "checkbox");
-	start.setAttribute('value', "class1");
-	var end = document.createElement('input');
-	end.setAttribute('type', "checkbox");
-	end.setAttribute('value', "class1");
-	section.appendChild(start);
-	section.appendChild(end);
 
-	info.appendChild(title);
-	info.appendChild(name);
-	info.appendChild(section);
-	courseType.appendChild(course);
-	courseSlot.appendChild(courseType);
-	courseSlot.appendChild(info);
-	list.appendChild(courseSlot);
-	return list;
+		var list = document.createElement('ul');
+		list.className="courses"
+
+		$.each(d.lectures, function(idx, lecture) {
+            console.log(lecture);
+
+	        var courseSlot = document.createElement('li');
+			var courseType = document.createElement('div');
+
+			courseType.id = 'type';
+			var course = document.createElement('span');
+			course.className += 'course';
+			course.innerHTML = lecture.program;
+			var info = document.createElement('div');
+			info.className = 'info';
+			var title = document.createElement('h2');
+			title.className += 'title';
+			title.innerHTML = lecture.number;
+			var name = document.createElement('p');
+			name.className += 'desc';
+			name.innerHTML = lecture.name;
+			var section = document.createElement('div');
+			section.className = lecture.section;
+			var checkbox = document.createElement('input');
+			checkbox.setAttribute('type', "checkbox");
+			checkbox.setAttribute('id', lecture.full_name + '/' + lecture.section);
+			section.appendChild(checkbox);
+
+			info.appendChild(title);
+			info.appendChild(name);
+			info.appendChild(section);
+			courseType.appendChild(course);
+			courseSlot.appendChild(courseType);
+			courseSlot.appendChild(info);
+			list.appendChild(courseSlot);
+		});
+
+		return list;
     }
 
     function createSearchList(d){
-	var row = document.createElement('tr');
-	var td = document.createElement('td');
-	td.className = "section";
-	td.innerHTML = d.section;
-	row.appendChild(td);
-	td = document.createElement('td');
-	td.className = "code";
-	td.innerHTML = d.full_name;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	td.className = "name";
-	td.innerHTML = d.name;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	td.className = "startTime";
-	td.innerHTML = d.start_time;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	td.className = "endTime";
-	td.innerHTML = d.end_time;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	td.className = "instructor";
-	td.innerHTML = d.instructor;
-	row.appendChild(td);
-	$('#fallList').add(row);
-	td = document.createElement('td');
-	input = document.createElement('input');
-	input.setAttribute('type', 'checkbox');
-	input.setAttribute('value', 'class1');
-	var selectionId = d.full_name + '/' +  d.section;
-	input.setAttribute('id', selectionId);
-	td.appendChild(input);
-	row.appendChild(td);
-	return row;	
+
+		var row = document.createElement('tr');
+		var td = document.createElement('td');
+		td.className = "section";
+		td.innerHTML = d.section;
+		row.appendChild(td);
+		td = document.createElement('td');
+		td.className = "code";
+		td.innerHTML = d.full_name;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		td.className = "name";
+		td.innerHTML = d.name;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		td.className = "startTime";
+		td.innerHTML = d.start_time;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		td.className = "endTime";
+		td.innerHTML = d.end_time;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		td.className = "instructor";
+		td.innerHTML = d.instructor;
+		row.appendChild(td);
+		$('#fallList').add(row);
+		td = document.createElement('td');
+		input = document.createElement('input');
+		input.setAttribute('type', 'checkbox');
+		input.setAttribute('value', 'class1');
+		var selectionId = d.full_name + '/' +  d.section;
+		input.setAttribute('id', selectionId);
+		input.onclick = function()
+		{
+			if(this.checked)
+			{
+				addPrerequisites($(this).closest('tr').index(), this.id);
+			}
+			else
+			{
+				removePrerequisites($(this).closest('tr').index());
+			}
+		};
+		td.appendChild(input);
+		row.appendChild(td);
+		return row;	
+    }
+
+    function addPrerequisites(index, id)
+    {
+    	$.ajax({
+	    url: '/get_prerequisites',
+	    type: 'POST',
+	    cache: false,
+	    data: {
+	       	lecture_id: id
+	    },
+	    dataType: "json",
+	    error: function(error) {
+          	console.log(error);
+	    },
+	    success: function(data) {
+	       	prerequisites = "";
+	       	$.each(data.courses, function(index, course)
+	       	{
+	       		if(course.completed)
+	       		{
+	       			prerequisites += '<td bgcolor="#66FF66">' + course.program + course.number + '</td>';
+	       		}
+	       		else
+	       		{
+	       			prerequisites += '<td bgcolor="#FF6666">' + course.program + course.number + '</td>';
+	       		}
+	       	});	
+	       	$('#courseList > tr').eq(index).after('<tr id="prerequisites"><td bgcolor="#6699FF"></td><td>Prereqs:</td><td></td>' + prerequisites + '</tr>');
+	    }
+	});
+    }
+
+    function removePrerequisites(index)
+    {
+    	$('#prerequisites').remove();
     }
 }());

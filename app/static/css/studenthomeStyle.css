@@ -10,9 +10,12 @@ body {
 .schedule{
 	background-color: white;
 	border-radius: 10px;
-	padding: 5px;
+	padding: 10px;
 	opacity: 0.8;
+	width:80%;
+	margin: 0 auto;
 }
+
 .courseListContainer{
 	display: inline-block;
 	padding:40px;
@@ -26,6 +29,8 @@ body {
 
 .courseList{
 	padding-top: 10px;
+	overflow-x: auto;
+	overflow-y: auto;
 }
 
 .courseListTitles{
@@ -42,4 +47,12 @@ body {
 }
 h2{
 	padding:25px;
+}
+
+#homeCalendar{
+    font-size: 12px;
+}
+
+#logo{
+    display:none;
 }
