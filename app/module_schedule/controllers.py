@@ -12,6 +12,24 @@ if __name__ == '__main__':
 from app import db
 from app.module_schedule.models import Lecture, Semester, Tutorial, Lab, AcademicRecord, Mapping, Course, Student
 
+@mod_schedule.route('/complete_course', methods=['GET', 'POST'])
+def complete_course():
+    info = request.form['course_id']
+    info_split = info.split('/')
+    program = info_split[0]
+    number = info_split[1]
+
+    course = db.session.query(Course).filter_by(program=program, number=number).first()
+
+    ac = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], course_id=course.id, lecture_status='registered').first()
+    if ac is not None:
+        db.session.add(AcademicRecord(session['user_id'], -1, course.id, 'completed'))
+        db.session.delete(ac)
+        db.session.commit()
+        return True
+    else:
+        return False
+
 @mod_schedule.route('/add_lecture', methods=['POST'])
 def add_lecture():
     student = get_student()
@@ -22,7 +40,7 @@ def add_lecture():
 
     course = db.session.query(Course).filter_by(full_name=lecture_code).first()
     lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=lecture_section).first()
-    return student.register_lecture(lecture.id)
+    return student.register_lecture(lecture.id, course.id)
 
 @mod_schedule.route('/delete_lecture', methods=['GET', 'POST'])
 def delete_lecture():
@@ -42,40 +60,6 @@ def delete_lecture():
 
 def get_student():
     return db.session.query(Student).filter_by(full_name=session['user_id']).first()
-
-def get_course(course_id):
-    return db.session.query(Course).filter_by(id=course_id).first()
-
-def get_lecture(lecture_id):
-    return db.session.query(Lecture).filter_by(id=lecture_id).first()
-
-
-@mod_schedule.route('/complete_course', methods=['GET', 'POST'])
-def complete_course():
-	info = request.form['course_id']
-	info_split = info.split('/')
-	program = info_split[0]
-	number = info_split[1]
-
-	course = db.session.query(Course).filter_by(program=program, number=number).first()
-	lecture = db.session.query(Lecture).filter_by(course_id=course.id).first()
-
-	ac = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_id=lecture.id, lecture_status='registered').first()
-	db.session.add(AcademicRecord(session['user_id'], lecture.id, 'completed'))
-	db.session.delete(ac)
-	db.session.commit()
-
-	return True
-
-
-#Gets all the lectures for a specified semester (id from 1-4)
-@mod_schedule.route('/lectures_semester', methods=['POST'])
-def get_lectures(semester_integer):
-    lectures = db.session.query(Lecture).filter_by(semester_id=semester_integer).all()
-
-    if(current_app):
-        return jsonify(lectures=lectures)
-
 
 @mod_schedule.route('/get_prerequisites', methods=['GET', 'POST'])
 def get_prerequisites():
@@ -218,26 +202,6 @@ def get_labs(lecture_id):
     if(current_app):
         return jsonify(labs=labs)
 
-
-# Gets the lectures a student is registered for
-@mod_schedule.route('/student_lectures', methods=['GET'])
-def get_student_lectures():
-    student = get_student()
-    return jsonify(lectures=student.get_lectures())
-
-
-# Gets the lectures a student is registered for
-@mod_schedule.route('/register', methods=['POST'])
-def register_lecture(lecture_id):
-    student = get_student()
-    return student.register_lecture(lecture_id)
-
-
-# Gets the lectures a student is registered for
-@mod_schedule.route('/completed_course', methods=['GET', 'POST'])
-def student_completed_course(course_id):
-    student = get_student()
-    return student.completed_course(course_id)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -46,13 +46,9 @@ class Student(Abstract_Base):
 
     def get_completed_courses(self):
         acs = db.session.query(AcademicRecord).filter_by(user_id=self.full_name, lecture_status='completed').all()
-        lectures = []
         courses = []
         for ac in acs:
-            lectures.append(db.session.query(Lecture).filter_by(id=ac.lecture_id).first())
-
-        for lecture in lectures:
-            courses.append(db.session.query(Course).filter_by(id=lecture.course_id).first())
+            courses.append(db.session.query(Course).filter_by(id=ac.course_id).first())
 
         return courses
 
@@ -122,7 +118,7 @@ class Student(Abstract_Base):
             return tutorials
 
 
-    def register_lecture(self, lecture_id):
+    def register_lecture(self, lecture_id, course_id):
         lecture = db.session.query(Lecture).filter_by(id=lecture_id).first()
 
         if self.is_registered(lecture.course_id):
@@ -144,7 +140,7 @@ class Student(Abstract_Base):
         if total > 17:
             return "You have surpassed the allocated number of credits: " + str(total)
 
-        db.session.add(AcademicRecord(session['user_id'], lecture_id, 'registered'))
+        db.session.add(AcademicRecord(session['user_id'], lecture_id, course_id, 'registered'))
         db.session.commit()
         return "Successfully registered."
 
@@ -163,8 +159,7 @@ class Student(Abstract_Base):
         academic_records = db.session.query(AcademicRecord).filter_by(user_id=session['user_id'], lecture_status='completed').all()
         for ac in academic_records:
 
-            lecture = db.session.query(Lecture).filter_by(id=ac.lecture_id).first()
-            completed_course = db.session.query(Course).filter_by(id=lecture.course_id).first()
+            completed_course = db.session.query(Course).filter_by(id=ac.course_id).first()
             query_course = db.session.query(Course).filter_by(id=course_id).first()
 
             if completed_course == query_course:
@@ -330,12 +325,14 @@ class AcademicRecord(Abstract_Base):
     __tablename__ = 'academic_records'
     user_id = db.Column(db.Integer)
     lecture_id = db.Column(db.Integer, db.ForeignKey('lectures.id'))
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     lecture_status = db.Column(db.String(50))
     year = db.Column(db.Integer)
 
-    def __init__(self, user_id=None, lecture_id=None, lecture_status=None, year=None):
+    def __init__(self, user_id=None, lecture_id=None, course_id=None, lecture_status=None, year=None):
         self.user_id = user_id
         self.lecture_id = lecture_id
+        self.course_id = course_id
         self.lecture_status = lecture_status
         self.year = year
 
