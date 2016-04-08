@@ -252,5 +252,69 @@ def get_labs(lecture_id):
         return jsonify(labs=labs)
 
 
+@mod_schedule.route('/time_conflicts', methods=['GET', 'POST'])
+def get_time_conflict(): 
+    lecture_id1 = request.form['lecture_id1']
+    lecture_id2 = request.form['lecture_id2']
+
+    info1 = lecture_id1.split('/')
+    info2 = lecture_id2.split('/')
+
+    course1 = db.session.query(Course).filter_by(full_name=info1[0]).first()
+    course2 = db.session.query(Course).filter_by(full_name=info2[0]).first()
+
+    lecture1 = db.session.query(Lecture).filter_by(course_id=course1.id, section=info1[1]).first()
+    lecture2 = db.session.query(Lecture).filter_by(course_id=course2.id, section=info2[1]).first()
+
+    l1d1 = lecture1.day_one
+    l2d1 = lecture2.day_one
+    l1d2 = lecture1.day_two
+    l2d2 = lecture2.day_two
+
+    if l1d1 != "" and l2d1 != "":
+        if l1d1 != l2d1 and l1d2 != l2d2:
+            return "false"
+        else:
+            return is_time_conflict(lecture1.start_time, lecture1.end_time, lecture2.start_time, lecture2.end_time)
+
+    elif l1d1 != "":
+        if l1d1 != l2d1 and l1d1 != l2d2:
+            return "false"
+        else:
+            return is_time_conflict(lecture1.start_time, lecture1.end_time, lecture2.start_time, lecture2.end_time)
+
+    elif l2d1 != "":
+        if l2d1 != l1d1 and l2d1 != l1d2:
+            return "false"
+        else:
+            return is_time_conflict(lecture1.start_time, lecture1.end_time, lecture2.start_time, lecture2.end_time)
+
+    else:
+        if l1d2 != l2d2:
+            return "false"
+        else:
+            return is_time_conflict(lecture1.start_time, lecture1.end_time, lecture2.start_time, lecture2.end_time)
+
+def is_time_conflict(start1, end1, start2, end2):
+    start_times1 = start1.split(':')
+    start_times2 = start2.split(':')
+    end_times1 = end1.split(':')
+    end_times2 = end2.split(':')
+
+    start1_str = start_times1[0] + start_times1[1]
+    start1_int = int(start1_str)
+    start2_str = start_times2[0] + start_times2[1]
+    start2_int = int(start2_str)
+    end1_str = end_times1[0] + end_times1[1]
+    end1_int = int(end1_str)
+    end2_str = end_times2[0] + end_times2[1]
+    end2_int = int(end2_str)
+
+    if (start1_int >= start2_int and start1_int <= end2_int) or (start2_int >= start1_int and start2_int <= end1_int):
+        return "true"
+
+    else:
+        return "false"
+
 if __name__ == '__main__':
     app.run(debug=True)
