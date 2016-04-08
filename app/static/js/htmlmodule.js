@@ -28,9 +28,10 @@ var HTMLModule = (function(){
 			head.appendChild(headRow);
 		}
 
+
 		var createTimeSlots = function(){
 			var tr, td, min, hour;
-	    for (var i = 0; i < 52; i++){ // rows
+	    for (var i = 0; i < 61; i++){ // rows
 	    	row = document.createElement('tr');
 			for (var j = 0; j < daysOfWeek.length + 1; j++){ // column
 				td = document.createElement('td');
@@ -245,10 +246,12 @@ function createSearchList(d){
 					checkboxes[i].disabled = true;
 			}
 			addPrerequisites($(this).closest('tr').index(), this.id);
+			checkTimeConflicts($(this).closest('tr').index(), this.id);
 		}
 		else
 		{
 			removePrerequisites($(this).closest('tr').index());
+			uncheckTimeConflicts();
 			var checkboxes = document.getElementsByClassName("selectClass");
 			for (var i = 0; i < checkboxes.length; i++) {
 				checkboxes[i].disabled = false;
@@ -291,25 +294,136 @@ function addPrerequisites(index, id)
 	});
 }
 
-function demoFallCalendar(){ //demo the checked class
-	$.ajax({
-		url: '/preview_fall_lecture_selection',
-		type: 'POST',
-		cache: false,
-		data: JSON.stringify(selectedCheckBoxes),
-		error: function(error) {
-			console.log("error")
-		},
-		success: function(data) {
-			console.log(data);
-			//$('#homeCalendar').empty();
-			//$('#homeCalendar').append(HTMLModule.createCalendar(data));
-		}
-	});
-}
 
-function removePrerequisites(index)
+function removePrerequisites()
 {
 	$('#prerequisites').remove();
+}
+
+function checkTimeConflicts(index, id)
+{
+	var url = window.location.pathname;
+	if(url == '/change_fall/')
+	{
+		console.log('time conflicts ' + id);
+		$.ajax({
+			url: '/student_fall_lectures',
+			type: 'GET',
+			cache: false,
+			dataType: "json",
+			error: function(error) {
+				console.log(error);
+			},
+			success: function(data) {
+				data.lectures.forEach((d)=>{
+					$.ajax({
+						url: '/time_conflicts',
+						type: 'POST',
+						cache: false,
+						data: {
+							lecture_id1: id,
+							lecture_id2: d.full_name + '/' + d.section
+						},
+						dataType: "json",
+						error: function(error) {
+							console.log(error);
+						},
+						success: function(data1) {
+							if(data1 == true)
+							{
+								$('#courseList > tr').eq(index).after('<tr id="conflict"><td bgcolor="#FF6666"></td><td>Time conflict:</td>' +
+									'<td></td><td>' + d.start_time + '</td><td> ' + d.end_time + '</td></tr>');
+								$('#add').prop('disabled', true);
+							}						       	
+						}
+					});
+				});
+			}
+		});
+	}
+	else if(url == '/change_winter/')
+	{
+		$.ajax({
+			url: '/student_winter_lectures',
+			type: 'GET',
+			cache: false,
+			dataType: "json",
+			error: function(error) {
+				console.log(error);
+			},
+			success: function(data) {
+				data.lectures.forEach((d)=>{
+					data.lectures.forEach((d)=>{
+						$.ajax({
+							url: '/time_conflicts',
+							type: 'POST',
+							cache: false,
+							data: {
+								lecture_id1: id,
+								lecture_id2: d.full_name + '/' + d.section
+							},
+							dataType: "json",
+							error: function(error) {
+								console.log(error);
+							},
+							success: function(data1) {
+								if(data1 == true)
+								{
+									$('#courseList > tr').eq(index).after('<tr id="conflict"><td bgcolor="#FF6666"></td><td>Time conflict:</td>' +
+										'<td></td><td>' + d.start_time + '</td><td> ' + d.end_time + '</td></tr>');
+									$('#add').prop('disabled', true);
+								}						       	
+							}
+						});
+					});
+				});
+			}
+		});
+	}
+	else if(url == '/change_summer/')
+	{
+		$.ajax({
+			url: '/student_summer_lectures',
+			type: 'GET',
+			cache: false,
+			dataType: "json",
+			error: function(error) {
+				console.log(error);
+			},
+			success: function(data) {
+				data.lectures.forEach((d)=>{
+					data.lectures.forEach((d)=>{
+						$.ajax({
+							url: '/time_conflicts',
+							type: 'POST',
+							cache: false,
+							data: {
+								lecture_id1: id,
+								lecture_id2: d.full_name + '/' + d.section
+							},
+							dataType: "json",
+							error: function(error) {
+								console.log(error);
+							},
+							success: function(data1) {
+								if(data1 == true)
+								{
+									$('#courseList > tr').eq(index).after('<tr id="conflict"><td bgcolor="#FF6666"></td><td>Time conflict:</td>' +
+										'<td></td><td>' + d.start_time + '</td><td> ' + d.end_time + '</td></tr>');
+									$('#add').prop('disabled', true);
+								}						       	
+							}
+						});
+					});
+				});
+			}
+		});
+	}
+}
+
+function uncheckTimeConflicts()
+{
+	$('#conflict').remove();
+	$('#add').prop('disabled', false);
 }
 }());

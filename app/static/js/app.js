@@ -3,8 +3,7 @@
 //////////
 $( document ).ready(function() {
   var url = window.location.pathname;
-  var studentCourses;
-
+  
   if(url == '/change_fall/')
   {
 	$.ajax({ //get all the fall courses

@@ -4,7 +4,19 @@
 {% endblock %}  
 
 {% block content %}
-	<div class="alert alert-warning text-center">
-		I see you got the app running. This is just the beginning...404 reasons to keep going!
-	</div>
+	<div class="error">
+        <div class="error-code code">404 <i class="fa fa-warning"></i></div>
+        <h3 class="font-bold">Null Pointer Exception</h3>
+
+        <div class="error-desc">
+            Sorry, this is not NullPointer. (Really, the NullPointer page that you are looking for was either not found or does not exist). Actually, this may be a null pointer.<br/>
+            
+            <div>
+                <a class=" login-detail-panel-button btn" href="http://127.0.0.1:5000/home/">
+                        <i class="fa fa-arrow-left"></i>
+                        Go back to NullPointer.                        
+                    </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
