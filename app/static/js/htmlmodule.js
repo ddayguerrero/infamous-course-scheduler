@@ -28,7 +28,7 @@ var HTMLModule = (function(){
 
 	var createTimeSlots = function(){
 	    var tr, td, min, hour;
-	    for (var i = 0; i < 52; i++){ // rows
+	    for (var i = 0; i < 61; i++){ // rows
 			row = document.createElement('tr');
 			for (var j = 0; j < daysOfWeek.length + 1; j++){ // column
 			    td = document.createElement('td');
