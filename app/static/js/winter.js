@@ -8,7 +8,7 @@ $( document ).ready(function() {
         success: function(data) {
             $('#courseList').empty();
 	    if(data.lectures.length === 0){
-		$('#courseList').append('<div class="well">...</div>');
+		$('#courseList').append('<div class="well">You are currently not registered for any courses this semester.</div>');
 	    }
             $('#homeCalendar').append(HTMLModule.createCalendar(data));
             $('#courseList').append(HTMLModule.createCourseList(data));
