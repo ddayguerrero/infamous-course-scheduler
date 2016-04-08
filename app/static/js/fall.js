@@ -4,7 +4,6 @@ $( document ).ready(function() {
         type: 'GET',
         dataType: "json",
         error: function(error) {
-        	console.log(error);
             },
             success: function(data) {
 		$('#courseList').empty();
@@ -15,6 +14,7 @@ $( document ).ready(function() {
                 $('#homeCalendar').append(HTMLModule.createCalendar(data));
 
             }
+
         });
 
 });
