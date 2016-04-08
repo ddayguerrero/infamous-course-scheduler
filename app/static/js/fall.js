@@ -7,9 +7,13 @@ $( document ).ready(function() {
         	console.log(error);
             },
             success: function(data) {
-                $('#courseList').empty();
+		$('#courseList').empty();
+		if(data.lectures.length === 0){
+		    $('#courseList').append('<div class="well">...</div>');
+		}
                 $('#courseList').append(HTMLModule.createCourseList(data));
                 $('#homeCalendar').append(HTMLModule.createCalendar(data));
+
             }
         });
 
