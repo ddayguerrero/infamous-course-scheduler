@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="../../static/css/studentHomeStyle.css">
+<link rel="stylesheet" type="text/css" href="../../static/css/courseListStyle.css">
+{% endblock %}  
+{{ super() }}
+{% block content %}
+
+<div class="container schedule">
+  <div class="row">
+    <div class="col-sm-10">
+      <h2>{% block semester %}{% endblock %} Semester</h2>
+    </div>
+    <!--       <div class="col-sm-offset-11">
+               <button class="btn btn-default" type="button">Log Out</button>
+    </div> -->
+  </div>
+
+  <div class="row">
+    <!-- Left Hand Side : Controls + Course List  -->
+    <div class="col-sm-6 courseListContainer">
+      <div class="row">
+
+	<!-- Header -->
+        <div class="headers">
+	  <!-- Add Course Button -->
+          <div id="delete_messages"></div>
+          <div class="col-xs-6 text-center">
+            <a {% if active_page == "fall" %} href="{{ url_for('auth.change_fall') }}" 
+            {% elif active_page == "winter" %} href="{{ url_for('auth.change_winter') }}" 
+            {% else %} href="{{ url_for('auth.change_summer') }}" {% endif %}>
+              <button id="add_course" type="button" class="btn btn-default">Add Course</button>
+            </a>
+          </div>
+	  <!-- Delete Course Button -->
+          <div class="col-xs-6 text-center"> 
+            <button id="delete_course" type="button" class="btn btn-default">Delete Course(s)</button>
+          </div>
+        </div>
+	<!-- End of Header -->
+
+	<!-- Course List -->
+        <div class="col-sm-12 courseList" id="courseList">
+        </div>
+	<!-- End of Course List -->
+      </div>
+    </div>
+
+    <!-- Right Hand Side : Calendar Schedule  -->
+    <div class="col-sm-6">
+      <div class="row headers">
+      </div>
+      <div id="homeCalendar">
+        
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "home.html" %}
+{% block title %}Registration{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="../../static/css/studentHomeStyle.css">
+{% endblock %}
+{{ super() }}
+{% from "auth/_formhelpers.html" import render_field %}
+
+{% block content %}
+<div id="container" class="schedule">
+  <div class="row">
+    <div class="col-sm-6 courseListContainer">
+      <div class="row">
+        <form id="verifyCourse-form" class="text-left" method="POST" role="form" onsubmit="return false">
+          <div class="form-group">
+
+            <div id="messages"> <!-- Messages pertaining to if a course was added are recorded here -->
+            </div>
+
+            Search for courses: <input type="text" class="form-group" id="searchBox" name="courseSearch"></input>
+          </div>
+        </form>
+        <button id="add">Add Selection</button>
+      </div>
+      <div class="row courseList">
+        <table class="table table-striped" id="table">
+          <thead id="head">
+            <tr>
+              <th>#</th>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Instructor</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="courseList">
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-6" id ="homeCalendar">
+    </div>
+  </div>
+  <button>Generate</button>
+</div>
+{% endblock %}

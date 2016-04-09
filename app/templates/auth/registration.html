@@ -1,45 +1,53 @@
-<!DOCTYPE>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../static/css/loginStyle.css">
-<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+{% extends "base.html" %}
+{% block title %}Registration{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="../../static/css/loginStyle.css">
+{% endblock %}
+{% block fullNavbar %}{% endblock %}
+{{ super() }}
+{% from "auth/_formhelpers.html" import render_field %}
 
-<html>
+{% block content %}
 <!-- Registration -->
 <div class="text-center" style="padding:50px 0">
 	<div class="logo">Register</div>
 	<div class="login-form-1">
-		<form id="register-form" class="text-left">
+		<form id="register-form" class="text-left" method="POST" role="form">
+			{{ form.csrf_token }}
 			<div class="login-form-main-message"></div>
 			<div class="main-login-form">
 				<div class="login-group">
+					{% with messages = get_flashed_messages() %}
+  					{% if messages %}
+    					<ul class="form-control">
+    						{% for message in messages %}
+      						<li>{{ message }}</li>
+    						{% endfor %}
+    					</ul>
+  					{% endif %}
+					{% endwith %}
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="username">
+						{{ render_field(form.username, class_="form-control") }}
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control"  placeholder="password">
+						{{ render_field(form.email, class_="form-control") }}
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control"  placeholder="confirm password">
-					</div>
-					
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="email">
+						{{ render_field(form.password, class_="form-control") }}
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="full name">
+						{{ render_field(form.confirm, class_="form-control") }}
 					</div>
-					
-					<div class="form-group login-group-checkbox">
-						<input type="checkbox" class="" >
-						<label for="reg_agree">I agree with <a href="#">terms of service</a></label>
+					<div class="form-group">
+						{{ render_field(form.accept_tos, class_="form-control") }}
 					</div>
 				</div>
 				<button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
 			</div>
 			<div class="etc-login-form">
-				<p>Already registered? <a href="{{ url_for('auth.home') }}">Login here</a></p>
+				<p>Already registered? <a class="formLink" href="{{ url_for('auth.login') }}">Login here</a></p>
 			</div>
 		</form>
 	</div>
 </div>
-</html>
+{% endblock %}

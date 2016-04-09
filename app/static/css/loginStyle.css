@@ -2,7 +2,6 @@
 html,
 body {
   background: #efefef;
-  padding: 10px;
   font-family: 'Open Sans';
 }
 
@@ -11,7 +10,7 @@ body {
     margin: 0 auto;
 }
 /*=== Links ===*/
-a {
+a.formLink {
   color: #7FB9FF;
   transition: all ease-in-out 200ms;
 }

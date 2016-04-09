@@ -1,0 +1,58 @@
+body {
+    background-color: #efefef !important;
+}
+.semesterButtons{
+	background-color: white;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+.schedule{
+	background-color: white;
+	border-radius: 10px;
+	padding: 10px;
+	opacity: 0.8;
+	width:80%;
+	margin: 0 auto;
+}
+
+.courseListContainer{
+	display: inline-block;
+	padding:40px;
+}
+
+#body {
+	height: 500px;
+	overflow-y: auto;
+	overflow-x: auto;
+}
+
+.courseList{
+	padding-top: 10px;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+
+.courseListTitles{
+	border-style: solid;
+}
+
+.coursesView{
+	margin:10px;
+	padding: 10px;
+}
+
+.courseSchedule{
+
+}
+h2{
+	padding:25px;
+}
+
+#homeCalendar{
+    font-size: 12px;
+}
+
+#logo{
+    display:none;
+}
