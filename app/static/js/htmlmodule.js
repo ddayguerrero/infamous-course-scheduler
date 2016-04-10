@@ -15,6 +15,9 @@ var HTMLModule = (function(){
 		var tbody = document.createElement('tbody');
 		let daysOfWeek = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 		var row, dayHeader;
+		var startOfDay=61;//used for trimming excess cells
+		var endOfDay=0;
+
 		var createCells = function(days){
 			for (var i = 0; i < days.length + 1 ; i++){
 				dayHeader = document.createElement('th');
@@ -57,8 +60,6 @@ var HTMLModule = (function(){
 
 		var getTableBoundsForEachCourse = function(){
 			var day1, day2, starthour,endhour;
-			var startOfDay=0;
-			var endOfDay=61;
 			$.each(listOfClasses.lectures, function(index, lecture) {
 				switch (lecture.day_one) {
 					case "M":
@@ -136,7 +137,15 @@ var HTMLModule = (function(){
 				if(day2!="")
 					printCourse(lecture,day2,time1,time2,starthour,endhour);
 
+				if(starthour<startOfDay){
+					startOfDay = starthour;
+				}
+				if(endhour>endOfDay){
+					endOfDay = endhour;
+				}
 			});
+
+			deleteExcessTimeSlots(startOfDay,endOfDay);
 		}
 
 		function printCourse(lecture,day,startTime,endTime,startRow,endRow){
@@ -148,6 +157,16 @@ var HTMLModule = (function(){
 			tbody.rows[startRow].cells[day].innerHTML=lecture.program +" "+ lecture.number;
 		}
 
+		function deleteExcessTimeSlots(start,end){
+			if(listOfClasses.lectures.length > 0){
+				for (var i = end + 2; i < 61; i++) {
+					tbody.deleteRow(end+2);
+				}
+				for (var i = 0; i < start-1; i++) {
+					tbody.deleteRow(0);
+				}
+			}
+		}
 		createCells(daysOfWeek);
 		createTimeSlots();
 		getTableBoundsForEachCourse();
