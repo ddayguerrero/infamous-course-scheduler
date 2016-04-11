@@ -12,8 +12,13 @@ $( document ).ready(function() {
    cache: false,
    dataType: "json",
    error: function(error) {
+    console.log("error");
   },
   success: function(data) {
+    console.log("success");
+    $.each(data.lectures, function(idx, lecture) {
+      console.log(lecture.name);
+    });
     $('#courseList').empty();
     data.lectures.forEach((d)=>{
       $('#courseList').append(HTMLModule.createSearchList(d));
@@ -85,6 +90,7 @@ $( document ).ready(function() {
         },
         dataType: "json",
         error: function(error) {
+          console.log(error);
         },
         success: function(data) {
           $('#courseList').empty();
@@ -126,6 +132,7 @@ $( document ).ready(function() {
         },
         dataType: "json",
         error: function(error) {
+          console.log(error);
         },
         success: function(data) {
           $('#courseList').empty();
@@ -154,6 +161,7 @@ $( document ).ready(function() {
      else
      {
        $.each(selected, function(i, id) {
+        console.log(id);
         $.ajax({
           url: '/add_lecture',
           type: 'POST',
@@ -186,6 +194,7 @@ $( document ).ready(function() {
       type: 'GET',
       dataType: "json",
       error: function(error) {
+        console.log(error);
       },
       success: function(data) {
         $('#homeCalendar').empty();
@@ -243,10 +252,11 @@ $( document ).ready(function() {
     }
     else
     {
-      var should_delete = confirm("Are you sure you want to delete: " + courses + "?");
+      var should_delete = confirm("Are you sure you want to delete: " + courses);
       if(should_delete)
       {
         $.each(selected, function(i, id) {
+          console.log(id);
           $.ajax({
            url: '/delete_lecture',
            type: 'POST',
@@ -255,8 +265,10 @@ $( document ).ready(function() {
              lecture_id: id
            },
            error: function(error) {
+             console.log(error);
            },
            success: function(data) {
+             console.log(data);
              location.reload();
            }
          });

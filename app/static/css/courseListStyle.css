@@ -97,11 +97,10 @@
     }
 
     .courses > li > .info {
-	background-color: rgb(245, 245, 245);
+	background-color: rgb(245, 245, 245);s
 	overflow: hidden;
-	position: relative;
 	height: 80px;
-	text-align: left;
+	text-align: center;
     }
 	
     .courses > li > .info > .title, 

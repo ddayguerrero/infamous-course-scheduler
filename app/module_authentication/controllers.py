@@ -39,11 +39,13 @@ def login():
 	return render_template('auth/login.html', form=form)
 
 
-@mod_auth.route('/')
+@mod_auth.route('/logout/')
 def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return render_template('auth/login.html', form=form)
+	session.pop('user_id', None)
+	session.pop('user_name', None)
+	session.pop('logged_in', None)
+	flash('You were logged out')
+	return redirect(url_for('auth.login'))
 
 
 @mod_auth.route('/registration/', methods=['GET', 'POST'])
