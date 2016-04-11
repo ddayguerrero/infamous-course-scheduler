@@ -258,6 +258,21 @@ class Lab(Abstract_ClassType):
     def __repr__(self):
         return '<Lab %r>' % (self.code)
 
+    def get_lecture(self):
+        return db.session.query(Lecture).filter_by(id=self.lecture_id).first()
+
+    def serialize(self):
+        course = self.get_lecture().get_course()
+        return {
+            'full_name': course.full_name,
+            'name': course.name,
+            'program': course.program,
+            'number': course.number,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'day_one': self.day_one
+        }
+
 
 class Tutorial(Abstract_ClassType):
     __tablename__ = 'tutorials'
@@ -273,6 +288,22 @@ class Tutorial(Abstract_ClassType):
 
     def __repr__(self):
         return '<Tutorial %r>' % (self.code)
+
+    def get_lecture(self):
+        return db.session.query(Lecture).filter_by(id=self.lecture_id).first()
+
+    def serialize(self):
+        course = self.get_lecture().get_course()
+        return {
+            'full_name': course.full_name,
+            'name': course.name,
+            'program': course.program,
+            'number': course.number,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'day_one': self.day_one,
+            'day_two': self.day_two
+        }
 
 
 class Lecture(Abstract_ClassType):
@@ -316,6 +347,9 @@ class Lecture(Abstract_ClassType):
 
     def get_course(self):
         return db.session.query(Course).filter_by(id=self.course_id).first()
+
+    def get_labs(self):
+        return db.session.query(Lab).filter_by(lecture_id=self.id).all()
 
     def __repr__(self):
         return '<Lecture %r>' % (self.instructor)
