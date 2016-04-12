@@ -244,12 +244,28 @@ def get_summer_lectures_search():
 
 	return jsonify(lectures=[lecture.serialize() for lecture in lectures])
 
-# Gets the lab for a specified lecture
-@mod_schedule.route('/labs', methods=['GET','POST'])
-def get_labs(lecture_id):
-    labs = db.session.query(Lab).filter_by(lecture_id=lecture_id).all()
-    if(current_app):
-        return jsonify(labs=labs)
+@mod_schedule.route('/get_labs', methods=['GET', 'POST'])
+def get_labs():
+    lecture_id = request.form['lecture_id']
+    info = lecture_id.split('/')
+    course = db.session.query(Course).filter_by(full_name=info[0]).first()
+    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=info[1]).first()
+    labs = []
+    if lecture.get_labs() is not None:
+        labs = lecture.get_labs()
+
+    return jsonify(labs=[lab.serialize() for lab in labs])
+
+
+@mod_schedule.route('/get_tutorials', methods=['GET', 'POST'])
+def get_tutorials():
+    lecture_id = request.form['lecture_id']
+    info = lecture_id.split('/')
+    course = db.session.query(Course).filter_by(full_name=info[0]).first()
+    lecture = db.session.query(Lecture).filter_by(course_id=course.id, section=info[1]).first()
+    tutorials = lecture.get_tutorials()
+
+    return jsonify(tutorials=[tutorial.serialize() for tutorial in tutorials])
 
 
 @mod_schedule.route('/time_conflicts', methods=['GET', 'POST'])

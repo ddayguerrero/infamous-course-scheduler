@@ -263,12 +263,16 @@ var HTMLModule = (function(){
 					if(checkboxes[i].id!=this.id)
 						checkboxes[i].disabled = true;
 				}
+				addLabs($(this).closest('tr').index(), this.id);
+				addTutorials($(this).closest('tr').index(), this.id);
 				addPrerequisites($(this).closest('tr').index(), this.id);
 				checkTimeConflicts($(this).closest('tr').index(), this.id);
 			}
 			else
 			{
-				removePrerequisites($(this).closest('tr').index());
+				removePrerequisites();
+				removeTutorials();
+				removeLabs();
 				uncheckTimeConflicts();
 				var checkboxes = document.getElementsByClassName("selectClass");
 				for (var i = 0; i < checkboxes.length; i++) {
@@ -279,6 +283,66 @@ var HTMLModule = (function(){
 		td.appendChild(input);
 		row.appendChild(td);
 		return row;	
+	}
+
+	function addTutorials(i, id)
+	{
+		$.ajax({
+			url: '/get_tutorials',
+			type: 'POST',
+			cache: false,
+			data: {
+				lecture_id: id
+			},
+			dataType: "json",
+			error: function(error) {
+				console.log(error);
+			},
+			success: function(data) {
+				$('#courseList > tr').eq(i).after('<tr class="tutorials"><td bgcolor="#33CC00"></td><td>Tutorials:</td><td></td></tr>');
+				i += 1;
+				$.each(data.tutorials, function(index, tutorial)
+				{
+					$('#courseList > tr').eq(i).after('<tr class="tutorials"><td></td><td></td><td></td><td>' + tutorial.start_time + '</td><td>' +
+						tutorial.end_time + '</td><td>' + tutorial.day_one + tutorial.day_two + '</td><td><input id="' + id + '" type="checkbox"></td></tr>');
+				});	
+			}
+		});
+	}
+
+	function removeTutorials()
+	{
+		$('.tutorials').remove();
+	}
+
+	function addLabs(i, id)
+	{
+		$.ajax({
+			url: '/get_labs',
+			type: 'POST',
+			cache: false,
+			data: {
+				lecture_id: id
+			},
+			dataType: "json",
+			error: function(error) {
+				console.log(error);
+			},
+			success: function(data) {
+				$('#courseList > tr').eq(i).after('<tr class="labs"><td bgcolor="#FFFF66"></td><td>Labs:</td><td></td></tr>');
+				i += 1;
+				$.each(data.labs, function(index, lab)
+				{
+					$('#courseList > tr').eq(i).after('<tr class="labs"><td></td><td></td><td></td><td>' + lab.start_time + '</td><td>' +
+						lab.end_time + '</td><td>' + lab.day_one + '</td><td><input id="' + id + '" type="checkbox"></td></tr>');
+				});	
+			}
+		});
+	}
+
+	function removeLabs()
+	{
+		$('.labs').remove();
 	}
 
 	function addPrerequisites(index, id){

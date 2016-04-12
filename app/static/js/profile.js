@@ -48,14 +48,14 @@ $(function () {
 
 function addSequenceCourse(course)
 {
-    id = course.program + '/' + course.number;
+    cid = course.program + '/' + course.number;
     if(course.completed)
     {
-        $('#sequenceCourses').append('<li class="list-group-item" style="background-color:#66FFCC">' + id + '</li>');
+        $('#sequenceCourses').append('<li class="list-group-item" style="background-color:#66FFCC">' + cid + '</li>');
     }
     else
     {
-        $('#sequenceCourses').append('<li class="list-group-item" style="background-color:#FF9999">' + id + '</li>');
+        $('#sequenceCourses').append('<li class="list-group-item" style="background-color:#FF9999">' + cid + '</li>');
     }
 }
 
