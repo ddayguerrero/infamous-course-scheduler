@@ -34,8 +34,8 @@ class TestClass(unittest.TestCase):
 	def test_student_lectures(self, test_lecture):
 		student = db.session.query(Student).filter_by(id=session['user_id']).first()
 
-		assertTrue(student_lectures(student, 'COMP232'))
-		assertFalse(student_lectures(student, test_lecture))
+		self.assertTrue(student_lectures(student, 'COMP232'))
+		self.assertFalse(student_lectures(student, test_lecture))
 
 
 	def register_course(self, course_id):
@@ -43,8 +43,8 @@ class TestClass(unittest.TestCase):
 		course = db.session.query(Course).filter_by(id=course_id).first()
 		course_bad = db.session.query(Course).filter_by(id=-2).first()
 
-		assertTrue(register_course(student, course))
-		assertFalse(register_course(student,course_bad))
+		self.assertTrue(register_course(student, course))
+		self.assertFalse(register_course(student,course_bad))
 
 
 	def delete_course(self, course_id):
@@ -52,26 +52,29 @@ class TestClass(unittest.TestCase):
 		course = db.session.query(Course).filter_by(id=course_id).first()
 		course_bad = db.session.query(Course).filter_by(id=-2).first()
 
-		assertTrue(delete_course(student, course))
-		assertFalse(delete_course(student,course_bad))
+		self.assertTrue(delete_course(student, course))
+		self.assertFalse(delete_course(student,course_bad))
 
 
 	def test_student_fall_lectures(self, test_lecture):
 		student = db.session.query(Student).filter_by(id=session['user_id']).first()
 
-		assertTrue(student_fall_lectures(student, 'COMP232'))
-		assertFalse(student_fall_lectures(student, test_lecture))
+		self.assertTrue(student_fall_lectures(student, 'COMP232'))
+		self.assertFalse(student_fall_lectures(student, test_lecture))
 
 
 	def test_student_winter_lectures(self, test_lecture):
 		student = db.session.query(Student).filter_by(id=session['user_id']).first()
 
-		assertTrue(student_winter_lectures(student, 'COMP232'))
-		assertFalse(student_winter_lectures(student, test_lecture))
+		self.assertTrue(student_winter_lectures(student, 'COMP232'))
+		self.assertFalse(student_winter_lectures(student, test_lecture))
 
 
 	def test_student_summer_lectures(self, test_lecture):
 		student = db.session.query(Student).filter_by(id=session['user_id']).first()
 
-		assertTrue(student_summer_lectures(student, 'COMP232'))
-		assertFalse(student_summer_lectures(student, test_lecture))
+		self.assertTrue(student_summer_lectures(student, 'COMP232'))
+		self.assertFalse(student_summer_lectures(student, test_lecture))
+
+if __name__ == '__main__':
+	unittest.main()
