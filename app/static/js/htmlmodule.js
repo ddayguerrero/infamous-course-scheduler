@@ -304,7 +304,7 @@ var HTMLModule = (function(){
 				$.each(data.tutorials, function(index, tutorial)
 				{
 					$('#courseList > tr').eq(i).after('<tr class="tutorials"><td></td><td></td><td></td><td>' + tutorial.start_time + '</td><td>' +
-						tutorial.end_time + '</td><td>' + tutorial.day_one + tutorial.day_two + '</td><td><input id="' + id + '" type="checkbox"></td></tr>');
+						tutorial.end_time + '</td><td>' + tutorial.day_one + tutorial.day_two + '</td></tr>');
 				});	
 			}
 		});
@@ -334,7 +334,7 @@ var HTMLModule = (function(){
 				$.each(data.labs, function(index, lab)
 				{
 					$('#courseList > tr').eq(i).after('<tr class="labs"><td></td><td></td><td></td><td>' + lab.start_time + '</td><td>' +
-						lab.end_time + '</td><td>' + lab.day_one + '</td><td><input id="' + id + '" type="checkbox"></td></tr>');
+						lab.end_time + '</td><td>' + lab.day_one + '</td></tr>');
 				});	
 			}
 		});
